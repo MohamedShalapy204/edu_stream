@@ -1,0 +1,99 @@
+
+> my_react_template@0.0.0 test
+> vitest --run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/home/mohamed/Desktop/projects/snap[39m
+
+ [32m✓[39m src/components/pages/_auth/VerifyEmail/VerifyEmail.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 650[2mms[22m[39m
+     [33m[2m✓[22m[39m should show success state when verification is successful [33m 547[2mms[22m[39m
+ [32m✓[39m src/components/pages/_auth/SignInForm/SignInForm.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 1019[2mms[22m[39m
+     [33m[2m✓[22m[39m should display validation errors for required fields [33m 710[2mms[22m[39m
+ [32m✓[39m src/components/pages/_auth/SignUpForm/SignUpForm.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 2336[2mms[22m[39m
+     [33m[2m✓[22m[39m should render all form fields correctly [33m 805[2mms[22m[39m
+     [33m[2m✓[22m[39m should display validation errors for required fields [33m 333[2mms[22m[39m
+     [33m[2m✓[22m[39m should show error for password ''1'' below minimum length [33m 319[2mms[22m[39m
+     [33m[2m✓[22m[39m should show error for password ''1234567'' below minimum length [33m 386[2mms[22m[39m
+ [32m✓[39m src/components/pages/_auth/VerifyLayout.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 499[2mms[22m[39m
+     [33m[2m✓[22m[39m should show loading spinner when data is pending [33m 477[2mms[22m[39m
+ [32m✓[39m src/components/pages/_auth/VerifyEmail/VerificationPending.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 600[2mms[22m[39m
+     [33m[2m✓[22m[39m should call resend on button click [33m 467[2mms[22m[39m
+ [32m✓[39m src/components/pages/_auth/AuthLayout/AuthLayout.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 448[2mms[22m[39m
+     [33m[2m✓[22m[39m should show loading spinner when user data is pending [33m 351[2mms[22m[39m
+[90mstderr[2m | src/services/appwrite/auth/auth.test.ts[2m > [22m[2mAuthService[2m > [22m[2mcreateUserAccount[2m > [22m[2mshould throw an error if account creation fails
+[22m[39mAuthService :: createUserAccount error: Error: Network Error
+    at [90m/home/mohamed/Desktop/projects/snap/[39msrc/services/appwrite/auth/auth.test.ts:66:17
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:145:11
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:915:26
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:37
+    at Traces.$ [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/traces.CCmnQaNT.js:142:27[90m)[39m
+    at trace [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:12[90m)[39m
+
+[90mstderr[2m | src/services/appwrite/auth/auth.test.ts[2m > [22m[2mAuthService[2m > [22m[2msignInAccount[2m > [22m[2mshould throw an error on invalid credentials
+[22m[39mAuthService :: signInAccount error: Error: Invalid credentials
+    at [90m/home/mohamed/Desktop/projects/snap/[39msrc/services/appwrite/auth/auth.test.ts:103:17
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:145:11
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:915:26
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:37
+    at Traces.$ [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/traces.CCmnQaNT.js:142:27[90m)[39m
+    at trace [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:12[90m)[39m
+
+[90mstderr[2m | src/services/appwrite/auth/auth.test.ts[2m > [22m[2mAuthService[2m > [22m[2msendVerificationEmail[2m > [22m[2mshould throw error if createVerification fails
+[22m[39mAuthService :: sendVerificationEmail error: Error: Verification error
+    at [90m/home/mohamed/Desktop/projects/snap/[39msrc/services/appwrite/auth/auth.test.ts:171:73
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:145:11
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:915:26
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:37
+    at Traces.$ [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/traces.CCmnQaNT.js:142:27[90m)[39m
+    at trace [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:12[90m)[39m
+
+[90mstderr[2m | src/services/appwrite/auth/auth.test.ts[2m > [22m[2mAuthService[2m > [22m[2mupdateVerificationStatus[2m > [22m[2mshould throw error if updateVerification fails
+[22m[39mAuthService :: updateVerificationStatus error: Error: Update failed
+    at [90m/home/mohamed/Desktop/projects/snap/[39msrc/services/appwrite/auth/auth.test.ts:191:73
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:145:11
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:915:26
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:37
+    at Traces.$ [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/traces.CCmnQaNT.js:142:27[90m)[39m
+    at trace [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:12[90m)[39m
+
+[90mstderr[2m | src/services/appwrite/auth/auth.test.ts[2m > [22m[2mAuthService[2m > [22m[2mupdateAccountName[2m > [22m[2mshould throw error if updateName fails
+[22m[39mAuthService :: updateAccountName error: Error: Update name failed
+    at [90m/home/mohamed/Desktop/projects/snap/[39msrc/services/appwrite/auth/auth.test.ts:211:65
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:145:11
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:915:26
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1209:10[90m)[39m
+    at [90mfile:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:37
+    at Traces.$ [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/traces.CCmnQaNT.js:142:27[90m)[39m
+    at trace [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4mvitest[24m/dist/chunks/test.B8ej_ZHS.js:239:21[90m)[39m
+    at runTest [90m(file:///home/mohamed/Desktop/projects/snap/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1653:12[90m)[39m
+
+ [32m✓[39m src/services/appwrite/auth/auth.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+[90mstdout[2m | src/hooks/queries/useAuth.test.ts[2m > [22m[2museSendVerificationEmail Hook[2m > [22m[2mshould successfully call send service
+[22m[39mVerification email sent!
+
+ [32m✓[39m src/hooks/queries/useAuth.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 493[2mms[22m[39m
+ [32m✓[39m src/services/appwrite/databases/snapgram/users/users.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m      Tests [22m [1m[32m53 passed[39m[22m[90m (53)[39m
+[2m   Start at [22m 20:30:06
+[2m   Duration [22m 9.50s[2m (transform 700ms, setup 2.58s, import 2.31s, tests 6.09s, environment 12.77s)[22m
+
