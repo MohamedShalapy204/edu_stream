@@ -70,7 +70,7 @@ export interface IUser {
 export interface ICourse {
     $id: string;
     title: string;
-    description: string;
+    description?: string;
     price: number;
     teacher_id: string;
     thumbnail_url?: string;
