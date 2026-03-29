@@ -10,6 +10,9 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole];
 export const ContentType = {
     VIDEO: 'video',
     PDF: 'pdf',
+    POWERPOINT: 'powerpoint',
+    WORD: 'word',
+    ZIP: 'zip',
     AUDIO: 'audio',
 } as const;
 export type ContentType = (typeof ContentType)[keyof typeof ContentType];
@@ -18,6 +21,7 @@ export const SubscriptionStatus = {
     ACTIVE: 'active',
     EXPIRED: 'expired',
     REVOKED: 'revoked',
+    CANCELED: 'canceled',
 } as const;
 export type SubscriptionStatus =
     (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus];
@@ -30,16 +34,37 @@ export const PaymentStatus = {
 export type PaymentStatus =
     (typeof PaymentStatus)[keyof typeof PaymentStatus];
 
+export const DeviceType = {
+    MOBILE: 'mobile',
+    DESKTOP: 'desktop',
+    TABLET: 'tablet',
+} as const;
+export type DeviceType =
+    (typeof DeviceType)[keyof typeof DeviceType];
+
 // ── Interfaces ──
+
+export interface IAccount {
+    $id: string;
+    $createdAt: string;
+    $updatedAt: string;
+    name: string;
+    email: string;
+    emailVerification: boolean;
+    phone: string;
+    phoneVerification: boolean;
+    status: boolean;
+    prefs: Record<string, unknown>;
+}
 
 export interface IUser {
     $id: string;
     name: string;
     email: string;
     role: UserRole;
-    avatarUrl?: string;
-    created_at: string;
-    updated_at: string;
+    avatar_url?: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface ICourse {
@@ -48,19 +73,23 @@ export interface ICourse {
     description: string;
     price: number;
     teacher_id: string;
-    teacher?: IUser;
     thumbnail_url?: string;
-    created_at: string;
-    updated_at: string;
+    is_published: boolean;
+    categories?: string[];
+    rating?: number;
+    total_students?: number;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface ISection {
     $id: string;
     course_id: string;
     title: string;
-    order: number;
-    created_at: string;
-    updated_at: string;
+    order?: number;
+    description?: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface ILesson {
@@ -69,10 +98,11 @@ export interface ILesson {
     title: string;
     content_type: ContentType;
     file_url: string;
-    duration: number;
-    order: number;
-    created_at: string;
-    updated_at: string;
+    duration?: number;
+    order?: number;
+    description?: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface ISubscription {
@@ -80,10 +110,11 @@ export interface ISubscription {
     user_id: string;
     course_id: string;
     status: SubscriptionStatus;
-    start_date: string;
-    end_date: string;
-    created_at: string;
-    updated_at: string;
+    start_date: Date;
+    end_date: Date;
+    created_at: Date;
+    updated_at: Date;
+    stripeSubscriptionId?: string;
 }
 
 export interface IPayment {
@@ -94,8 +125,8 @@ export interface IPayment {
     currency: string;
     payment_status: PaymentStatus;
     stripe_payment_id: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface IReview {
@@ -104,8 +135,8 @@ export interface IReview {
     course_id: string;
     rating: number;
     comment: string;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface INotification {
@@ -114,8 +145,8 @@ export interface INotification {
     title: string;
     message: string;
     is_read: boolean;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface IContentAccess {
@@ -123,7 +154,10 @@ export interface IContentAccess {
     user_id: string;
     course_id: string;
     device_id: string;
-    last_access_time: string;
-    created_at: string;
-    updated_at: string;
+    last_access_time?: Date;
+    device_name: string;
+    device_type: DeviceType;
+    ip_address?: string;
+    created_at: Date;
+    updated_at: Date;
 }
