@@ -7,11 +7,16 @@ export const loginSchema = z.object({
     password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
-export const registerSchema = z
-    .object({
-        name: z.string().min(2, 'Name must be at least 2 characters'),
-        email: z.string().email('Invalid email address'),
-        password: z.string().min(8, 'Password must be at least 8 characters'),
+// For Service Level (Account Creation)
+export const accountSchema = z.object({
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+});
+
+// For UI Level (Registration Form)
+export const registerSchema = accountSchema
+    .extend({
         confirmPassword: z.string(),
         role: z.enum(['student', 'teacher', 'admin']),
     })

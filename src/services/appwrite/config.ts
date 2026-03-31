@@ -6,6 +6,9 @@ export const appwriteConfig = {
     databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID,
     storageId: import.meta.env.VITE_APPWRITE_STORAGE_ID,
 
+    // ── Deployment & Integration ──
+    baseUrl: import.meta.env.VITE_APP_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : ''),
+
     // ── Collections ──
     usersCollectionId: import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID,
     coursesCollectionId: import.meta.env.VITE_APPWRITE_COURSES_COLLECTION_ID,

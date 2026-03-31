@@ -46,26 +46,30 @@ export type DeviceType =
 
 export interface IAccount {
     $id: string;
-    $createdAt: string;
-    $updatedAt: string;
+    $createdAt: string; // ISO String
+    $updatedAt: string; // ISO String
     name: string;
     email: string;
+    password: string;
     emailVerification: boolean;
     phone: string;
     phoneVerification: boolean;
     status: boolean;
+    labels: string[];
     prefs: Record<string, unknown>;
 }
 
 export interface IUser {
     $id: string;
+    $createdAt: string; // ISO String
+    $updatedAt: string; // ISO String
     name: string;
     email: string;
     role: UserRole;
     avatar_url?: string;
-    created_at: Date;
-    updated_at: Date;
+    bio?: string;
 }
+
 
 export interface ICourse {
     $id: string;

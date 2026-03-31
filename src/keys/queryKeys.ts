@@ -2,6 +2,9 @@ export const queryKeys = {
     auth: {
         session: ['auth', 'session'] as const,
     },
+    users: {
+        current: ['users', 'current'] as const,
+    },
     courses: {
         all: ['courses'] as const,
         list: (filters: Record<string, unknown>) =>
