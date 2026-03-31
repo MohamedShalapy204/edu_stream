@@ -14,11 +14,19 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NotFound from './pages/errors/NotFound';
 import Unauthorized from './pages/errors/Unauthorized';
 
+// Phase 4: Course Management
+import CoursesPage from './pages/courses/CoursesPage';
+import CourseDetailPage from './pages/courses/CourseDetailPage';
+
 function App() {
   return (
     <Routes>
       {/* ── Public Routes ── */}
-      <Route path="/" element={<Home />} />
+      <Route element={<MainLayout isPublic />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/courses/:id" element={<CourseDetailPage />} />
+      </Route>
 
       {/* ── Guest Routes (Only logged out users) ── */}
       <Route path="/login" element={
@@ -38,18 +46,12 @@ function App() {
 
         {/* ── Role-Specific Routes (TEACHER) ── */}
         <Route element={<RoleGuard allowedRoles={[UserRole.TEACHER]} />}>
-          {/* 
-              Example: 
-              <Route path="/courses/create" element={<CreateCourse />} /> 
-            */}
+          <Route path="/courses/create" element={<div>Create Course Page Placeholder</div>} />
         </Route>
 
         {/* ── Role-Specific Routes (ADMIN) ── */}
         <Route element={<RoleGuard allowedRoles={[UserRole.ADMIN]} />}>
-          {/* 
-              Example: 
-              <Route path="/admin" element={<AdminDashboard />} /> 
-            */}
+          <Route path="/admin" element={<div>Admin Dashboard Placeholder</div>} />
         </Route>
       </Route>
 

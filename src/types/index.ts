@@ -42,15 +42,26 @@ export const DeviceType = {
 export type DeviceType =
     (typeof DeviceType)[keyof typeof DeviceType];
 
+// ── Base Interface ──
+
+export interface IAppwriteDoc {
+    $id: string;
+    $collectionId: string;
+    $databaseId: string;
+    $createdAt: string;
+    $updatedAt: string;
+    $permissions: string[];
+    $sequence: number;
+}
+
 // ── Interfaces ──
 
 export interface IAccount {
     $id: string;
-    $createdAt: string; // ISO String
-    $updatedAt: string; // ISO String
+    $createdAt: string;
+    $updatedAt: string;
     name: string;
     email: string;
-    password: string;
     emailVerification: boolean;
     phone: string;
     phoneVerification: boolean;
@@ -59,10 +70,7 @@ export interface IAccount {
     prefs: Record<string, unknown>;
 }
 
-export interface IUser {
-    $id: string;
-    $createdAt: string; // ISO String
-    $updatedAt: string; // ISO String
+export interface IUser extends IAppwriteDoc {
     name: string;
     email: string;
     role: UserRole;
@@ -70,98 +78,74 @@ export interface IUser {
     bio?: string;
 }
 
-
-export interface ICourse {
-    $id: string;
+export interface ICourse extends IAppwriteDoc {
     title: string;
     description?: string;
     price: number;
     teacher_id: string;
-    thumbnail_url?: string;
+    thumbnail_id?: string; // Appwrite Storage ID
     is_published: boolean;
     categories?: string[];
     rating?: number;
     total_students?: number;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export interface ISection {
-    $id: string;
+export interface ISection extends IAppwriteDoc {
     course_id: string;
     title: string;
     order?: number;
     description?: string;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export interface ILesson {
-    $id: string;
+export interface ILesson extends IAppwriteDoc {
     section_id: string;
     title: string;
     content_type: ContentType;
-    file_url: string;
-    duration?: number;
+    video_url?: string; // For YouTube/Vimeo embeds (Free Plan friendly)
+    file_id?: string;   // For Appwrite Storage (PDFs, small assets)
+    duration?: number;  // in seconds
     order?: number;
     description?: string;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export interface ISubscription {
-    $id: string;
+export interface ISubscription extends IAppwriteDoc {
     user_id: string;
     course_id: string;
     status: SubscriptionStatus;
-    start_date: Date;
-    end_date: Date;
-    created_at: Date;
-    updated_at: Date;
-    stripeSubscriptionId?: string;
+    start_date: string;
+    end_date: string;
+    stripe_subscription_id?: string;
 }
 
-export interface IPayment {
-    $id: string;
+export interface IPayment extends IAppwriteDoc {
     user_id: string;
     course_id: string;
     amount: number;
     currency: string;
     payment_status: PaymentStatus;
     stripe_payment_id: string;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export interface IReview {
-    $id: string;
+export interface IReview extends IAppwriteDoc {
     user_id: string;
     course_id: string;
-    rating: number;
+    rating: number; // 1-5
     comment: string;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export interface INotification {
-    $id: string;
+export interface INotification extends IAppwriteDoc {
     user_id: string;
     title: string;
     message: string;
     is_read: boolean;
-    created_at: Date;
-    updated_at: Date;
 }
 
-export interface IContentAccess {
-    $id: string;
+export interface IContentAccess extends IAppwriteDoc {
     user_id: string;
     course_id: string;
     device_id: string;
-    last_access_time?: Date;
     device_name: string;
     device_type: DeviceType;
+    last_access_time?: string;
     ip_address?: string;
-    created_at: Date;
-    updated_at: Date;
 }

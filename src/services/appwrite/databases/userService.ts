@@ -1,6 +1,6 @@
 import { AppwriteException } from 'appwrite';
 import { databases, appwriteConfig } from '../config';
-import type { IUser, UserRole } from '../../../types';
+import type { IUser, UserRole, IAppwriteDoc } from '../../../types';
 
 
 
@@ -62,7 +62,7 @@ export async function getUserDoc(userId: string): Promise<IUser> {
 
 export async function updateUserDoc(
     userId: string,
-    data: Partial<Omit<IUser, '$id' | '$createdAt' | '$updatedAt'>>,
+    data: Partial<Omit<IUser, keyof IAppwriteDoc>>,
 ): Promise<IUser> {
     try {
         const userDoc = await databases.updateDocument(
