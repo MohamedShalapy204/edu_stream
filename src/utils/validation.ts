@@ -28,9 +28,11 @@ export const registerSchema = accountSchema
 // ── Course Schemas ──
 
 export const courseSchema = z.object({
-    title: z.string().min(3, 'Title must be at least 3 characters'),
-    description: z.string().min(10, 'Description must be at least 10 characters'),
-    price: z.number().min(0, 'Price cannot be negative'),
+    title: z.string().min(5, 'Title must be at least 5 characters'),
+    description: z.string(),
+    price: z.number().min(0, 'Price must be positive'),
+    categories: z.array(z.string()),
+    is_published: z.boolean(),
 });
 
 export const sectionSchema = z.object({

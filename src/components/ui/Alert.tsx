@@ -5,9 +5,10 @@ interface AlertProps {
     type?: 'info' | 'success' | 'warning' | 'error';
     message: string;
     onClose?: () => void;
+    className?: string; // Support custom spacing or placement
 }
 
-const Alert: React.FC<AlertProps> = ({ type = 'info', message, onClose }) => {
+const Alert: React.FC<AlertProps> = ({ type = 'info', message, onClose, className = '' }) => {
     const configs = {
         info: {
             bg: 'bg-blue-50 border-blue-200',
@@ -37,11 +38,12 @@ const Alert: React.FC<AlertProps> = ({ type = 'info', message, onClose }) => {
         <div className={`
             flex p-4 mb-4 text-sm rounded-xl border animate-in slide-in-from-top-1 fade-in duration-200
             ${config.bg} ${config.text}
+            ${className}
         `}>
             <div className="shrink-0 mr-3 mt-0.5">
                 {config.icon}
             </div>
-            <div className="grow font-medium leading-relaxed">
+            <div className="grow font-medium leading-relaxed text-left">
                 {message}
             </div>
             {onClose && (

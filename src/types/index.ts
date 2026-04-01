@@ -88,6 +88,7 @@ export interface ICourse extends IAppwriteDoc {
     categories?: string[];
     rating?: number;
     total_students?: number;
+    duration?: number;
 }
 
 export interface ISection extends IAppwriteDoc {

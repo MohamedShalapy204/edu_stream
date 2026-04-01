@@ -3,8 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useGetCourseById } from '../../hooks/useCourses';
 import { useGetSections } from '../../hooks/useSections';
 import { useGetLessons } from '../../hooks/useLessons';
+import { useCurrentAccount } from '../../hooks/useAuth';
 import { storageService } from '../../services/appwrite/storage/storageService';
-import { LessonPlayer } from '../../components/courses/LessonPlayer';
 import {
     ChevronLeft,
     Clock,
@@ -20,6 +20,7 @@ import {
 
 const CourseDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
+    const { data: account } = useCurrentAccount();
 
     // ── Data Fetching ──
     const { data: course, isLoading: courseLoading } = useGetCourseById(id!);
@@ -40,7 +41,7 @@ const CourseDetailPage: React.FC = () => {
         );
     }
 
-    if (!course) {
+    if (!course || (!course.is_published && course.teacher_id !== account?.$id)) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
                 <h2 className="text-2xl font-black text-slate-900">Course Not Found</h2>
@@ -99,7 +100,7 @@ const CourseDetailPage: React.FC = () => {
                             </div>
                             <div>
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Duration</p>
-                                <p className="text-sm font-bold text-slate-800">12h 45m</p>
+                                <p className="text-sm font-bold text-slate-800">{Math.round(course.duration ? course.duration / 60 : 0)} hours</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">

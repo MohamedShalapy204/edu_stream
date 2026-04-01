@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AppwriteException } from 'appwrite';
 import { queryKeys } from '../keys/queryKeys';
 import * as userService from '../services/appwrite/databases/userService';
+import { useCurrentAccount } from './useAuth';
 
 export function useUser(userId: string) {
     return useQuery({
@@ -19,4 +20,9 @@ export function useUser(userId: string) {
         enabled: !!userId,
         staleTime: 1000 * 60 * 60,
     });
+}
+
+export function useCurrentUser() {
+    const { data: account } = useCurrentAccount();
+    return useUser(account?.$id || '');
 }

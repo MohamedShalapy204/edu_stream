@@ -1,8 +1,10 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { useLogout, useCurrentAccount } from '../hooks/useAuth';
+import { useCurrentUser } from '../hooks/useUser';
 import Button from '../components/ui/Button';
-import { HiOutlineLogout } from 'react-icons/hi';
+import { HiOutlineLogout, HiCube } from 'react-icons/hi';
 import { LogIn } from 'lucide-react';
+import { UserRole } from '../types';
 
 interface MainLayoutProps {
     isPublic?: boolean;
@@ -11,6 +13,7 @@ interface MainLayoutProps {
 export default function MainLayout({ isPublic = false }: MainLayoutProps) {
     const navigate = useNavigate();
     const { data: account } = useCurrentAccount();
+    const { data: profile } = useCurrentUser();
     const { mutate: logout, isPending } = useLogout();
 
     const handleLogout = () => {
@@ -34,7 +37,12 @@ export default function MainLayout({ isPublic = false }: MainLayoutProps) {
 
                     <nav className="hidden md:flex items-center gap-8 mr-auto ml-12">
                         <Link to="/courses" className="text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">Courses</Link>
-                        <Link to="/" className="text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">About</Link>
+                        {profile?.role === UserRole.TEACHER && (
+                            <Link to="/teacher/dashboard" className="flex items-center gap-2 text-sm font-black text-blue-600 hover:text-blue-700 transition-colors">
+                                <HiCube className="w-4 h-4" />
+                                Teacher Dashboard
+                            </Link>
+                        )}
                     </nav>
 
                     <div className="flex items-center space-x-4">

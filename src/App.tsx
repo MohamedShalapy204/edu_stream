@@ -17,6 +17,8 @@ import Unauthorized from './pages/errors/Unauthorized';
 // Phase 4: Course Management
 import CoursesPage from './pages/courses/CoursesPage';
 import CourseDetailPage from './pages/courses/CourseDetailPage';
+import TeacherDashboard from './pages/teacher/TeacherDashboard';
+import ManageCoursePage from './pages/teacher/ManageCoursePage';
 
 function App() {
   return (
@@ -46,7 +48,9 @@ function App() {
 
         {/* ── Role-Specific Routes (TEACHER) ── */}
         <Route element={<RoleGuard allowedRoles={[UserRole.TEACHER]} />}>
-          <Route path="/courses/create" element={<div>Create Course Page Placeholder</div>} />
+          <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+          <Route path="/teacher/courses/new" element={<ManageCoursePage />} />
+          <Route path="/teacher/courses/:id" element={<ManageCoursePage />} />
         </Route>
 
         {/* ── Role-Specific Routes (ADMIN) ── */}

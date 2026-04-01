@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Query } from 'appwrite';
 import { queryKeys } from '../keys/queryKeys';
 import { courseService } from '../services/appwrite/databases/courseService';
 import type { ICourse } from '../types';
@@ -6,10 +7,10 @@ import type { ICourse } from '../types';
 /**
  * Hook to fetch all published courses.
  */
-export function useGetCourses(queries?: string[]) {
+export function useGetCourses(queries: string[] = []) {
     return useQuery({
         queryKey: queryKeys.courses.list({ queries }),
-        queryFn: () => courseService.listCourses(queries),
+        queryFn: () => courseService.listCourses([...queries, Query.equal('is_published', true)]),
     });
 }
 
