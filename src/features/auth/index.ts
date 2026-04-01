@@ -4,3 +4,4 @@ export * from './components/AuthGuard';
 export * from './components/RoleGuard';
 export * from './components/PermissionGuard';
 export * from './routes';
+export * from './types';

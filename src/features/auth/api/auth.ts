@@ -1,6 +1,6 @@
 import { ID, AppwriteException } from 'appwrite';
 import { account, appwriteConfig } from '@/services/appwrite/config';
-import type { IAccount } from '@/types';
+import type { IAccount } from '../types';
 
 /**
  * Creates a new Appwrite Account.

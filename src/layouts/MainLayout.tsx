@@ -4,7 +4,7 @@ import { useCurrentUser } from '@/hooks/useUser';
 import Button from '@/components/ui/Button';
 import { HiOutlineLogout, HiCube } from 'react-icons/hi';
 import { LogIn } from 'lucide-react';
-import { UserRole } from '@/types';
+import { UserRole } from '@/features/auth';
 
 interface MainLayoutProps {
     isPublic?: boolean;

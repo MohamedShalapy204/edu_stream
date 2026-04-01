@@ -1,6 +1,7 @@
 import { AppwriteException } from 'appwrite';
 import { databases, appwriteConfig } from '../config';
-import type { IUser, UserRole, IAppwriteDoc } from '../../../types';
+import type { IUser, UserRole } from '@/features/auth';
+import type { IAppwriteDoc } from '@/types';
 
 
 
