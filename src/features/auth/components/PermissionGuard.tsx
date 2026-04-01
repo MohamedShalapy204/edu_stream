@@ -1,7 +1,7 @@
 import React from 'react';
-import { useCurrentAccount } from '../../hooks/useAuth';
-import { useUser } from '../../hooks/useUser';
-import { UserRole } from '../../types';
+import { useCurrentAccount } from '../hooks/useAuth';
+import { useUser } from '@/hooks/useUser';
+import { UserRole } from '@/types';
 
 interface PermissionGuardProps {
     /**

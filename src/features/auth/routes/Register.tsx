@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
 import { HiMail, HiLockClosed, HiUser, HiArrowRight, HiAcademicCap, HiTranslate } from 'react-icons/hi';
-import { registerSchema, type RegisterInput } from '../../utils/validation';
-import { useRegister } from '../../hooks/useAuth';
-import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
-import Alert from '../../components/ui/Alert';
+import { registerSchema, type RegisterInput } from '@/utils/validation';
+import { useRegister } from '@/features/auth';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Alert from '@/components/ui/Alert';
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate();

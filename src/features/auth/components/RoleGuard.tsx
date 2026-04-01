@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useCurrentAccount } from '../../hooks/useAuth';
-import { useUser } from '../../hooks/useUser';
-import type { UserRole } from '../../types';
+import { useCurrentAccount } from '../hooks/useAuth';
+import { useUser } from '@/hooks/useUser';
+import type { UserRole } from '@/types';
 
 interface RoleGuardProps extends PropsWithChildren {
     allowedRoles: UserRole[];

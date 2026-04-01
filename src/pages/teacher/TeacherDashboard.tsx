@@ -1,10 +1,10 @@
 import React from 'react';
 import { HiPlus, HiAcademicCap, HiCube, HiChartBar, HiPencil, HiExternalLink } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-import { useGetTeacherCourses } from '../../hooks/useCourses';
-import { useCurrentAccount } from '../../hooks/useAuth';
-import Button from '../../components/ui/Button';
-import Alert from '../../components/ui/Alert';
+import { useGetTeacherCourses } from '@/hooks/useCourses';
+import { useCurrentAccount } from '@/features/auth';
+import Button from '@/components/ui/Button';
+import Alert from '@/components/ui/Alert';
 
 const TeacherDashboard: React.FC = () => {
     const { data: account } = useCurrentAccount();

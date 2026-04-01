@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HiArrowLeft, HiSparkles } from 'react-icons/hi';
-import Button from '../../components/ui/Button';
-import CourseForm from '../../components/courses/CourseForm';
-import { useCreateCourse, useUpdateCourse, useGetCourseById } from '../../hooks/useCourses';
-import { useCurrentAccount } from '../../hooks/useAuth';
-import Alert from '../../components/ui/Alert';
-import { type CourseInput } from '../../utils/validation';
+import Button from '@/components/ui/Button';
+import CourseForm from '@/components/courses/CourseForm';
+import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/hooks/useCourses';
+import { useCurrentAccount } from '@/features/auth';
+import Alert from '@/components/ui/Alert';
+import { type CourseInput } from '@/utils/validation';
 
 const ManageCoursePage: React.FC = () => {
     const { id } = useParams();

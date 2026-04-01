@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useCurrentAccount } from '../../hooks/useAuth';
+import { useCurrentAccount } from '../hooks/useAuth';
 
 /**
  * 🛡️ AuthGuard (The Bouncer)

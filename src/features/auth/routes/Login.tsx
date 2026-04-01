@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { HiMail, HiLockClosed, HiArrowRight } from 'react-icons/hi';
-import { loginSchema, type LoginInput } from '../../utils/validation';
-import { useLogin } from '../../hooks/useAuth';
-import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
-import Alert from '../../components/ui/Alert';
+import { loginSchema, type LoginInput } from '@/utils/validation';
+import { useLogin } from '@/features/auth';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import Alert from '@/components/ui/Alert';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();

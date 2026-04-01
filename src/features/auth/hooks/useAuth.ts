@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AppwriteException } from 'appwrite';
-import { queryKeys } from '../keys/queryKeys';
-import * as authService from '../services/appwrite/auth/authService';
-import { avatars } from '../services/appwrite/config';
-import * as userService from '../services/appwrite/databases/userService';
-import type { LoginInput, RegisterInput } from '../utils/validation';
+import { queryKeys } from '@/keys/queryKeys';
+import * as authService from '../api/auth';
+import { avatars } from '@/services/appwrite/config';
+import * as userService from '@/services/appwrite/databases/userService';
+import type { LoginInput, RegisterInput } from '@/utils/validation';
 
 export function useCurrentAccount() {
     return useQuery({

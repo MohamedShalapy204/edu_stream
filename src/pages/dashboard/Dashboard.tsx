@@ -1,4 +1,4 @@
-import { useCurrentAccount } from '../../hooks/useAuth';
+import { useCurrentAccount } from '@/features/auth';
 
 export default function Dashboard() {
     const { data: account } = useCurrentAccount();

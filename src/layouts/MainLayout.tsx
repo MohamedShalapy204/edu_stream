@@ -1,10 +1,10 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
-import { useLogout, useCurrentAccount } from '../hooks/useAuth';
-import { useCurrentUser } from '../hooks/useUser';
-import Button from '../components/ui/Button';
+import { useLogout, useCurrentAccount } from '@/features/auth';
+import { useCurrentUser } from '@/hooks/useUser';
+import Button from '@/components/ui/Button';
 import { HiOutlineLogout, HiCube } from 'react-icons/hi';
 import { LogIn } from 'lucide-react';
-import { UserRole } from '../types';
+import { UserRole } from '@/types';
 
 interface MainLayoutProps {
     isPublic?: boolean;

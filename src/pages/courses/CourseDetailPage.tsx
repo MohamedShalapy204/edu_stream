@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useGetCourseById } from '../../hooks/useCourses';
-import { useGetSections } from '../../hooks/useSections';
-import { useGetLessons } from '../../hooks/useLessons';
-import { useCurrentAccount } from '../../hooks/useAuth';
-import { storageService } from '../../services/appwrite/storage/storageService';
+import { useGetCourseById } from '@/hooks/useCourses';
+import { useGetSections } from '@/hooks/useSections';
+import { useGetLessons } from '@/hooks/useLessons';
+import { useCurrentAccount } from '@/features/auth';
+import { storageService } from '@/services/appwrite/storage/storageService';
 import {
     ChevronLeft,
     Clock,
