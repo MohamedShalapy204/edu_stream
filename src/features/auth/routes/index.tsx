@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { GuestGuard } from '../components/AuthGuard';
 import Login from './Login';
 import Register from './Register';
@@ -24,7 +24,6 @@ export const AuthRoutes = () => {
                 }
             />
             <Route path="verify-email" element={<VerifyEmail />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
     );
 };

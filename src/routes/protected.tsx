@@ -1,6 +1,5 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { RoleGuard } from '@/features/auth';
-import { UserRole } from '@/types';
+import { Outlet } from 'react-router-dom';
+import { RoleGuard, UserRole } from '@/features/auth';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import TeacherDashboard from '@/pages/teacher/TeacherDashboard';
 import ManageCoursePage from '@/pages/teacher/ManageCoursePage';
@@ -29,7 +28,6 @@ export const protectedRoutes = [
                     { path: '', element: <div>Admin Dashboard Placeholder</div> },
                 ]
             },
-            { path: '*', element: <Navigate to="/dashboard" replace /> },
         ],
     },
 ];
