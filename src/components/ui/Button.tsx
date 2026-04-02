@@ -28,11 +28,11 @@ const Button = forwardRef(<T extends ElementType = 'button'>(
     const Component: ElementType = as || 'button';
 
     const variants = {
-        primary: 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:bg-blue-400',
-        secondary: 'bg-slate-900 text-white hover:bg-slate-800 shadow-sm disabled:bg-slate-700',
-        outline: 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 disabled:opacity-50',
-        danger: 'bg-rose-500 text-white hover:bg-rose-600 shadow-sm disabled:bg-rose-400',
-        ghost: 'bg-transparent text-slate-600 hover:bg-slate-100 disabled:opacity-50'
+        primary: 'bg-[#4e45e4] text-white hover:bg-[#3d36b8] shadow-lg shadow-[#4e45e4]/20 active:shadow-none active:scale-95',
+        secondary: 'bg-[#f1f4f8] text-[#2d3338] hover:bg-[#e8ecf1] active:bg-[#e0e7ff] active:text-[#4e45e4] active:scale-95',
+        outline: 'bg-white text-[#2d3338] shadow-[0_4px_16px_rgba(0,0,0,0.02)] border border-[#f1f4f8] hover:border-[#4e45e4]/20 hover:text-[#4e45e4] active:scale-95',
+        danger: 'bg-rose-50 text-rose-600 hover:bg-rose-100/80 active:bg-rose-200 active:scale-95',
+        ghost: 'bg-transparent text-[#adb3b8] hover:text-[#4e45e4] hover:bg-[#4e45e4]/5 active:bg-[#4e45e4]/10 active:scale-95'
     };
 
     const activeVariant = variants[variant];
@@ -42,23 +42,22 @@ const Button = forwardRef(<T extends ElementType = 'button'>(
             ref={ref}
             disabled={disabled || isLoading}
             className={`
-                inline-flex items-center justify-center rounded-xl px-5 py-2.5 
-                text-sm font-semibold transition-all duration-200 
-                focus:outline-none focus:ring-2 focus:ring-blue-500/20 active:scale-95
+                inline-flex items-center justify-center rounded-2xl h-12 px-6
+                text-xs font-black uppercase tracking-widest text-center
+                transition-all duration-300 select-none
+                focus:outline-none focus:ring-4 focus:ring-[#4e45e4]/5
+                disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none
                 ${activeVariant}
                 ${className}
             `}
             {...props}
         >
             {isLoading && (
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
             )}
-            {!isLoading && leftIcon && <span className="mr-2">{leftIcon}</span>}
-            {children}
-            {!isLoading && rightIcon && <span className="ml-2">{rightIcon}</span>}
+            {!isLoading && leftIcon && <div className="mr-2.5 transition-transform group-hover:-translate-x-0.5">{leftIcon}</div>}
+            <span>{children}</span>
+            {!isLoading && rightIcon && <div className="ml-2.5 transition-transform group-hover:translate-x-0.5">{rightIcon}</div>}
         </Component>
     );
 });
