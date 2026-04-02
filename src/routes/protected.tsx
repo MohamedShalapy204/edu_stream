@@ -24,6 +24,7 @@ export const protectedRoutes = [
             {
                 path: 'admin',
                 element: <RoleGuard allowedRoles={[UserRole.ADMIN]}><Outlet /></RoleGuard>,
+                // TODO: Add admin routes
                 children: [
                     { path: '', element: <div>Admin Dashboard Placeholder</div> },
                 ]

@@ -9,6 +9,7 @@ import {
     HiOutlineEye,
     HiOutlineEyeSlash,
     HiArrowRight,
+    HiOutlineCheckCircle,
 } from 'react-icons/hi2';
 import { useLogin, loginSchema, type LoginInput } from '@/features/auth';
 
@@ -182,6 +183,17 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <AnimatePresence mode="wait">
+                        {location.state?.message && !authError && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0, y: -10 }}
+                                animate={{ opacity: 1, height: "auto", y: 0 }}
+                                exit={{ opacity: 0, height: 0, y: -10 }}
+                                className="alert alert-success rounded-3xl border-none bg-primary/10 text-primary flex items-center gap-4 p-4 shadow-sm overflow-hidden"
+                            >
+                                <HiOutlineCheckCircle className="w-5 h-5 shrink-0" />
+                                <span className="font-bold text-xs uppercase tracking-tight">{location.state.message}</span>
+                            </motion.div>
+                        )}
                         {authError && (
                             <motion.div
                                 initial={{ opacity: 0, height: 0, y: -10 }}

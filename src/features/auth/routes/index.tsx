@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { GuestGuard } from '../components/AuthGuard';
 import Login from './Login';
 import Register from './Register';
+import VerifyEmail from './VerifyEmail';
 
 export const AuthRoutes = () => {
     return (
@@ -22,7 +23,8 @@ export const AuthRoutes = () => {
                     </GuestGuard>
                 }
             />
-            <Route path="*" element={<Navigate to="login" replace />} />
+            <Route path="verify-email" element={<VerifyEmail />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
     );
 };

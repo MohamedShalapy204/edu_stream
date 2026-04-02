@@ -7,15 +7,17 @@ import {
     HiOutlineEnvelope,
     HiOutlineLockClosed,
     HiOutlineUser,
-    HiCheckCircle,
     HiOutlineArrowRight,
     HiOutlineChevronRight,
+    HiCheckCircle,
 } from 'react-icons/hi2';
-import { useRegister, UserRole, registerSchema, type RegisterInput } from '@/features/auth';
+import { useRegister, UserRole, registerSchema, type RegisterInput, useSendEmailVerification } from '@/features/auth';
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
-    const { mutate: registerUser, isPending, reset } = useRegister();
+    const { mutate: registerUser, isPending: isRegistering, reset: resetRegister } = useRegister();
+    const { mutate: sendVerification } = useSendEmailVerification();
+
     const [authError, setAuthError] = useState<string | null>(null);
 
     const {
@@ -30,9 +32,18 @@ const RegisterPage: React.FC = () => {
 
     const onSubmit = (data: RegisterInput) => {
         setAuthError(null);
-        reset();
+        resetRegister();
         registerUser(data, {
-            onSuccess: () => navigate('/login'),
+            onSuccess: () => {
+                sendVerification(undefined, {
+                    onSuccess: () => navigate('/login', {
+                        state: { message: 'A verification link has been sent to your email. Please verify to access the Atheneum.' }
+                    }),
+                    onError: () => navigate('/login', {
+                        state: { message: 'Registration successful! However, we couldn\'t send a verification link. Please sign in and request a new one.' }
+                    })
+                });
+            },
             onError: (err: Error) => setAuthError(err.message || 'Registration failed. Please try again.'),
         });
     };
@@ -58,6 +69,7 @@ const RegisterPage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex bg-base-100 text-base-content selection:bg-primary/20 overflow-x-hidden">
+
 
             {/* ── LEFT: Form Section ──────────────────────────────────────── */}
             <main className="flex-1 flex flex-col items-center justify-center px-10 py-16 lg:px-24 overflow-y-auto">
@@ -176,10 +188,10 @@ const RegisterPage: React.FC = () => {
                         <motion.div variants={itemVariants} className="pt-8">
                             <button
                                 type="submit"
-                                disabled={isPending}
+                                disabled={isRegistering}
                                 className="btn btn-primary w-full h-16 rounded-4xl font-black text-xs uppercase tracking-[0.3em] shadow-premium hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group no-animation border-none"
                             >
-                                {isPending ? <span className="loading loading-spinner" /> : <>Finalize Enrollment <HiOutlineArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" /></>}
+                                {isRegistering ? <span className="loading loading-spinner" /> : <>Finalize Enrollment <HiOutlineArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" /></>}
                             </button>
                         </motion.div>
                     </form>
