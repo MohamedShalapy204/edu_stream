@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import {
     HiOutlineEnvelope,
     HiOutlineLockClosed,
@@ -50,38 +51,80 @@ const LoginPage: React.FC = () => {
                 aria-hidden="true"
             >
                 {/* Decorative Ambient Glows */}
-                <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full opacity-20 pointer-events-none blur-3xl"
-                    style={{ background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)' }} />
-                <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full opacity-10 pointer-events-none blur-3xl"
-                    style={{ background: 'radial-gradient(circle, var(--color-secondary) 0%, transparent 70%)' }} />
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 0.2, scale: 1 }}
+                    transition={{ duration: 2, ease: "easeOut" }}
+                    className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full pointer-events-none blur-3xl"
+                    style={{ background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)' }}
+                />
+                <motion.div
+                    initial={{ opacity: 0, scale: 1.2 }}
+                    animate={{ opacity: 0.1, scale: 1 }}
+                    transition={{ duration: 2.5, ease: "easeOut" }}
+                    className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none blur-3xl"
+                    style={{ background: 'radial-gradient(circle, var(--color-secondary) 0%, transparent 70%)' }}
+                />
 
-                <div className="relative z-10 flex items-center gap-3">
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, ease: "circOut" }}
+                    className="relative z-10 flex items-center gap-3"
+                >
                     <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-primary-content text-lg font-black bg-primary shadow-premium">
                         EDU
                     </div>
                     <span className="font-heading text-xl font-bold tracking-tight">stream</span>
-                </div>
+                </motion.div>
 
                 <div className="relative z-10 space-y-8">
-                    <div className="text-primary text-[10px] tracking-[0.25em] uppercase font-black opacity-80 decoration-primary/30 underline underline-offset-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 0.8, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.6 }}
+                        className="text-primary text-[10px] tracking-[0.25em] uppercase font-black decoration-primary/30 underline underline-offset-8"
+                    >
                         The Digital Curator
-                    </div>
-                    <h1 className="text-7xl font-heading font-black leading-none tracking-tight text-base-content">
+                    </motion.div>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.8, ease: "circOut" }}
+                        className="text-7xl font-heading font-black leading-none tracking-tight text-base-content"
+                    >
                         Knowledge,<br />
                         <span className="text-primary italic font-medium">curated</span><br />
                         for you.
-                    </h1>
-                    <p className="text-base-content/60 text-xl leading-relaxed max-w-sm font-medium">
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 0.6, y: 0 }}
+                        transition={{ delay: 0.6, duration: 0.8 }}
+                        className="text-base-content text-xl leading-relaxed max-w-sm font-medium"
+                    >
                         Access world-class courses designed for the modern scholar. A library of intelligence at your fingertips.
-                    </p>
+                    </motion.p>
                 </div>
 
                 {/* 42k Learners Glass Card */}
-                <div className="relative z-10 max-w-xs glass rounded-3xl p-8 border-none ring-1 ring-white/20">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 1, type: "spring", bounce: 0.3 }}
+                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                    className="relative z-10 max-w-xs glass rounded-3xl p-8 border-none ring-1 ring-white/20 shadow-premium cursor-default"
+                >
                     <div className="flex items-center gap-4 mb-6">
                         <div className="flex -space-x-3">
                             {[1, 2, 3].map((i) => (
-                                <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-base-200 shadow-sm" />
+                                <motion.div
+                                    key={i}
+                                    initial={{ x: -10, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: 1 + (i * 0.1) }}
+                                    className="w-10 h-10 rounded-full border-2 border-white bg-base-200 shadow-sm"
+                                />
                             ))}
                             <div className="w-10 h-10 rounded-full border-2 border-white bg-primary flex items-center justify-center text-[10px] text-primary-content font-black">+</div>
                         </div>
@@ -98,7 +141,7 @@ const LoginPage: React.FC = () => {
                         ))}
                         <span className="text-xs font-black ml-2 tabular-nums">4.9 / 5.0</span>
                     </div>
-                </div>
+                </motion.div>
             </aside>
 
             {/* ── RIGHT: Form Panel ──────────────────────────────────────── */}
@@ -112,24 +155,55 @@ const LoginPage: React.FC = () => {
                     <span className="font-heading text-xl font-bold tracking-tight">stream</span>
                 </div>
 
-                <div className="w-full max-w-md space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "circOut" }}
+                    className="w-full max-w-md space-y-12"
+                >
 
                     <div className="text-center lg:text-left space-y-3">
-                        <h2 className="text-5xl font-heading font-black tracking-tight text-base-content leading-tight">Welcome back</h2>
-                        <p className="text-lg text-base-content/50 font-medium">Continue your journey into curated knowledge.</p>
+                        <motion.h2
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2, duration: 0.6 }}
+                            className="text-5xl font-heading font-black tracking-tight text-base-content leading-tight"
+                        >
+                            Welcome back
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 0.5, x: 0 }}
+                            transition={{ delay: 0.3, duration: 0.6 }}
+                            className="text-lg text-base-content font-medium"
+                        >
+                            Continue your journey into curated knowledge.
+                        </motion.p>
                     </div>
 
-                    {authError && (
-                        <div className="alert alert-error rounded-3xl border-none bg-error/10 text-error flex items-center gap-4 p-4 shadow-sm">
-                            <span className="font-black text-xs uppercase tracking-widest">{authError}</span>
-                        </div>
-                    )}
+                    <AnimatePresence mode="wait">
+                        {authError && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0, y: -10 }}
+                                animate={{ opacity: 1, height: "auto", y: 0 }}
+                                exit={{ opacity: 0, height: 0, y: -10 }}
+                                className="alert alert-error rounded-3xl border-none bg-error/10 text-error flex items-center gap-4 p-4 shadow-sm overflow-hidden"
+                            >
+                                <span className="font-black text-xs uppercase tracking-widest">{authError}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
 
                         <div className="space-y-4">
                             {/* Email */}
-                            <div className="space-y-2">
+                            <motion.div
+                                initial={{ opacity: 0, y: 15 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4, duration: 0.5 }}
+                                className="space-y-2"
+                            >
                                 <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/40 ml-1">
                                     Email
                                 </label>
@@ -146,10 +220,15 @@ const LoginPage: React.FC = () => {
                                 {errors.email && (
                                     <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.email.message}</p>
                                 )}
-                            </div>
+                            </motion.div>
 
                             {/* Password */}
-                            <div className="space-y-2">
+                            <motion.div
+                                initial={{ opacity: 0, y: 15 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5, duration: 0.5 }}
+                                className="space-y-2"
+                            >
                                 <div className="flex justify-between items-center ml-1">
                                     <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/40">
                                         Password
@@ -181,10 +260,15 @@ const LoginPage: React.FC = () => {
                                 {errors.password && (
                                     <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.password.message}</p>
                                 )}
-                            </div>
+                            </motion.div>
                         </div>
 
-                        <div className="pt-6">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.7, duration: 0.6 }}
+                            className="pt-6"
+                        >
                             <button
                                 type="submit"
                                 disabled={isPending}
@@ -199,10 +283,15 @@ const LoginPage: React.FC = () => {
                                     </>
                                 )}
                             </button>
-                        </div>
+                        </motion.div>
                     </form>
 
-                    <div className="pt-4 text-center">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1, duration: 1 }}
+                        className="pt-4 text-center"
+                    >
                         <p className="text-sm font-bold text-base-content/30">
                             New to the Stream?{' '}
                             <Link
@@ -212,8 +301,8 @@ const LoginPage: React.FC = () => {
                                 Create an account free
                             </Link>
                         </p>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </main>
         </div>
     );
