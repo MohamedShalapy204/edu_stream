@@ -10,8 +10,7 @@ import {
     HiOutlineArrowRight,
     HiOutlineChevronRight,
 } from 'react-icons/hi2';
-import { registerSchema, type RegisterInput } from '@/utils/validation';
-import { useRegister, UserRole } from '@/features/auth';
+import { useRegister, UserRole, registerSchema, type RegisterInput } from '@/features/auth';
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
@@ -66,7 +65,7 @@ const RegisterPage: React.FC = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Name */}
                             <div className="space-y-3">
-                                <label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Full Identity</label>
+                                <label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Name</label>
                                 <div className="relative group">
                                     <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
                                     <input id="name" placeholder="John Doe" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('name')} />
@@ -118,14 +117,26 @@ const RegisterPage: React.FC = () => {
                             />
                         </div>
 
-                        {/* Password */}
-                        <div className="space-y-3">
-                            <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Secret Key</label>
-                            <div className="relative group">
-                                <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                                <input id="password" type="password" placeholder="••••••••" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('password')} />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {/* Password */}
+                            <div className="space-y-3">
+                                <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Secret Key</label>
+                                <div className="relative group">
+                                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                    <input id="password" type="password" placeholder="••••••••" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('password')} />
+                                </div>
+                                {errors.password && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.password.message}</p>}
                             </div>
-                            {errors.password && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.password.message}</p>}
+
+                            {/* Confirm Password */}
+                            <div className="space-y-3">
+                                <label htmlFor="confirmPassword" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Verify Key</label>
+                                <div className="relative group">
+                                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                    <input id="confirmPassword" type="password" placeholder="••••••••" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('confirmPassword')} />
+                                </div>
+                                {errors.confirmPassword && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.confirmPassword.message}</p>}
+                            </div>
                         </div>
 
                         <div className="pt-8">

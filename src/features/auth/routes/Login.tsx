@@ -9,8 +9,7 @@ import {
     HiOutlineEyeSlash,
     HiArrowRight,
 } from 'react-icons/hi2';
-import { loginSchema, type LoginInput } from '@/utils/validation';
-import { useLogin } from '@/features/auth';
+import { useLogin, loginSchema, type LoginInput } from '@/features/auth';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -57,17 +56,17 @@ const LoginPage: React.FC = () => {
                     style={{ background: 'radial-gradient(circle, var(--color-secondary) 0%, transparent 70%)' }} />
 
                 <div className="relative z-10 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-primary-content text-lg font-black bg-primary shadow-premium">
-                        E
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-primary-content text-lg font-black bg-primary shadow-premium">
+                        EDU
                     </div>
-                    <span className="font-heading text-xl font-bold tracking-tight">Atheneum</span>
+                    <span className="font-heading text-xl font-bold tracking-tight">stream</span>
                 </div>
 
                 <div className="relative z-10 space-y-8">
                     <div className="text-primary text-[10px] tracking-[0.25em] uppercase font-black opacity-80 decoration-primary/30 underline underline-offset-8">
                         The Digital Curator
                     </div>
-                    <h1 className="text-7xl font-heading font-black leading-[1.0] tracking-tight text-base-content">
+                    <h1 className="text-7xl font-heading font-black leading-none tracking-tight text-base-content">
                         Knowledge,<br />
                         <span className="text-primary italic font-medium">curated</span><br />
                         for you.
@@ -107,10 +106,10 @@ const LoginPage: React.FC = () => {
 
                 {/* Mobile Header */}
                 <div className="lg:hidden absolute top-12 flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-primary-content text-lg font-bold bg-primary shadow-premium">
-                        E
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center text-primary-content text-lg font-bold bg-primary shadow-premium">
+                        EDU
                     </div>
-                    <span className="font-heading text-xl font-bold tracking-tight">Atheneum</span>
+                    <span className="font-heading text-xl font-bold tracking-tight">stream</span>
                 </div>
 
                 <div className="w-full max-w-md space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
@@ -132,7 +131,7 @@ const LoginPage: React.FC = () => {
                             {/* Email */}
                             <div className="space-y-2">
                                 <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/40 ml-1">
-                                    Workspace Email
+                                    Email
                                 </label>
                                 <div className="relative group/field">
                                     <HiOutlineEnvelope className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within/field:text-primary transition-colors" />
@@ -153,13 +152,13 @@ const LoginPage: React.FC = () => {
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center ml-1">
                                     <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/40">
-                                        Cipher Key
+                                        Password
                                     </label>
                                     <Link
                                         to="/forgot-password"
                                         className="text-[10px] uppercase font-black tracking-widest text-primary hover:opacity-70 transition-opacity"
                                     >
-                                        Forgot Key?
+                                        Forgot Password?
                                     </Link>
                                 </div>
                                 <div className="relative group/field">
@@ -205,7 +204,7 @@ const LoginPage: React.FC = () => {
 
                     <div className="pt-4 text-center">
                         <p className="text-sm font-bold text-base-content/30">
-                            New to the Atheneum?{' '}
+                            New to the Stream?{' '}
                             <Link
                                 to="/register"
                                 className="text-primary hover:underline underline-offset-8 transition-all font-black decoration-2"
