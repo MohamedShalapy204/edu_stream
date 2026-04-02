@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HiArrowLeft, HiSparkles } from 'react-icons/hi2';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import CourseForm from '@/components/courses/CourseForm';
 import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/hooks/useCourses';
 import { useCurrentAccount } from '@/features/auth';
-import Alert from '@/components/ui/Alert';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { type CourseInput } from '@/utils/validation';
 
 const ManageCoursePage: React.FC = () => {
@@ -21,7 +21,7 @@ const ManageCoursePage: React.FC = () => {
     const handleSubmit = (data: CourseInput) => {
         if (isEditMode && id) {
             updateCourse(
-                { id, data },
+                { courseId: id, data },
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
         } else {
@@ -31,7 +31,7 @@ const ManageCoursePage: React.FC = () => {
                     teacher_id: account?.$id || '',
                     total_students: 0,
                     rating: 0,
-                } as any, // Fixed by previous NewDoc logic, but let's assume NewDoc is back
+                } as any,
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
         }
@@ -40,7 +40,7 @@ const ManageCoursePage: React.FC = () => {
     if (isEditMode && isLoadingCourse) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4e45e4]"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
         );
     }
@@ -52,23 +52,23 @@ const ManageCoursePage: React.FC = () => {
                 <Button
                     variant="ghost"
                     onClick={() => navigate(-1)}
-                    leftIcon={<HiArrowLeft className="w-5 h-5" />}
-                    className="text-[#adb3b8] font-bold hover:text-[#4e45e4] transition-colors"
+                    className="text-muted-foreground font-bold hover:text-primary transition-colors gap-2"
                 >
+                    <HiArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
                     Back to Dashboard
                 </Button>
 
-                <div className="flex items-center gap-2 bg-[#f1f4f8] text-[#4e45e4] px-4 py-2 rounded-2xl font-black text-[10px] uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2 bg-surface-100 text-primary px-4 py-2 rounded-2xl font-black text-[10px] uppercase tracking-[0.15em] transition-colors border border-primary/5">
                     <HiSparkles className="w-4 h-4" />
                     Teacher Mode
                 </div>
             </div>
 
             <div className="mb-10 text-center lg:text-left">
-                <h1 className="text-4xl font-extrabold text-[#1e1e1e] tracking-tight mb-3">
-                    {isEditMode ? 'Edit' : 'Create'} <span className="text-[#4e45e4]">Course</span>
+                <h1 className="text-4xl font-extrabold text-foreground tracking-tighter mb-3">
+                    {isEditMode ? 'Edit' : 'Create'} <span className="text-primary italic">Course</span>
                 </h1>
-                <p className="text-[#5a6065] text-lg font-medium">
+                <p className="text-muted-foreground text-lg font-medium leading-relaxed">
                     {isEditMode
                         ? 'Update your course details and curriculum.'
                         : 'Share your knowledge with the world by creating a new course.'}
@@ -78,23 +78,23 @@ const ManageCoursePage: React.FC = () => {
             {/* Error States */}
             {(fetchError) && (
                 <Alert
-                    type="error"
-                    message="Failed to load course details. Please try again."
-                    className="mb-8"
-                />
+                    variant="destructive"
+                    className="mb-8 rounded-3xl border-none shadow-sm bg-destructive/5"
+                >
+                    <AlertDescription className="font-bold text-sm tracking-tight">Failed to load course details. Please try again.</AlertDescription>
+                </Alert>
             )}
 
-            {/* Main Form Container: Premium depth, no borders */}
-            <div className="bg-white rounded-[2.5rem] shadow-[0_8px_40px_rgba(0,0,0,0.03)] p-8 lg:p-12 overflow-hidden relative group">
+            {/* Main Form Container: Premium depth, using shadcn primitives indirectly through CourseForm */}
+            <div className="bg-white dark:bg-surface-900 rounded-[2.5rem] shadow-[0_8px_40px_rgba(0,0,0,0.03)] p-8 lg:p-12 overflow-hidden relative group transition-colors duration-500">
                 {/* Decorative depth accent */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#f1f4f8] rounded-full translate-x-16 -translate-y-16 opacity-50 group-hover:bg-[#e0e7ff] transition-colors duration-700" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-surface-50 rounded-full translate-x-16 -translate-y-16 opacity-50 group-hover:bg-primary/5 transition-colors duration-1000" />
 
                 <div className="relative z-10">
                     <CourseForm
                         initialData={course as any}
                         onSubmit={handleSubmit}
                         isLoading={isCreating || isUpdating}
-                        isEditMode={isEditMode}
                     />
                 </div>
             </div>
