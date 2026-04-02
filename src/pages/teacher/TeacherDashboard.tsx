@@ -3,8 +3,6 @@ import { HiPlus, HiAcademicCap, HiCube, HiChartBar, HiOutlinePencil, HiOutlineAr
 import { Link } from 'react-router-dom';
 import { useGetTeacherCourses } from '@/hooks/useCourses';
 import { useCurrentAccount } from '@/features/auth';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const TeacherDashboard: React.FC = () => {
     const { data: account } = useCurrentAccount();
@@ -28,13 +26,13 @@ const TeacherDashboard: React.FC = () => {
                     </h1>
                     <p className="text-muted-foreground text-lg font-medium leading-relaxed">Manage your curriculum and track student progress.</p>
                 </div>
-                <Button
-                    className="h-14 px-8 shadow-xl shadow-primary/10 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] transform hover:scale-[1.02] transition-all hover:shadow-primary/20"
-                    render={<Link to="/teacher/courses/new" />}
+                <Link
+                    to="/teacher/courses/new"
+                    className="btn btn-primary h-14 px-8 shadow-xl shadow-primary/10 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transform hover:scale-[1.02] transition-all hover:shadow-primary/20 no-animation border-none"
                 >
                     <HiPlus className="w-5 h-5 mr-2" />
                     Create New Course
-                </Button>
+                </Link>
             </div>
 
             {/* Stats Overview: High Fidelity, No Borders */}
@@ -63,10 +61,8 @@ const TeacherDashboard: React.FC = () => {
             </div>
 
             {error && (
-                <div className="mb-8">
-                    <Alert variant="destructive" className="rounded-2xl border-none bg-destructive/5">
-                        <AlertDescription className="font-bold text-sm tracking-tight text-destructive">Failed to load your courses. Please try again later.</AlertDescription>
-                    </Alert>
+                <div className="alert alert-error mb-8 rounded-2xl border-none bg-error/10 text-error flex items-center gap-3">
+                    <span className="font-bold text-sm tracking-tight text-error">Failed to load your courses. Please try again later.</span>
                 </div>
             )}
 
@@ -77,13 +73,12 @@ const TeacherDashboard: React.FC = () => {
                     </div>
                     <h3 className="text-2xl font-bold text-foreground mb-3 tracking-tight italic">Your library is empty.</h3>
                     <p className="text-muted-foreground text-lg font-medium mb-10 max-w-sm mx-auto">Start sharing your knowledge by creating your first masterclass.</p>
-                    <Button
-                        variant="secondary"
-                        className="px-10 h-14 rounded-[2rem] bg-surface-50 text-foreground font-black text-xs uppercase tracking-widest hover:bg-surface-100 shadow-sm"
-                        render={<Link to="/teacher/courses/new" />}
+                    <Link
+                        to="/teacher/courses/new"
+                        className="btn btn-ghost h-14 px-10 rounded-[2rem] bg-surface-50 text-foreground font-black text-xs uppercase tracking-widest hover:bg-surface-100 shadow-sm no-animation"
                     >
                         Create First Course
-                    </Button>
+                    </Link>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -119,12 +114,19 @@ const TeacherDashboard: React.FC = () => {
                                             {course.title}
                                         </h3>
                                         <div className="flex items-center gap-2">
-                                            <Button variant="ghost" className="w-9 h-9 p-0 flex items-center justify-center text-muted-foreground hover:text-primary bg-muted/30 rounded-xl" render={<Link to={`/teacher/courses/${course.$id}`} />}>
+                                            <Link
+                                                to={`/teacher/courses/${course.$id}`}
+                                                className="btn btn-ghost w-9 h-9 p-0 flex items-center justify-center text-muted-foreground hover:text-primary bg-muted/30 rounded-xl min-h-0"
+                                            >
                                                 <HiOutlinePencil className="w-4 h-4" />
-                                            </Button>
-                                            <Button variant="ghost" className="w-9 h-9 p-0 flex items-center justify-center text-muted-foreground hover:text-primary bg-muted/30 rounded-xl" render={<Link to={`/courses/${course.$id}`} target="_blank" />}>
+                                            </Link>
+                                            <Link
+                                                to={`/courses/${course.$id}`}
+                                                target="_blank"
+                                                className="btn btn-ghost w-9 h-9 p-0 flex items-center justify-center text-muted-foreground hover:text-primary bg-muted/30 rounded-xl min-h-0"
+                                            >
                                                 <HiOutlineArrowTopRightOnSquare className="w-4 h-4" />
-                                            </Button>
+                                            </Link>
                                         </div>
                                     </div>
                                     <p className="text-sm font-medium text-muted-foreground line-clamp-2 mb-6 leading-relaxed">

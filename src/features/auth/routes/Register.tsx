@@ -12,10 +12,6 @@ import {
 } from 'react-icons/hi2';
 import { registerSchema, type RegisterInput } from '@/utils/validation';
 import { useRegister, UserRole } from '@/features/auth';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Label } from '@/components/ui/label';
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
@@ -60,9 +56,9 @@ const RegisterPage: React.FC = () => {
                     </div>
 
                     {authError && (
-                        <Alert variant="destructive" className="rounded-3xl border-none shadow-sm bg-destructive/10 text-destructive">
-                            <AlertDescription className="font-bold text-sm tracking-tight">{authError}</AlertDescription>
-                        </Alert>
+                        <div className="alert alert-error rounded-3xl border-none shadow-sm bg-error/10 text-error flex items-center gap-3">
+                            <span className="font-bold text-sm tracking-tight text-error">{authError}</span>
+                        </div>
                     )}
 
                     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
@@ -70,28 +66,28 @@ const RegisterPage: React.FC = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Name */}
                             <div className="space-y-3">
-                                <Label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Full Identity</Label>
+                                <label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Full Identity</label>
                                 <div className="relative group">
                                     <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                                    <Input id="name" placeholder="John Doe" className="h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('name')} />
+                                    <input id="name" placeholder="John Doe" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('name')} />
                                 </div>
-                                {errors.name && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.name.message}</p>}
+                                {errors.name && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.name.message}</p>}
                             </div>
 
                             {/* Email */}
                             <div className="space-y-3">
-                                <Label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">E-Mail Address</Label>
+                                <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">E-Mail Address</label>
                                 <div className="relative group">
                                     <HiOutlineEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                                    <Input id="email" type="email" placeholder="you@domain.com" className="h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('email')} />
+                                    <input id="email" type="email" placeholder="you@domain.com" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('email')} />
                                 </div>
-                                {errors.email && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.email.message}</p>}
+                                {errors.email && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.email.message}</p>}
                             </div>
                         </div>
 
                         {/* Role Selector Dashboard Style */}
                         <div className="space-y-4">
-                            <Label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Define Your Path</Label>
+                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Define Your Path</label>
                             <Controller
                                 control={control}
                                 name="role"
@@ -124,22 +120,22 @@ const RegisterPage: React.FC = () => {
 
                         {/* Password */}
                         <div className="space-y-3">
-                            <Label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Secret Key</Label>
+                            <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Secret Key</label>
                             <div className="relative group">
                                 <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                                <Input id="password" type="password" placeholder="••••••••" className="h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('password')} />
+                                <input id="password" type="password" placeholder="••••••••" className="input input-bordered w-full h-14 rounded-3xl pl-12 bg-surface-50 border-transparent focus:bg-white focus:border-primary/20 focus:ring-primary/5 transition-all text-base font-medium" {...register('password')} />
                             </div>
-                            {errors.password && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.password.message}</p>}
+                            {errors.password && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.password.message}</p>}
                         </div>
 
                         <div className="pt-8">
-                            <Button
+                            <button
                                 type="submit"
                                 disabled={isPending}
-                                className="w-full h-16 rounded-[2rem] bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.3em] shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group"
+                                className="btn btn-primary w-full h-16 rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group no-animation border-none"
                             >
-                                {isPending ? <span className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <>Finalize Enrollment <HiOutlineArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" /></>}
-                            </Button>
+                                {isPending ? <span className="loading loading-spinner" /> : <>Finalize Enrollment <HiOutlineArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" /></>}
+                            </button>
                         </div>
                     </form>
 

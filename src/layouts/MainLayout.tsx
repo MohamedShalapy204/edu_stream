@@ -1,7 +1,6 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { useLogout, useCurrentAccount } from '@/features/auth';
 import { useCurrentUser } from '@/hooks/useUser';
-import { Button } from '@/components/ui/button';
 import { HiOutlineArrowRightOnRectangle, HiOutlineSquares2X2 } from 'react-icons/hi2';
 import { UserRole } from '@/features/auth';
 
@@ -57,32 +56,30 @@ export default function MainLayout({ isPublic = false }: MainLayoutProps) {
                                     <span className="text-xs font-bold text-foreground leading-none">{account.email}</span>
                                 </div>
 
-                                <Button
-                                    variant="ghost"
-                                    className="h-10 px-4 text-muted-foreground hover:text-destructive hover:bg-destructive/5 rounded-xl transition-all duration-300"
+                                <button
+                                    className="btn btn-ghost h-10 px-4 text-muted-foreground hover:text-error hover:bg-error/5 rounded-xl transition-all duration-300 no-animation group min-h-0 border-none"
                                     disabled={isPending}
                                     onClick={handleLogout}
                                 >
                                     {isPending ? (
-                                        <span className="w-4 h-4 border-2 border-foreground/30 border-t-foreground rounded-full animate-spin" />
+                                        <span className="loading loading-spinner loading-xs" />
                                     ) : (
                                         <>
                                             <HiOutlineArrowRightOnRectangle size={19} className="mr-2" />
                                             <span className="text-xs font-bold uppercase tracking-widest">Sign Out</span>
                                         </>
                                     )}
-                                </Button>
+                                </button>
                             </>
                         ) : (
                             isPublic && (
                                 <Link to="/login">
-                                    <Button
-                                        variant="default"
-                                        className="h-10 px-6 rounded-xl bg-primary text-primary-foreground font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-300"
+                                    <button
+                                        className="btn btn-primary h-10 px-6 rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 transition-all duration-300 no-animation min-h-0 border-none"
                                     >
                                         Sign In
                                         <HiOutlineArrowRightOnRectangle size={17} className="ml-2" />
-                                    </Button>
+                                    </button>
                                 </Link>
                             )
                         )}
