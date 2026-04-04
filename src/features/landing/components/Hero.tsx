@@ -7,7 +7,7 @@ export const Hero: React.FC = () => {
     return (
         <section className="relative pt-20 pb-32 overflow-hidden">
             {/* Ambient background glows */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full -z-10 pointer-events-none opacity-20">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none opacity-20">
                 <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary/20 blur-[120px] -translate-y-1/2" />
                 <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-[100px]" />
             </div>

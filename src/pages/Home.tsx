@@ -1,22 +1,29 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Hero, Features } from '@/features/landing';
 
-export default function Home() {
+const Home: React.FC = () => {
     return (
-        <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 text-white">
-            <h1 className="text-5xl font-extrabold tracking-tight mb-4">EduStream</h1>
-            <p className="text-slate-400 text-lg mb-8 max-w-xl text-center">The ultimate learning management platform. Scalable, secure, and built for modern education.</p>
+        <div className="bg-base-100 min-h-screen">
+            <Hero />
+            <Features />
 
-            <div className="flex space-x-4">
-                <Link to="/login" className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 font-medium rounded-lg transition-colors">
-                    Log In
-                </Link>
-                <Link to="/register" className="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 font-medium rounded-lg transition-colors border border-slate-700">
-                    Sign Up
-                </Link>
-                <Link to="/dashboard" className="px-6 py-2.5 text-slate-300 hover:text-white font-medium transition-colors">
-                    Dashboard
-                </Link>
-            </div>
+            {/* Final CTA Section */}
+            <section className="py-24 bg-primary text-primary-content">
+                <div className="container mx-auto px-6 lg:px-12 text-center space-y-8">
+                    <h2 className="text-4xl lg:text-6xl font-heading font-black tracking-tight">Ready to join the <span className="italic font-medium">Digital Atheneum?</span></h2>
+                    <p className="max-w-2xl mx-auto text-lg lg:text-xl font-medium opacity-80 leading-relaxed">
+                        Secure your place in the future of education. Join 42,000+ scholars mastering the world's most curated knowledge.
+                    </p>
+                    <div className="pt-8">
+                        <Link to="/register" className="btn btn-secondary h-16 px-12 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-2xl hover:scale-105 active:scale-95 transition-all border-none">
+                            Create Free Account
+                        </Link>
+                    </div>
+                </div>
+            </section>
         </div>
     );
-}
+};
+
+export default Home;
