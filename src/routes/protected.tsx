@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import NotFound from '@/pages/errors/NotFound';
 import { RoleGuard, UserRole } from '@/features/auth';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import TeacherDashboard from '@/pages/teacher/TeacherDashboard';
@@ -28,6 +29,7 @@ export const protectedRoutes = [
                     { path: '', element: <div>Admin Dashboard Placeholder</div> },
                 ]
             },
+            { path: '*', element: <NotFound /> },
         ],
     },
 ];
