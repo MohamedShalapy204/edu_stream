@@ -33,7 +33,7 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
 
                     {/* Resume Learning */}
                     <Link to="/dashboard" className="group">
-                        <div className="p-8 h-full rounded-[2.5rem] bg-white shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-primary/10">
+                        <div className="p-8 h-full rounded-[2.5rem] bg-base-200 shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-primary/10">
                             <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform">
                                 <HiOutlineRocketLaunch className="w-7 h-7" />
                             </div>
@@ -46,7 +46,7 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
 
                     {/* Explore Courses */}
                     <Link to="/courses" className="group">
-                        <div className="p-8 h-full rounded-[2.5rem] bg-white shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-secondary/10">
+                        <div className="p-8 h-full rounded-[2.5rem] bg-base-200 shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-secondary/10">
                             <div className="w-14 h-14 rounded-2xl bg-secondary/5 flex items-center justify-center text-secondary mb-8 group-hover:scale-110 transition-transform">
                                 <HiOutlineAcademicCap className="w-7 h-7" />
                             </div>

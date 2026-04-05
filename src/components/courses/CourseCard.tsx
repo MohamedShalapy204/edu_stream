@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { ICourse } from '../../types';
-import { storageService } from '../../services/appwrite/storage/storageService';
+import type { ICourse } from '@/features/courses';
+import { storageService } from '@/services/appwrite/storage/storageService';
 import { BookOpen, Star, Users } from 'lucide-react';
 
 interface CourseCardProps {
@@ -42,7 +42,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
             </div>
 
             {/* Content Body */}
-            <div className="p-5 flex flex-col flex-grow">
+            <div className="p-5 flex flex-col grow">
                 <h3 className="text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
                     {course.title}
                 </h3>
