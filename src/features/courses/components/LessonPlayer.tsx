@@ -1,7 +1,7 @@
 import React from 'react';
-import type { ILesson } from '../../types';
-import { ContentType } from '../../types';
-import { storageService } from '../../services/appwrite/storage/storageService';
+import type { ILesson } from '../types/courseTypes';
+import { ContentType } from '../types/courseTypes';
+import { storageService } from '@/services/appwrite/storage/storageService';
 import { AlertCircle, FileText } from 'lucide-react';
 
 interface LessonPlayerProps {
