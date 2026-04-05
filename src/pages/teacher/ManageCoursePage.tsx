@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HiOutlineArrowLeft, HiOutlineSparkles } from 'react-icons/hi2';
 import { motion } from 'motion/react';
 import CourseForm from '@/features/courses/components/CourseForm';
+import { CurriculumEditor } from '@/features/courses';
 import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
 import type { CourseInput } from '@/utils/validation';
@@ -12,6 +13,8 @@ const ManageCoursePage: React.FC = () => {
     const navigate = useNavigate();
     const isEditMode = Boolean(id);
     const { data: account } = useCurrentAccount();
+
+    const [activeTab, setActiveTab] = useState<'details' | 'curriculum'>('details');
 
     const { data: course, isLoading: isLoadingCourse, error: fetchError } = useGetCourseById(id || '');
     const { mutate: createCourse, isPending: isCreating } = useCreateCourse();
@@ -80,6 +83,24 @@ const ManageCoursePage: React.FC = () => {
                 </p>
             </div>
 
+            {/* Tabs */}
+            {isEditMode && (
+                <div className="flex items-center gap-4 mb-8 border-b border-base-content/5 pb-px">
+                    <button
+                        onClick={() => setActiveTab('details')}
+                        className={`pb-4 px-2 text-sm font-black uppercase tracking-widest transition-all ${activeTab === 'details' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
+                    >
+                        Course Metadata
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('curriculum')}
+                        className={`pb-4 px-2 text-sm font-black uppercase tracking-widest transition-all ${activeTab === 'curriculum' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
+                    >
+                        Syllabus & Curriculum
+                    </button>
+                </div>
+            )}
+
             {/* Error States */}
             {fetchError && (
                 <div className="p-6 bg-error/5 text-error rounded-3xl border border-error/10 text-xs font-black uppercase tracking-[0.2em] text-center mb-10 shadow-sm">
@@ -93,11 +114,15 @@ const ManageCoursePage: React.FC = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full translate-x-24 -translate-y-24 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
 
                 <div className="relative z-10">
-                    <CourseForm
-                        initialData={course as any}
-                        onSubmit={handleSubmit}
-                        isLoading={isCreating || isUpdating}
-                    />
+                    {!isEditMode || activeTab === 'details' ? (
+                        <CourseForm
+                            initialData={course as any}
+                            onSubmit={handleSubmit}
+                            isLoading={isCreating || isUpdating}
+                        />
+                    ) : (
+                        <CurriculumEditor courseId={id!} />
+                    )}
                 </div>
             </div>
         </motion.div>
