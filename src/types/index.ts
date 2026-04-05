@@ -3,15 +3,6 @@
 import { UserRole } from '@/features/auth';
 export { UserRole };
 
-export const ContentType = {
-    VIDEO: 'video',
-    PDF: 'pdf',
-    POWERPOINT: 'powerpoint',
-    WORD: 'word',
-    ZIP: 'zip',
-    AUDIO: 'audio',
-} as const;
-export type ContentType = (typeof ContentType)[keyof typeof ContentType];
 
 export const SubscriptionStatus = {
     ACTIVE: 'active',
@@ -54,36 +45,6 @@ export interface IAppwriteDoc {
 
 // moved to @/features/auth/types
 
-export interface ICourse extends IAppwriteDoc {
-    title: string;
-    description?: string;
-    price: number;
-    teacher_id: string;
-    thumbnail_id?: string; // Appwrite Storage ID
-    is_published: boolean;
-    categories?: string[];
-    rating?: number;
-    total_students?: number;
-    duration?: number;
-}
-
-export interface ISection extends IAppwriteDoc {
-    course_id: string;
-    title: string;
-    order?: number;
-    description?: string;
-}
-
-export interface ILesson extends IAppwriteDoc {
-    section_id: string;
-    title: string;
-    content_type: ContentType;
-    video_url?: string; // For YouTube/Vimeo embeds (Free Plan friendly)
-    file_id?: string;   // For Appwrite Storage (PDFs, small assets)
-    duration?: number;  // in seconds
-    order?: number;
-    description?: string;
-}
 
 export interface ISubscription extends IAppwriteDoc {
     user_id: string;

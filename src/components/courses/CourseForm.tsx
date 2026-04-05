@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto } from 'react-icons/hi2';
-import type { ICourse } from '../../types';
-import { courseSchema, type CourseInput } from '../../utils/validation';
+import type { ICourse } from '@/features/courses';
+import { courseSchema, type CourseInput } from '@/utils/validation';
 
 export type CourseFormData = CourseInput;
 
@@ -52,7 +52,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             }`}
                     >
                         <s.icon className={`w-5 h-5 ${step === s.id ? 'animate-pulse' : ''}`} />
-                        <span className="text-sm font-black tracking-tight uppercase tracking-[0.1em]">{s.label}</span>
+                        <span className="text-sm font-black tracking-tight uppercase">{s.label}</span>
                     </div>
                 ))}
             </div>
@@ -103,7 +103,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         </div>
                         <h3 className="text-2xl font-black text-foreground mb-3 italic tracking-tight underline decoration-primary/20 underline-offset-8">Curriculum Builder</h3>
                         <p className="text-muted-foreground text-lg font-medium mb-10 max-w-sm mx-auto leading-relaxed">Sections and lessons are managed after the initial course creation to ensure pedagogical integrity.</p>
-                        <div className="alert bg-indigo-50/50 border-none shadow-sm max-w-lg mx-auto rounded-[2rem] flex items-center gap-3">
+                        <div className="alert bg-indigo-50/50 border-none shadow-sm max-w-lg mx-auto rounded-4xl flex items-center gap-3">
                             <span className="font-bold text-sm tracking-tight text-primary">You will access the syllabus editor in the next phase of the workflow.</span>
                         </div>
                     </div>
@@ -150,7 +150,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         {step < 3 ? (
                             <button
                                 type="button"
-                                className="btn btn-primary h-14 px-10 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all group no-animation border-none"
+                                className="btn btn-primary h-14 px-10 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all group no-animation border-none"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setStep((s) => s + 1);
@@ -162,7 +162,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         ) : (
                             <button
                                 type="submit"
-                                className="btn btn-primary h-14 px-12 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
+                                className="btn btn-primary h-14 px-12 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
                                 disabled={isLoading}
                             >
                                 {isLoading ? <span className="loading loading-spinner" /> : (initialData ? 'Commit Updates' : 'Launch Masterclass')}

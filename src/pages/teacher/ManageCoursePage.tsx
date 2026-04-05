@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { HiArrowLeft, HiSparkles } from 'react-icons/hi2';
+import { HiOutlineArrowLeft, HiOutlineSparkles } from 'react-icons/hi2';
+import { motion } from 'motion/react';
 import CourseForm from '@/components/courses/CourseForm';
-import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/hooks/useCourses';
+import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
-import { type CourseInput } from '@/utils/validation';
+import type { CourseInput } from '@/utils/validation';
 
 const ManageCoursePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -37,52 +38,59 @@ const ManageCoursePage: React.FC = () => {
 
     if (isEditMode && isLoadingCourse) {
         return (
-            <div className="flex items-center justify-center min-h-[400px]">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <div className="flex items-center justify-center min-h-[70vh]">
+                <div className="w-12 h-12 border-4 border-primary/10 border-t-primary rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-12">
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="max-w-5xl mx-auto px-6 py-12"
+        >
             {/* Header: Digital Atheneum style */}
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center justify-between mb-16">
                 <button
                     onClick={() => navigate(-1)}
-                    className="btn btn-ghost text-muted-foreground font-black hover:text-primary transition-all gap-2 group rounded-2xl no-animation border-none"
+                    className="group inline-flex items-center gap-3 text-base-content/30 hover:text-primary transition-all"
                 >
-                    <HiArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-                    Back to Dashboard
+                    <div className="p-2 rounded-xl group-hover:bg-primary/5 transition-colors border border-transparent group-hover:border-primary/10">
+                        <HiOutlineArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Return to Dashboard</span>
                 </button>
 
-                <div className="flex items-center gap-2 bg-surface-100 text-primary px-4 py-2 rounded-2xl font-black text-[10px] uppercase tracking-[0.15em] transition-colors border border-primary/5">
-                    <HiSparkles className="w-4 h-4" />
-                    Teacher Mode
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10">
+                    <HiOutlineSparkles className="w-4 h-4" />
+                    Archive Mode
                 </div>
             </div>
 
-            <div className="mb-10 text-center lg:text-left">
-                <h1 className="text-4xl font-extrabold text-foreground tracking-tighter mb-3">
-                    {isEditMode ? 'Edit' : 'Create'} <span className="text-primary italic">Course</span>
+            <div className="mb-16 text-center sm:text-left space-y-4">
+                <h1 className="text-5xl font-heading font-black text-base-content tracking-tighter leading-tight">
+                    {isEditMode ? 'Refine' : 'Archive'} <span className="text-primary italic font-medium">Wisdom</span>
                 </h1>
-                <p className="text-muted-foreground text-lg font-medium leading-relaxed">
+                <p className="text-base-content/50 text-lg font-medium leading-relaxed max-w-xl border-l-[3px] border-primary/10 pl-6 py-2">
                     {isEditMode
-                        ? 'Update your course details and curriculum.'
-                        : 'Share your knowledge with the world by creating a new course.'}
+                        ? 'Update your course details and curriculum records.'
+                        : 'Initiate a new domain of study for the Atheneum catalog.'}
                 </p>
             </div>
 
             {/* Error States */}
             {fetchError && (
-                <div className="alert alert-error mb-8 rounded-[2rem] border-none shadow-sm bg-error/10 text-error flex items-center gap-3">
-                    <span className="font-bold text-sm tracking-tight text-error">Failed to load course details. Please try again.</span>
+                <div className="p-6 bg-error/5 text-error rounded-3xl border border-error/10 text-xs font-black uppercase tracking-[0.2em] text-center mb-10 shadow-sm">
+                    Failed to synchronize course records.
                 </div>
             )}
 
-            {/* Main Form Container: Premium depth, using shadcn primitives indirectly through CourseForm */}
-            <div className="bg-white dark:bg-surface-900 rounded-[2.5rem] shadow-[0_8px_40px_rgba(0,0,0,0.03)] p-8 lg:p-12 overflow-hidden relative group transition-colors duration-500">
+            {/* Main Form Container: Premium depth */}
+            <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] shadow-premium p-8 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group">
                 {/* Decorative depth accent */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-surface-50 rounded-full translate-x-16 -translate-y-16 opacity-50 group-hover:bg-primary/5 transition-colors duration-1000" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full translate-x-24 -translate-y-24 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
 
                 <div className="relative z-10">
                     <CourseForm
@@ -92,7 +100,7 @@ const ManageCoursePage: React.FC = () => {
                     />
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

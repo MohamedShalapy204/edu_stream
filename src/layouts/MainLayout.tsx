@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
     HiOutlineArrowRightOnRectangle,
     HiOutlineSquares2X2,
@@ -152,17 +152,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                 </div>
 
                 <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={location.pathname}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                        >
-                            <Outlet />
-                        </motion.div>
-                    </AnimatePresence>
+                    <Outlet />
                 </div>
             </main>
 
