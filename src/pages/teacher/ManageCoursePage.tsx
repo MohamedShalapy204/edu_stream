@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HiOutlineArrowLeft, HiOutlineSparkles } from 'react-icons/hi2';
 import { motion } from 'motion/react';
-import CourseForm from '@/components/courses/CourseForm';
+import CourseForm from '@/features/courses/components/CourseForm';
 import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
 import type { CourseInput } from '@/utils/validation';
