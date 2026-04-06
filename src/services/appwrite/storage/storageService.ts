@@ -29,15 +29,12 @@ export const storageService = {
 
     /**
      * Gets a preview URL for an image (e.g. course thumbnail).
+     * Falls back to getFileView if the plan blocks transformations.
      */
-    getFilePreview(fileId: string, width = 800, height = 450) {
+    getFilePreview(fileId: string) {
         try {
-            return storage.getFilePreview(
-                appwriteConfig.storageId,
-                fileId,
-                width,
-                height
-            );
+            // Use getFileView for the Free Plan to avoid 403 transformations_blocked
+            return storage.getFileView(appwriteConfig.storageId, fileId);
         } catch (error) {
             console.error('[StorageService.getFilePreview]', error);
             return '';

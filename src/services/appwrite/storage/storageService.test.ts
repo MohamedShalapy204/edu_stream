@@ -41,22 +41,20 @@ describe('storageService', () => {
     });
 
     describe('getFilePreview', () => {
-        it('should return a preview URL', () => {
-            vi.mocked(storage.getFilePreview).mockReturnValue('http://preview-url' as any);
+        it('should return a preview URL (using view for compatibility)', () => {
+            vi.mocked(storage.getFileView).mockReturnValue('http://view-url' as any);
 
-            const url = storageService.getFilePreview('file-123', 400, 300);
+            const url = storageService.getFilePreview('file-123');
 
-            expect(storage.getFilePreview).toHaveBeenCalledWith(
+            expect(storage.getFileView).toHaveBeenCalledWith(
                 'test-bucket',
-                'file-123',
-                400,
-                300
+                'file-123'
             );
-            expect(url).toBe('http://preview-url');
+            expect(url).toBe('http://view-url');
         });
 
         it('should return an empty string on error', () => {
-            vi.mocked(storage.getFilePreview).mockImplementation(() => {
+            vi.mocked(storage.getFileView).mockImplementation(() => {
                 throw new Error('SDK Error');
             });
 
