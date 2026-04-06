@@ -3,11 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { HiOutlineArrowLeft, HiOutlineSparkles, HiOutlineTrash } from 'react-icons/hi2';
 import { motion } from 'motion/react';
 import CourseForm from '@/features/courses/components/CourseForm';
-import { CurriculumEditor } from '@/features/courses';
+import { CurriculumEditor, type ICourse } from '@/features/courses';
 import { useCreateCourse, useUpdateCourse, useGetCourseById, useDeleteCourse } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
 import type { CourseInput } from '@/features/courses/schemas/courseSchema';
 
+/**
+ * 🏛️ ManageCoursePage
+ * 
+ * Orchestrates the creation and refinement of course archives.
+ * Features a dual-tab layout for metadata and curriculum management.
+ */
 const ManageCoursePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -28,13 +34,14 @@ const ManageCoursePage: React.FC = () => {
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
         } else {
+            // Mapping input data to the creation schema
             createCourse(
                 {
                     ...data,
                     teacher_id: account?.$id || '',
                     total_students: 0,
                     rating: 0,
-                } as any,
+                },
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
         }
@@ -124,7 +131,7 @@ const ManageCoursePage: React.FC = () => {
                     {!isEditMode || activeTab === 'details' ? (
                         <>
                             <CourseForm
-                                initialData={course as any}
+                                initialData={course as unknown as ICourse}
                                 onSubmit={handleSubmit}
                                 isLoading={isCreating || isUpdating}
                             />

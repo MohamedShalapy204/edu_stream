@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom';
 import NotFound from '@/pages/errors/NotFound';
 import { RoleGuard, UserRole } from '@/features/auth';
 import Dashboard from '@/pages/dashboard/Dashboard';
-import TeacherDashboard from '@/pages/teacher/TeacherDashboard';
-import ManageCoursePage from '@/pages/teacher/ManageCoursePage';
+import { TeacherDashboard, ManageCoursePage } from '@/features/teacher';
 import { ProtectedLayoutWrapper } from './ProtectedLayoutWrapper';
 
+// TODO: Fix potential naming collisions if any arise from consolidating teacher features
 export const protectedRoutes = [
     {
         path: '/',

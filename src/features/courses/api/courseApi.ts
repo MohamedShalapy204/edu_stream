@@ -68,8 +68,8 @@ export const courseApi = {
      */
     async createCourse(data: Omit<ICourse, keyof IAppwriteDoc>) {
         try {
-            const { thumbnail, ...payload } = data as any;
-            let finalPayload = { ...payload };
+            const { thumbnail, ...payload } = data;
+            let finalPayload: Record<string, unknown> = { ...payload };
 
             if (thumbnail instanceof File) {
                 const meta = await this.handleThumbnail(thumbnail);
@@ -94,20 +94,20 @@ export const courseApi = {
      */
     async updateCourse(courseId: string, data: Partial<ICourse>) {
         try {
-            const { thumbnail, ...payload } = data as any;
-            let finalPayload = { ...payload };
+            const { thumbnail, ...payload } = data;
+            let finalPayload: Record<string, unknown> = { ...payload as Record<string, unknown> };
 
             if (thumbnail instanceof File) {
                 const meta = await this.handleThumbnail(thumbnail);
                 finalPayload = { ...finalPayload, ...meta };
             }
 
-            // Remove internal properties before sending to Appwrite
-            const cleanedPayload: any = {};
+            // Remove internal properties and Appwrite system fields before sending
             const allowedFields = ['title', 'description', 'price', 'is_published', 'categories', 'thumbnail_id', 'thumbnail_url', 'teacher_id', 'total_students', 'rating', 'duration', 'language'];
 
-            Object.keys(finalPayload).forEach(key => {
-                if (allowedFields.includes(key)) {
+            const cleanedPayload: Record<string, unknown> = {};
+            allowedFields.forEach(key => {
+                if (key in finalPayload && finalPayload[key] !== undefined) {
                     cleanedPayload[key] = finalPayload[key];
                 }
             });

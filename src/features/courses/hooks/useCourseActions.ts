@@ -3,6 +3,7 @@ import { Query } from 'appwrite';
 import { queryKeys } from '@/keys/queryKeys';
 import { courseApi } from '../api/courseApi';
 import type { ICourse } from '../types/courseTypes';
+import type { IAppwriteDoc } from '@/types';
 
 /**
  * 🪝 useCourseActions
@@ -37,7 +38,7 @@ export function useCreateCourse() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data: Omit<ICourse, '$id' | '$createdAt' | '$updatedAt'>) =>
+        mutationFn: (data: Omit<ICourse, keyof IAppwriteDoc>) =>
             courseApi.createCourse(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
