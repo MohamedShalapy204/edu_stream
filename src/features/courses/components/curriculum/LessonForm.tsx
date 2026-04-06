@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCreateLesson } from '@/features/courses/hooks/useLessonActions';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import { HiOutlineDocument } from 'react-icons/hi2';
+import { ProgressBar } from '@/components/ui/ProgressBar';
 
 interface LessonFormProps {
     sectionId: string;
@@ -19,6 +20,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
     const [files, setFiles] = useState<File[]>([]);
     const [isFree, setIsFree] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,7 +31,12 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
 
         try {
             if (files.length > 0) {
-                const uploadPromises = files.map(file => storageService.uploadFile(file));
+                const progresses = new Array(files.length).fill(0);
+                const uploadPromises = files.map((file, idx) => storageService.uploadFile(file, (p) => {
+                    progresses[idx] = p.progress;
+                    const total = progresses.reduce((a, b) => a + b, 0) / files.length;
+                    setUploadProgress(total);
+                }));
                 const uploadedFiles = await Promise.all(uploadPromises);
                 uploadedFileIds = uploadedFiles.map(f => f.$id);
             }
@@ -117,7 +124,12 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                 </div>
             </div>
 
-            <div className="pt-2 flex justify-end">
+            <div className="pt-2 flex flex-col items-end gap-3">
+                {isUploading && uploadProgress > 0 && (
+                    <div className="w-full sm:w-1/2 px-2">
+                        <ProgressBar progress={uploadProgress} label="Uploading Attachments" />
+                    </div>
+                )}
                 <button
                     type="submit"
                     disabled={isPending || isUploading || !title.trim()}

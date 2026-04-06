@@ -52,8 +52,10 @@ export const courseApi = {
      * handleThumbnail
      * Processes file upload and returns updated metadata.
      */
-    async handleThumbnail(file: File) {
-        const uploadedFile = await storageService.uploadFile(file);
+    async handleThumbnail(file: File, onProgress?: (progress: number) => void) {
+        const uploadedFile = await storageService.uploadFile(file, (p) => {
+            if (onProgress) onProgress(p.progress);
+        });
         const thumbnailUrl = storageService.getFilePreview(uploadedFile.$id).toString();
 
         return {
@@ -66,13 +68,13 @@ export const courseApi = {
      * createCourse
      * Registers a new scholarly course in the Atheneum.
      */
-    async createCourse(data: Omit<ICourse, keyof IAppwriteDoc>) {
+    async createCourse(data: Omit<ICourse, keyof IAppwriteDoc>, onProgress?: (progress: number) => void) {
         try {
             const { thumbnail, ...payload } = data;
             let finalPayload: Record<string, unknown> = { ...payload };
 
             if (thumbnail instanceof File) {
-                const meta = await this.handleThumbnail(thumbnail);
+                const meta = await this.handleThumbnail(thumbnail, onProgress);
                 finalPayload = { ...finalPayload, ...meta };
             }
 
@@ -92,13 +94,13 @@ export const courseApi = {
      * updateCourse
      * Refines the metadata of an existing course.
      */
-    async updateCourse(courseId: string, data: Partial<ICourse>) {
+    async updateCourse(courseId: string, data: Partial<ICourse>, onProgress?: (progress: number) => void) {
         try {
             const { thumbnail, ...payload } = data;
             let finalPayload: Record<string, unknown> = { ...payload as Record<string, unknown> };
 
             if (thumbnail instanceof File) {
-                const meta = await this.handleThumbnail(thumbnail);
+                const meta = await this.handleThumbnail(thumbnail, onProgress);
                 finalPayload = { ...finalPayload, ...meta };
             }
 

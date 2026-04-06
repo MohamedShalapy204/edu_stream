@@ -34,12 +34,23 @@ export function useGetTeacherCourses(teacherId: string) {
     });
 }
 
+export function useGetPublicTeacherCourses(teacherId: string) {
+    return useQuery({
+        queryKey: queryKeys.courses.publicByTeacher(teacherId),
+        queryFn: () => courseApi.listCourses([
+            Query.equal('teacher_id', teacherId),
+            Query.equal('is_published', true)
+        ]),
+        enabled: !!teacherId,
+    });
+}
+
 export function useCreateCourse() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data: Omit<ICourse, keyof IAppwriteDoc>) =>
-            courseApi.createCourse(data),
+        mutationFn: ({ data, onProgress }: { data: Omit<ICourse, keyof IAppwriteDoc>; onProgress?: (progress: number) => void }) =>
+            courseApi.createCourse(data, onProgress),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
         },
@@ -50,8 +61,8 @@ export function useUpdateCourse() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ courseId, data }: { courseId: string; data: Partial<ICourse> }) =>
-            courseApi.updateCourse(courseId, data),
+        mutationFn: ({ courseId, data, onProgress }: { courseId: string; data: Partial<ICourse>; onProgress?: (progress: number) => void }) =>
+            courseApi.updateCourse(courseId, data, onProgress),
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
             queryClient.invalidateQueries({ queryKey: queryKeys.courses.detail(variables.courseId) });

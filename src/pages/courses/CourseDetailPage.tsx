@@ -16,6 +16,7 @@ import { useGetCourseById } from '@/features/courses';
 import { useGetSections } from '@/hooks/useSections';
 import { useGetLessons } from '@/hooks/useLessons';
 import { useCurrentAccount } from '@/features/auth';
+import { useUser } from '@/hooks/useUser';
 import { storageService } from '@/services/appwrite/storage/storageService';
 
 const CourseDetailPage: React.FC = () => {
@@ -24,6 +25,7 @@ const CourseDetailPage: React.FC = () => {
 
     // ── Data Fetching ──
     const { data: course, isLoading: courseLoading } = useGetCourseById(id!);
+    const { data: teacher } = useUser(course?.teacher_id || '');
     const { data: sections, isLoading: sectionsLoading } = useGetSections(id!);
 
     // Fetch lessons for the first section as a preview if needed
@@ -99,15 +101,19 @@ const CourseDetailPage: React.FC = () => {
                     </p>
 
                     <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-base-content/5">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-base-content/20 shadow-premium">
-                                <HiOutlineUser className="w-6 h-6" />
+                        <Link to={`/teachers/${course.teacher_id}`} className="flex items-center gap-4 group cursor-pointer text-left">
+                            <div className="w-12 h-12 bg-base-200/50 rounded-[1rem] flex items-center justify-center text-primary shadow-premium border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 transition-all">
+                                {teacher?.avatar_url ? (
+                                    <img src={teacher.avatar_url} alt={teacher.name} className="w-full h-full rounded-[1rem] object-cover" />
+                                ) : (
+                                    <HiOutlineUser className="w-6 h-6" />
+                                )}
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest">Instructor</p>
-                                <p className="text-sm font-black text-base-content/80">Academic Expert</p>
+                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest mb-1 group-hover:text-primary/50 transition-colors">Instructor</p>
+                                <p className="text-sm font-black text-base-content/80 group-hover:text-primary transition-colors">{teacher?.name || 'Academic Expert'}</p>
                             </div>
-                        </div>
+                        </Link>
                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-base-content/20 shadow-premium">
                                 <HiOutlineClock className="w-6 h-6" />

@@ -6,6 +6,7 @@ import { useGetTeacherCourses, type ICourse } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
 import { StatsOverview } from '../components/StatsOverview';
 import { CourseList } from '../components/CourseList';
+import { EnrollmentLedger } from '../components/EnrollmentLedger';
 import { useTeacherStats } from '../hooks/useTeacherStats';
 
 /**
@@ -80,6 +81,11 @@ const TeacherDashboard: React.FC = () => {
                 )}
 
                 <CourseList courses={courses?.documents as unknown as ICourse[]} />
+            </div>
+
+            {/* ── Scholarly Roster (Enrollments) ── */}
+            <div className="mt-20 mb-10">
+                <EnrollmentLedger courses={(courses?.documents as unknown as ICourse[]) || []} />
             </div>
         </motion.div>
     );

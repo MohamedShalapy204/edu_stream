@@ -10,7 +10,7 @@ export const storageService = {
     /**
      * Uploads a file to Appwrite Storage with a size guard.
      */
-    async uploadFile(file: File) {
+    async uploadFile(file: File, onProgress?: (progress: { progress: number }) => void) {
         if (file.size > STORAGE_SIZE_LIMIT) {
             throw new Error(`File too large (${(file.size / 1024 / 1024).toFixed(2)}MB). Max allowed is 50MB on Free Plan.`);
         }
@@ -19,7 +19,9 @@ export const storageService = {
             return await storage.createFile(
                 appwriteConfig.storageId,
                 ID.unique(),
-                file
+                file,
+                undefined, // Default permissions
+                onProgress
             );
         } catch (error) {
             console.error('[StorageService.uploadFile]', error);

@@ -12,6 +12,8 @@ export const queryKeys = {
         detail: (id: string) => ['courses', 'detail', id] as const,
         byTeacher: (teacherId: string) =>
             ['courses', 'teacher', teacherId] as const,
+        publicByTeacher: (teacherId: string) =>
+            ['courses', 'publicTeacher', teacherId] as const,
     },
     sections: {
         byCourse: (courseId: string) => ['sections', courseId] as const,

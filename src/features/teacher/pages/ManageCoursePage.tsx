@@ -21,6 +21,7 @@ const ManageCoursePage: React.FC = () => {
     const { data: account } = useCurrentAccount();
 
     const [activeTab, setActiveTab] = useState<'details' | 'curriculum'>('details');
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const { data: course, isLoading: isLoadingCourse, error: fetchError } = useGetCourseById(id || '');
     const { mutate: createCourse, isPending: isCreating } = useCreateCourse();
@@ -30,17 +31,19 @@ const ManageCoursePage: React.FC = () => {
     const handleSubmit = (data: CourseInput) => {
         if (isEditMode && id) {
             updateCourse(
-                { courseId: id, data },
+                { courseId: id, data, onProgress: setUploadProgress },
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
         } else {
-            // Mapping input data to the creation schema
             createCourse(
                 {
-                    ...data,
-                    teacher_id: account?.$id || '',
-                    total_students: 0,
-                    rating: 0,
+                    data: {
+                        ...data,
+                        teacher_id: account?.$id || '',
+                        total_students: 0,
+                        rating: 0,
+                    },
+                    onProgress: setUploadProgress
                 },
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
@@ -80,9 +83,22 @@ const ManageCoursePage: React.FC = () => {
                     <span className="text-[10px] font-black uppercase tracking-[0.2em]">Return to Dashboard</span>
                 </button>
 
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10">
-                    <HiOutlineSparkles className="w-4 h-4" />
-                    Archive Mode
+                <div className="flex items-center gap-4">
+                    {isEditMode && (
+                        <a
+                            href={`/courses/${id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-white text-[10px] uppercase font-black tracking-[0.2em] shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                        >
+                            <HiOutlineSparkles className="w-4 h-4" />
+                            Live Preview
+                        </a>
+                    )}
+                    <div className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10">
+                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                        Archive Mode
+                    </div>
                 </div>
             </div>
 
@@ -134,6 +150,7 @@ const ManageCoursePage: React.FC = () => {
                                 initialData={course as unknown as ICourse}
                                 onSubmit={handleSubmit}
                                 isLoading={isCreating || isUpdating}
+                                uploadProgress={uploadProgress}
                             />
 
                             {/* Danger Zone */}

@@ -5,6 +5,7 @@ import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight,
 import type { ICourse } from '@/features/courses';
 import { courseSchema, type CourseInput } from '../schemas/courseSchema';
 import { storageService } from '@/services/appwrite/storage/storageService';
+import { ProgressBar } from '@/components/ui/ProgressBar';
 
 export type CourseFormData = CourseInput;
 
@@ -12,9 +13,10 @@ interface CourseFormProps {
     initialData?: Partial<ICourse>;
     onSubmit: (data: CourseFormData) => void;
     isLoading?: boolean;
+    uploadProgress?: number;
 }
 
-const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoading }) => {
+const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoading, uploadProgress = 0 }) => {
     const [step, setStep] = useState(1);
     const [preview, setPreview] = useState<string | null>(
         initialData?.thumbnail_url ||
@@ -233,13 +235,20 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                 <HiOutlineChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </button>
                         ) : (
-                            <button
-                                type="submit"
-                                className="btn btn-primary h-14 px-12 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
-                                disabled={isLoading}
-                            >
-                                {isLoading ? <span className="loading loading-spinner" /> : (initialData?.$id ? 'Commit Updates' : 'Launch Masterclass')}
-                            </button>
+                            <div className="flex flex-col items-end gap-3 w-72">
+                                {isLoading && uploadProgress > 0 && (
+                                    <div className="w-full px-2 mb-2">
+                                        <ProgressBar progress={uploadProgress} label="Uploading Assets" />
+                                    </div>
+                                )}
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary w-full h-14 px-12 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? <span className="loading loading-spinner" /> : (initialData?.$id ? 'Commit Updates' : 'Launch Masterclass')}
+                                </button>
+                            </div>
                         )}
                     </div>
                 </div>
