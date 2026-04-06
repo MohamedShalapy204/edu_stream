@@ -42,10 +42,9 @@ export interface ILesson extends IAppwriteDoc {
     section_id: string;
     course_id?: string;
     title: string;
-    content_type?: ContentType;
     video_url?: string;
     video_id?: string;
-    file_id?: string;
+    document_ids?: string[];
     duration?: number;
     order: number;
     description?: string;

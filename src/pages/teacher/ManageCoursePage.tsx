@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { HiOutlineArrowLeft, HiOutlineSparkles } from 'react-icons/hi2';
+import { HiOutlineArrowLeft, HiOutlineSparkles, HiOutlineTrash } from 'react-icons/hi2';
 import { motion } from 'motion/react';
 import CourseForm from '@/features/courses/components/CourseForm';
 import { CurriculumEditor } from '@/features/courses';
-import { useCreateCourse, useUpdateCourse, useGetCourseById } from '@/features/courses';
+import { useCreateCourse, useUpdateCourse, useGetCourseById, useDeleteCourse } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
 import type { CourseInput } from '@/utils/validation';
 
@@ -19,6 +19,7 @@ const ManageCoursePage: React.FC = () => {
     const { data: course, isLoading: isLoadingCourse, error: fetchError } = useGetCourseById(id || '');
     const { mutate: createCourse, isPending: isCreating } = useCreateCourse();
     const { mutate: updateCourse, isPending: isUpdating } = useUpdateCourse();
+    const { mutate: deleteCourse, isPending: isDeleting } = useDeleteCourse();
 
     const handleSubmit = (data: CourseInput) => {
         if (isEditMode && id) {
@@ -36,6 +37,12 @@ const ManageCoursePage: React.FC = () => {
                 } as any,
                 { onSuccess: () => navigate('/teacher/dashboard') }
             );
+        }
+    };
+
+    const handleDeleteCourse = () => {
+        if (window.confirm('WARNING: Are you sure you want to permanently delete this course? This action cannot be undone.')) {
+            deleteCourse(id!, { onSuccess: () => navigate('/teacher/dashboard') });
         }
     };
 
@@ -109,17 +116,34 @@ const ManageCoursePage: React.FC = () => {
             )}
 
             {/* Main Form Container: Premium depth */}
-            <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] shadow-premium p-8 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group">
+            <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] shadow-premium p-8 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group mb-12">
                 {/* Decorative depth accent */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full translate-x-24 -translate-y-24 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
 
                 <div className="relative z-10">
                     {!isEditMode || activeTab === 'details' ? (
-                        <CourseForm
-                            initialData={course as any}
-                            onSubmit={handleSubmit}
-                            isLoading={isCreating || isUpdating}
-                        />
+                        <>
+                            <CourseForm
+                                initialData={course as any}
+                                onSubmit={handleSubmit}
+                                isLoading={isCreating || isUpdating}
+                            />
+
+                            {/* Danger Zone */}
+                            {isEditMode && (
+                                <div className="mt-16 pt-8 border-t border-error/10 flex flex-col items-center sm:items-start">
+                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-error mb-4 opacity-50">Danger Zone</h4>
+                                    <button
+                                        onClick={handleDeleteCourse}
+                                        disabled={isDeleting}
+                                        className="btn btn-outline border-error/30 text-error hover:bg-error hover:text-white hover:border-error h-14 px-8 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all w-full sm:w-auto flex items-center gap-2"
+                                    >
+                                        {isDeleting ? <span className="loading loading-spinner loading-xs" /> : <HiOutlineTrash className="w-5 h-5" />}
+                                        Delete Course Archive
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     ) : (
                         <CurriculumEditor courseId={id!} />
                     )}

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { HiPlus, HiOutlineSparkles } from 'react-icons/hi2';
-import { useGetCourseSections, useCreateSection } from '@/features/courses/hooks/useSectionActions';
+import { useGetCourseSections, useCreateSection, useDeleteSection, useUpdateSection } from '@/features/courses/hooks/useSectionActions';
 import SectionItem from './SectionItem';
 
 export const CurriculumEditor: React.FC<{ courseId: string }> = ({ courseId }) => {
     const { data: sections, isLoading } = useGetCourseSections(courseId);
     const { mutate: createSection, isPending } = useCreateSection();
+    const { mutate: deleteSection } = useDeleteSection();
+    const { mutate: updateSection } = useUpdateSection();
+
     const [newSectionTitle, setNewSectionTitle] = useState('');
 
     const handleCreateSection = (e: React.FormEvent) => {
@@ -22,6 +25,26 @@ export const CurriculumEditor: React.FC<{ courseId: string }> = ({ courseId }) =
                 onSuccess: () => setNewSectionTitle('')
             }
         );
+    };
+
+    const handleMoveSection = (index: number, direction: 'up' | 'down') => {
+        if (!sections?.documents) return;
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+
+        if (targetIndex < 0 || targetIndex >= sections.documents.length) return;
+
+        const currentSection = sections.documents[index];
+        const adjacentSection = sections.documents[targetIndex];
+
+        // Swap their orders in the DB
+        updateSection({ sectionId: currentSection.$id, data: { order: adjacentSection.order ?? targetIndex } });
+        updateSection({ sectionId: adjacentSection.$id, data: { order: currentSection.order ?? index } });
+    };
+
+    const handleDeleteSection = (sectionId: string) => {
+        if (window.confirm('Are you sure you want to delete this section? All its lessons will be lost.')) {
+            deleteSection(sectionId);
+        }
     };
 
     if (isLoading) {
@@ -43,7 +66,15 @@ export const CurriculumEditor: React.FC<{ courseId: string }> = ({ courseId }) =
 
             <div className="space-y-6">
                 {sections?.documents.map((section, idx) => (
-                    <SectionItem key={section.$id} section={section} index={idx} />
+                    <SectionItem
+                        key={section.$id}
+                        section={section}
+                        index={idx}
+                        totalSections={sections.documents.length}
+                        onMoveUp={() => handleMoveSection(idx, 'up')}
+                        onMoveDown={() => handleMoveSection(idx, 'down')}
+                        onDelete={() => handleDeleteSection(section.$id)}
+                    />
                 ))}
 
                 {sections?.documents.length === 0 && (
