@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto } from 'react-icons/hi2';
 import type { ICourse } from '@/features/courses';
 import { courseSchema, type CourseInput } from '@/utils/validation';
+import { storageService } from '@/services/appwrite/storage/storageService';
 
 export type CourseFormData = CourseInput;
 
@@ -15,19 +16,43 @@ interface CourseFormProps {
 
 const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoading }) => {
     const [step, setStep] = useState(1);
+    const [preview, setPreview] = useState<string | null>(
+        initialData?.thumbnail_url ||
+        (initialData?.thumbnail_id ? storageService.getFilePreview(initialData.thumbnail_id).toString() : null)
+    );
 
-    const { register, handleSubmit, formState: { errors } } = useForm<CourseFormData>({
-        resolver: zodResolver(courseSchema),
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<CourseFormData>({
+        resolver: zodResolver(courseSchema) as any,
         defaultValues: {
             title: initialData?.title || '',
             description: initialData?.description || '',
             price: initialData?.price || 0,
             is_published: initialData?.is_published || false,
             categories: initialData?.categories || [],
+            thumbnail_id: initialData?.thumbnail_id || '',
         }
     });
 
-    const handleFinalSubmit = (data: CourseFormData) => {
+    React.useEffect(() => {
+        return () => {
+            if (preview?.startsWith('blob:')) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, [preview]);
+
+    const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            if (preview?.startsWith('blob:')) {
+                URL.revokeObjectURL(preview);
+            }
+            setValue('thumbnail', file);
+            setPreview(URL.createObjectURL(file));
+        }
+    };
+
+    const handleFinalSubmit: SubmitHandler<CourseFormData> = (data) => {
         if (step !== 3) {
             setStep((s) => s + 1);
             return;
@@ -111,27 +136,48 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
 
                 {step === 3 && (
                     <div className="animate-in slide-in-from-right-4 duration-700 space-y-8">
-                        <div className="bg-surface-50 p-12 rounded-[3rem] border-2 border-dashed border-muted text-center group hover:border-primary/20 transition-all duration-500">
-                            <div className="h-20 w-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                                <HiOutlinePhoto className="w-10 h-10 text-muted-foreground" />
+                        <div
+                            className="bg-surface-50 p-12 rounded-[3rem] border-2 border-dashed border-muted text-center group hover:border-primary/20 transition-all duration-500 relative cursor-pointer overflow-hidden min-h-[300px] flex flex-col justify-center"
+                            onClick={() => document.getElementById('thumbnail-input')?.click()}
+                        >
+                            {preview ? (
+                                <img src={preview} alt="Thumbnail preview" className="absolute inset-0 w-full h-full object-cover" />
+                            ) : (
+                                <div className="h-20 w-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                                    <HiOutlinePhoto className="w-10 h-10 text-muted-foreground" />
+                                </div>
+                            )}
+                            <div className={`relative z-10 ${preview ? 'bg-black/40 backdrop-blur-sm p-6 rounded-2xl mx-auto inline-block text-white w-4/5' : ''}`}>
+                                <h4 className={`text-xl font-bold mb-1 tracking-tighter ${preview ? 'text-white' : 'text-foreground'}`}>Course Visuals</h4>
+                                <p className={`text-sm mb-4 font-medium ${preview ? 'text-white/80' : 'text-muted-foreground'}`}>{preview ? 'Click anywhere on frame to replace visual' : 'Upload high-fidelity imagery for the course cover.'}</p>
+                                <input
+                                    id="thumbnail-input"
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={handleThumbnailChange}
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline h-12 px-10 rounded-2xl bg-white text-xs font-black uppercase tracking-widest border-muted shadow-sm hover:border-primary/40 hover:text-primary transition-all no-animation"
+                                >
+                                    {preview ? 'Replace Visual' : 'Selection Gallery'}
+                                </button>
                             </div>
-                            <h4 className="text-xl font-bold text-foreground mb-1 tracking-tighter">Course Visuals</h4>
-                            <p className="text-sm text-muted-foreground mb-8 font-medium">Upload high-fidelity imagery for the course cover.</p>
-                            <button
-                                type="button"
-                                className="btn btn-outline h-12 px-10 rounded-2xl bg-white text-xs font-black uppercase tracking-widest border-muted shadow-sm hover:border-primary/40 hover:text-primary transition-all no-animation"
-                            >
-                                Selection Gallery
-                            </button>
                         </div>
-                        <div className="flex items-center gap-6 p-8 bg-primary/5 rounded-[2.5rem] border border-primary/5 group cursor-pointer hover:bg-primary/10 transition-all">
+                        <div className="flex items-center gap-6 p-8 bg-primary/5 rounded-[2.5rem] border border-primary/5 group cursor-pointer hover:bg-primary/10 transition-all relative">
                             <div className="relative flex items-center">
-                                <input id="publish" type="checkbox" className="w-6 h-6 rounded-lg opacity-0 absolute cursor-pointer z-10" {...register('is_published')} />
-                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-white flex items-center justify-center transition-colors">
-                                    <div className="w-3 h-3 bg-primary rounded-sm transition-transform scale-0 peer-checked:scale-100" />
+                                <input
+                                    id="is_published"
+                                    type="checkbox"
+                                    className="peer w-6 h-6 rounded-lg opacity-0 absolute cursor-pointer z-10"
+                                    {...register('is_published')}
+                                />
+                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-white flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
+                                    <HiOutlineChevronRight className="w-4 h-4 text-white transition-transform scale-0 peer-checked:scale-100" />
                                 </div>
                             </div>
-                            <label htmlFor="publish" className="text-sm font-black text-primary uppercase tracking-widest cursor-pointer select-none">Deploy Course Immediately</label>
+                            <label htmlFor="is_published" className="text-sm font-black text-primary uppercase tracking-widest cursor-pointer select-none">Deploy Course Immediately</label>
                         </div>
                     </div>
                 )}
@@ -161,7 +207,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                 className="btn btn-primary h-14 px-12 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
                                 disabled={isLoading}
                             >
-                                {isLoading ? <span className="loading loading-spinner" /> : (initialData ? 'Commit Updates' : 'Launch Masterclass')}
+                                {isLoading ? <span className="loading loading-spinner" /> : (initialData?.$id ? 'Commit Updates' : 'Launch Masterclass')}
                             </button>
                         )}
                     </div>

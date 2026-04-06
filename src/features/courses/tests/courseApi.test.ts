@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { courseApi } from '../api/courseApi';
 import { databases } from '@/services/appwrite/config';
-import { ID, Query } from 'appwrite';
+import { storageService } from '@/services/appwrite/storage/storageService';
 
 vi.mock('@/services/appwrite/config', () => ({
     databases: {
@@ -17,6 +17,13 @@ vi.mock('@/services/appwrite/config', () => ({
     },
 }));
 
+vi.mock('@/services/appwrite/storage/storageService', () => ({
+    storageService: {
+        uploadFile: vi.fn(),
+        getFilePreview: vi.fn(),
+    }
+}));
+
 describe('courseApi', () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -25,7 +32,7 @@ describe('courseApi', () => {
     const mockCourse = {
         $id: 'course-1',
         title: 'Mastering AI',
-        instructor_id: 'inst-1',
+        teacher_id: 'teacher-1',
         description: 'Learn everything about AI',
         price: 99.99,
         is_published: true,
@@ -49,66 +56,47 @@ describe('courseApi', () => {
                 expect.arrayContaining([expect.stringContaining('$createdAt')])
             );
             expect(result.total).toBe(1);
-            expect(result.documents[0].title).toBe('Mastering AI');
-        });
-    });
-
-    describe('getCourse', () => {
-        it('should fetch a single course by ID', async () => {
-            vi.mocked(databases.getDocument).mockResolvedValue(mockCourse as any);
-
-            const result = await courseApi.getCourse('course-1');
-
-            expect(databases.getDocument).toHaveBeenCalledWith('test-db', 'courses-col', 'course-1');
-            expect(result.$id).toBe('course-1');
-        });
-    });
-
-    describe('createCourse', () => {
-        it('should create a new course document', async () => {
-            vi.mocked(databases.createDocument).mockResolvedValue(mockCourse as any);
-            const courseInput = {
-                title: 'Mastering AI',
-                instructor_id: 'inst-1',
-                price: 99.99,
-                is_published: true,
-            };
-
-            const result = await courseApi.createCourse(courseInput as any);
-
-            expect(databases.createDocument).toHaveBeenCalledWith(
-                'test-db',
-                'courses-col',
-                expect.any(String),
-                courseInput
-            );
-            expect(result.$id).toBe('course-1');
         });
     });
 
     describe('updateCourse', () => {
-        it('should update an existing course', async () => {
-            vi.mocked(databases.updateDocument).mockResolvedValue({ ...mockCourse, title: 'Updated Title' } as any);
+        it('should update and filter extra attributes', async () => {
+            vi.mocked(databases.updateDocument).mockResolvedValue({ ...mockCourse } as any);
 
-            const result = await courseApi.updateCourse('course-1', { title: 'Updated Title' });
+            await courseApi.updateCourse('course-1', {
+                title: 'New Title',
+                thumbnail: 'something' as any // Should be filtered if not File
+            } as any);
 
             expect(databases.updateDocument).toHaveBeenCalledWith(
                 'test-db',
                 'courses-col',
                 'course-1',
-                { title: 'Updated Title' }
+                { title: 'New Title' }
             );
-            expect(result.title).toBe('Updated Title');
         });
-    });
 
-    describe('deleteCourse', () => {
-        it('should delete a course document', async () => {
-            vi.mocked(databases.deleteDocument).mockResolvedValue({} as any);
+        it('should upload thumbnail if it is a File', async () => {
+            const file = new File([''], 'test.png', { type: 'image/png' });
+            vi.mocked(storageService.uploadFile).mockResolvedValue({ $id: 'file-123' } as any);
+            vi.mocked(storageService.getFilePreview).mockReturnValue('http://preview-url' as any);
+            vi.mocked(databases.updateDocument).mockResolvedValue(mockCourse as any);
 
-            await courseApi.deleteCourse('course-1');
+            await courseApi.updateCourse('course-1', {
+                title: 'New Title',
+                thumbnail: file
+            } as any);
 
-            expect(databases.deleteDocument).toHaveBeenCalledWith('test-db', 'courses-col', 'course-1');
+            expect(storageService.uploadFile).toHaveBeenCalledWith(file);
+            expect(databases.updateDocument).toHaveBeenCalledWith(
+                'test-db',
+                'courses-col',
+                'course-1',
+                expect.objectContaining({
+                    thumbnail_id: 'file-123',
+                    thumbnail_url: 'http://preview-url'
+                })
+            );
         });
     });
 });

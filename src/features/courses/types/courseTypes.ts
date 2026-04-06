@@ -15,6 +15,8 @@ export interface ICourse extends IAppwriteDoc {
     title: string;
     description: string;
     thumbnail_id?: string;
+    thumbnail_url?: string;
+    thumbnail?: File | any; // Temporary for upload mutations
     teacher_id: string;
     price: number;
     is_published: boolean;

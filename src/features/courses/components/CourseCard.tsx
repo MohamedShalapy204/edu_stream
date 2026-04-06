@@ -16,9 +16,10 @@ interface CourseCardProps {
  * Features a "Scholarly Tile" aesthetic with buttery-smooth hover states.
  */
 export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
-    const thumbnailUrl = course.thumbnail_id
+    const thumbnailUrl = course.thumbnail_url || (course.thumbnail_id
         ? storageService.getFilePreview(course.thumbnail_id)
-        : 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=60';
+        : 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=60');
+
 
     return (
         <motion.div

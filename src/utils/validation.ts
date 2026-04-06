@@ -7,7 +7,9 @@ export const courseSchema = z.object({
     description: z.string(),
     price: z.number().min(0, 'Price must be positive'),
     categories: z.array(z.string()),
-    is_published: z.boolean(),
+    is_published: z.boolean().default(false),
+    thumbnail_id: z.string().optional(),
+    thumbnail: z.any().optional(), // For File/FileList
 });
 
 export const sectionSchema = z.object({

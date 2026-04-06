@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@/test-utils';
+import { render, screen, fireEvent, waitFor } from '@/test-utils';
 import CourseForm from '../components/CourseForm';
 import userEvent from '@testing-library/user-event';
 
@@ -69,6 +69,40 @@ describe('CourseForm', () => {
             expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
                 title: 'Solid Course Title',
                 price: 49.99,
+            }));
+        });
+    });
+
+    it('should allow selecting a thumbnail and toggling publication', async () => {
+        const onSubmit = vi.fn();
+        render(<CourseForm {...defaultProps} onSubmit={onSubmit} />);
+        const user = userEvent.setup();
+
+        // Step 1
+        await user.type(screen.getByLabelText(/Masterclass Title/i), 'Thumbnail Course');
+        await user.type(screen.getByLabelText(/Tuition/i), '25');
+        await user.click(screen.getByText(/Advance/i));
+
+        // Step 2
+        await user.click(screen.getByText(/Advance/i));
+
+        // Step 3
+        const file = new File(['hello'], 'hello.png', { type: 'image/png' });
+        // The label is inside a div, but we can look for the input or query by id
+        const input = document.getElementById('thumbnail-input') as HTMLInputElement;
+
+        fireEvent.change(input, { target: { files: [file] } });
+
+        const publishCheckbox = screen.getByLabelText(/Deploy Course Immediately/i);
+        await user.click(publishCheckbox);
+
+        await user.click(screen.getByRole('button', { name: /Launch Masterclass/i }));
+
+        await waitFor(() => {
+            expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
+                title: 'Thumbnail Course',
+                is_published: true,
+                thumbnail: file,
             }));
         });
     });
