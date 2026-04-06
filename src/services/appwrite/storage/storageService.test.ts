@@ -29,7 +29,9 @@ describe('storageService', () => {
             expect(storage.createFile).toHaveBeenCalledWith(
                 'test-bucket',
                 expect.any(String),
-                mockFile
+                mockFile,
+                undefined,
+                undefined
             );
             expect(result.$id).toBe('file-123');
         });

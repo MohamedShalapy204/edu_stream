@@ -57,10 +57,10 @@ describe('useCourseActions hooks', () => {
             const { result } = renderHook(() => useCreateCourse());
 
             await act(async () => {
-                await result.current.mutateAsync(courseInput as any);
+                await result.current.mutateAsync({ data: courseInput as any });
             });
 
-            expect(courseApi.createCourse).toHaveBeenCalledWith(courseInput);
+            expect(courseApi.createCourse).toHaveBeenCalledWith(courseInput, undefined);
         });
     });
 
@@ -75,7 +75,7 @@ describe('useCourseActions hooks', () => {
                 await result.current.mutateAsync({ courseId: 'course-1', data: updateInput });
             });
 
-            expect(courseApi.updateCourse).toHaveBeenCalledWith('course-1', updateInput);
+            expect(courseApi.updateCourse).toHaveBeenCalledWith('course-1', updateInput, undefined);
         });
     });
 

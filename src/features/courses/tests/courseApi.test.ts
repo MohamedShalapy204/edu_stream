@@ -88,7 +88,7 @@ describe('courseApi', () => {
                 thumbnail: file
             } as any);
 
-            expect(storageService.uploadFile).toHaveBeenCalledWith(file);
+            expect(storageService.uploadFile).toHaveBeenCalledWith(file, expect.any(Function));
             expect(databases.updateDocument).toHaveBeenCalledWith(
                 'test-db',
                 'courses-col',
