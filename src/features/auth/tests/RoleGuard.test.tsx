@@ -1,16 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '../test-utils';
-import { RoleGuard } from '../../src/components/auth/RoleGuard';
-import * as useAuth from '../../src/hooks/useAuth';
-import * as useUser from '../../src/hooks/useUser';
-import { UserRole } from '../../src/types';
+import { render, screen } from '@/test-utils';
+import { RoleGuard } from '@/features/auth';
+import * as useAuth from '@/features/auth/hooks/useAuth';
+import * as useUser from '@/hooks/useUser';
+import { UserRole } from '@/types';
 import { Routes, Route } from 'react-router-dom';
 
-vi.mock('../../src/hooks/useAuth', () => ({
+vi.mock('@/features/auth/hooks/useAuth', () => ({
     useCurrentAccount: vi.fn(),
 }));
 
-vi.mock('../../src/hooks/useUser', () => ({
+vi.mock('@/hooks/useUser', () => ({
     useUser: vi.fn(),
 }));
 

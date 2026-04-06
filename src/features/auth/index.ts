@@ -1,4 +1,5 @@
 export * from './api/auth';
+export * from './api/users';
 export * from './hooks/useAuth';
 export * from './components/AuthGuard';
 export * from './components/RoleGuard';

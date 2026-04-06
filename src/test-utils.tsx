@@ -5,8 +5,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { RootState, AppStore } from '../src/store/store';
-import uiReducer from '../src/store/slices/uiSlice';
+import type { RootState, AppStore } from '@/store/store';
+import uiReducer from '@/store/slices/uiSlice';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     preloadedState?: Partial<RootState>;

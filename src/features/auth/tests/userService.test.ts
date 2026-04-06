@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as userService from '../../src/services/appwrite/databases/userService';
-import { databases } from '../../src/services/appwrite/config';
-import { UserRole } from '../../src/types';
+import * as userService from '@/features/auth';
+import { databases } from '@/services/appwrite/config';
+import { UserRole } from '@/types';
 import { AppwriteException } from 'appwrite';
 
-vi.mock('../../src/services/appwrite/config', () => ({
+vi.mock('@/services/appwrite/config', () => ({
     databases: {
         createDocument: vi.fn(),
         getDocument: vi.fn(),

@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '../test-utils';
-import { PermissionGuard } from '../../src/components/auth/PermissionGuard';
-import { UserRole } from '../../src/types';
-import * as useAuth from '../../src/hooks/useAuth';
-import * as useUser from '../../src/hooks/useUser';
+import { render, screen } from '@/test-utils';
+import { PermissionGuard } from '@/features/auth';
+import { UserRole } from '@/types';
+import * as useAuth from '@/features/auth/hooks/useAuth';
+import * as useUser from '@/hooks/useUser';
 
-vi.mock('../../src/hooks/useAuth', () => ({
+vi.mock('@/features/auth/hooks/useAuth', () => ({
     useCurrentAccount: vi.fn(),
 }));
 
-vi.mock('../../src/hooks/useUser', () => ({
+vi.mock('@/hooks/useUser', () => ({
     useUser: vi.fn(),
 }));
 

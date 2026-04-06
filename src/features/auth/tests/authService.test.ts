@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as authService from '../../src/services/appwrite/auth/authService';
-import { account } from '../../src/services/appwrite/config';
+import * as authService from '@/features/auth';
+import { account } from '@/services/appwrite/config';
 import { AppwriteException } from 'appwrite';
 
-vi.mock('../../src/services/appwrite/config', () => ({
+vi.mock('@/services/appwrite/config', () => ({
     account: {
         create: vi.fn(),
         createEmailPasswordSession: vi.fn(),

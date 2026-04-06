@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '../test-utils';
-import { useRegister, useLogin, useLogout } from '../../src/hooks/useAuth';
-import * as authService from '../../src/services/appwrite/auth/authService';
-import * as userService from '../../src/services/appwrite/databases/userService';
-import { UserRole } from '../../src/types';
+import { renderHook, act } from '@/test-utils';
+import { useRegister, useLogin, useLogout } from '@/features/auth';
+import * as authService from '@/features/auth/api/auth';
+import * as userService from '@/features/auth/api/users';
+import { UserRole } from '@/types';
 import { AppwriteException } from 'appwrite';
 
-vi.mock('../../src/services/appwrite/auth/authService');
-vi.mock('../../src/services/appwrite/databases/userService');
-vi.mock('../../src/services/appwrite/config', () => ({
+vi.mock('@/features/auth/api/auth');
+vi.mock('@/features/auth/api/users');
+vi.mock('@/services/appwrite/config', () => ({
     avatars: {
         getInitials: vi.fn(() => ({ toString: () => 'avatar-url' })),
     },

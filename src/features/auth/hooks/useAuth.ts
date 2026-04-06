@@ -3,7 +3,7 @@ import { AppwriteException } from 'appwrite';
 import { queryKeys } from '@/keys/queryKeys';
 import * as authService from '../api/auth';
 import { avatars } from '@/services/appwrite/config';
-import * as userService from '@/services/appwrite/databases/userService';
+import * as userService from '../api/users';
 import type { LoginInput, RegisterInput } from '../schemas';
 
 export function useCurrentAccount() {

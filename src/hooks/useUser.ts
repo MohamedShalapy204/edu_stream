@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AppwriteException } from 'appwrite';
 import { queryKeys } from '@/keys/queryKeys';
-import * as userService from '@/services/appwrite/databases/userService';
+import * as userService from '@/features/auth/api/users';
 import { useCurrentAccount } from '@/features/auth';
 
 export function useUser(userId: string) {

@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '../test-utils';
-import { AuthGuard } from '../../src/components/auth/AuthGuard';
-import * as useAuth from '../../src/hooks/useAuth';
+import { render, screen } from '@/test-utils';
+import { AuthGuard } from '@/features/auth';
+import * as useAuth from '@/features/auth/hooks/useAuth';
 import { Routes, Route } from 'react-router-dom';
 
-vi.mock('../../src/hooks/useAuth', () => ({
+vi.mock('@/features/auth/hooks/useAuth', () => ({
     useCurrentAccount: vi.fn(),
 }));
 
@@ -13,11 +13,11 @@ describe('AuthGuard', () => {
         vi.clearAllMocks();
     });
 
-    it('should render children when authenticated', () => {
+    it('should render children when authenticated and verified', () => {
         vi.mocked(useAuth.useCurrentAccount).mockReturnValue({
-            data: { $id: 'user-id' },
+            data: { $id: 'user-id', emailVerification: true },
             isLoading: false,
-        } as any);
+        } as unknown as any);
 
         render(
             <AuthGuard>
@@ -32,7 +32,7 @@ describe('AuthGuard', () => {
         vi.mocked(useAuth.useCurrentAccount).mockReturnValue({
             data: null,
             isLoading: false,
-        } as any);
+        } as unknown as any);
 
         render(
             <Routes>
@@ -53,16 +53,16 @@ describe('AuthGuard', () => {
         vi.mocked(useAuth.useCurrentAccount).mockReturnValue({
             data: null,
             isLoading: true,
-        } as any);
+        } as unknown as any);
 
-        const { container } = render(
+        render(
             <AuthGuard>
                 <div data-testid="protected">Protected</div>
             </AuthGuard>
         );
 
-        // The loader is a div with animate-spin
-        expect(container.querySelector('.animate-spin')).toBeInTheDocument();
+        // The loader is the EDUstream branded component
+        expect(screen.getByText(/EDU/i)).toBeInTheDocument();
         expect(screen.queryByTestId('protected')).not.toBeInTheDocument();
     });
 });
