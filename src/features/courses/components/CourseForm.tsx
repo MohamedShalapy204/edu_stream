@@ -3,7 +3,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto } from 'react-icons/hi2';
 import type { ICourse } from '@/features/courses';
-import { courseSchema, type CourseInput } from '@/utils/validation';
+import { courseSchema, type CourseInput } from '../schemas/courseSchema';
 import { storageService } from '@/services/appwrite/storage/storageService';
 
 export type CourseFormData = CourseInput;
@@ -30,6 +30,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
             is_published: initialData?.is_published || false,
             categories: initialData?.categories || [],
             thumbnail_id: initialData?.thumbnail_id || '',
+            language: initialData?.language || 'English',
         }
     });
 
@@ -98,6 +99,23 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             </div>
 
                             <div className="space-y-3">
+                                <label htmlFor="language" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Instructional Language</label>
+                                <select
+                                    id="language"
+                                    className="select select-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full"
+                                    {...register('language')}
+                                >
+                                    <option value="English">English</option>
+                                    <option value="Arabic">Arabic</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="French">French</option>
+                                    <option value="German">German</option>
+                                    <option value="Japanese">Japanese</option>
+                                </select>
+                                {errors.language && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.language.message}</p>}
+                            </div>
+
+                            <div className="space-y-3">
                                 <label htmlFor="price" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Tuition ($)</label>
                                 <input
                                     id="price"
@@ -108,6 +126,19 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     {...register('price', { valueAsNumber: true })}
                                 />
                                 {errors.price && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.price.message}</p>}
+                            </div>
+
+                            <div className="space-y-3">
+                                <label htmlFor="categories" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Categories (Comma separated)</label>
+                                <input
+                                    id="categories"
+                                    placeholder="e.g. Design, Architecture, Art"
+                                    className={`input input-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.categories ? 'ring-2 ring-destructive/20' : ''}`}
+                                    {...register('categories', {
+                                        setValueAs: (v) => typeof v === 'string' ? v.split(',').map(s => s.trim()).filter(Boolean) : v
+                                    })}
+                                />
+                                {errors.categories && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.categories.message}</p>}
                             </div>
                         </div>
                         <div className="space-y-3 text-left">

@@ -6,7 +6,7 @@ import CourseForm from '@/features/courses/components/CourseForm';
 import { CurriculumEditor } from '@/features/courses';
 import { useCreateCourse, useUpdateCourse, useGetCourseById, useDeleteCourse } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
-import type { CourseInput } from '@/utils/validation';
+import type { CourseInput } from '@/features/courses/schemas/courseSchema';
 
 const ManageCoursePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();

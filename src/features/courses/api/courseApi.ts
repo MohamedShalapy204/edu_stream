@@ -126,10 +126,23 @@ export const courseApi = {
 
     /**
      * deleteCourse
-     * Removes a course from the available catalog.
+     * Removes a course from the available catalog and deletes its thumbnail if present.
      */
     async deleteCourse(courseId: string) {
         try {
+            // First, get the course to find the associated thumbnail_id
+            const course = await this.getCourse(courseId);
+
+            // Delete associated thumbnail from storage if it exists
+            if (course.thumbnail_id) {
+                try {
+                    await storageService.deleteFile(course.thumbnail_id);
+                } catch (storageError) {
+                    // Log but don't fail document deletion if storage fails (e.g. file already gone)
+                    console.warn('[courseApi.deleteCourse] Storage cleanup failed:', storageError);
+                }
+            }
+
             return await databases.deleteDocument(
                 appwriteConfig.databaseId,
                 appwriteConfig.coursesCollectionId,

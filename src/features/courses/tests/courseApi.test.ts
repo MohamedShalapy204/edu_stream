@@ -21,6 +21,7 @@ vi.mock('@/services/appwrite/storage/storageService', () => ({
     storageService: {
         uploadFile: vi.fn(),
         getFilePreview: vi.fn(),
+        deleteFile: vi.fn(),
     }
 }));
 
@@ -97,6 +98,20 @@ describe('courseApi', () => {
                     thumbnail_url: 'http://preview-url'
                 })
             );
+        });
+    });
+
+    describe('deleteCourse', () => {
+        it('should delete a course and its thumbnail if present', async () => {
+            const courseWithThumb = { ...mockCourse, thumbnail_id: 'thumb-123' };
+            vi.mocked(databases.getDocument).mockResolvedValue(courseWithThumb as any);
+            vi.mocked(databases.deleteDocument).mockResolvedValue({} as any);
+
+            await courseApi.deleteCourse('course-1');
+
+            expect(databases.getDocument).toHaveBeenCalledWith('test-db', 'courses-col', 'course-1');
+            expect(storageService.deleteFile).toHaveBeenCalledWith('thumb-123');
+            expect(databases.deleteDocument).toHaveBeenCalledWith('test-db', 'courses-col', 'course-1');
         });
     });
 });

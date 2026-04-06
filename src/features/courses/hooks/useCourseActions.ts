@@ -63,7 +63,10 @@ export function useDeleteCourse() {
 
     return useMutation({
         mutationFn: (courseId: string) => courseApi.deleteCourse(courseId),
-        onSuccess: () => {
+        onSuccess: (_, courseId) => {
+            // Remove the specific detail query from the cache so it's not refetched as a 404
+            queryClient.removeQueries({ queryKey: queryKeys.courses.detail(courseId) });
+            // Invalidate everything else (lists, teacher dashboards)
             queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
         },
     });
