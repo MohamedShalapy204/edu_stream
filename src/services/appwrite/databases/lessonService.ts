@@ -40,6 +40,25 @@ export const lessonService = {
     },
 
     /**
+     * Lists all lessons for a specific course, ordered by 'order'.
+     */
+    async listCourseLessons(courseId: string) {
+        try {
+            return await databases.listDocuments<ILesson>(
+                appwriteConfig.databaseId,
+                appwriteConfig.lessonsCollectionId,
+                [
+                    Query.equal('course_id', courseId),
+                    Query.orderAsc('order')
+                ]
+            );
+        } catch (error) {
+            console.error('[LessonService.listCourseLessons]', error);
+            throw error;
+        }
+    },
+
+    /**
      * Gets a single lesson by ID.
      */
     async getLesson(lessonId: string) {

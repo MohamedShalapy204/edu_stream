@@ -15,6 +15,17 @@ export function useGetLessons(sectionId: string) {
 }
 
 /**
+ * Hook to fetch all lessons for an entire course.
+ */
+export function useGetLessonsByCourse(courseId: string) {
+    return useQuery({
+        queryKey: ['lessons', 'course', courseId],
+        queryFn: () => lessonService.listCourseLessons(courseId),
+        enabled: !!courseId,
+    });
+}
+
+/**
  * Hook to fetch a single lesson.
  */
 export function useGetLessonById(lessonId: string) {

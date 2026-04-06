@@ -6,7 +6,8 @@ import {
     HiOutlineSquares2X2,
     HiOutlineBookOpen,
     HiOutlineUserCircle,
-    HiOutlineChevronDown
+    HiOutlineChevronDown,
+    HiOutlineAcademicCap
 } from 'react-icons/hi2';
 import { useLogout, useCurrentAccount, UserRole } from '@/features/auth';
 import { useCurrentUser } from '@/hooks/useUser';
@@ -86,6 +87,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                         Faculty Dashboard
                                     </Link>
                                 )}
+
+                                {profile?.role === UserRole.STUDENT && (
+                                    <Link
+                                        to="/student/dashboard"
+                                        className={`flex items-center gap-2.5 text-[10px] uppercase font-black tracking-[0.25em] py-2 px-4 rounded-xl transition-all ${location.pathname.startsWith('/student') ? 'bg-primary/10 text-primary shadow-premium' : 'text-base-content/40 hover:bg-base-200'}`}
+                                    >
+                                        <HiOutlineAcademicCap className="w-4 h-4" />
+                                        Learning Portal
+                                    </Link>
+                                )}
                             </nav>
                         </div>
 
@@ -110,6 +121,22 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                             <p className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/30 mb-1">Authenticated Account</p>
                                             <p className="text-xs font-bold truncate">{account.email}</p>
                                         </div>
+                                        {profile?.role === UserRole.STUDENT && (
+                                            <li>
+                                                <Link to="/student/dashboard" className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
+                                                    <HiOutlineAcademicCap className="w-5 h-5" />
+                                                    Learning Portal
+                                                </Link>
+                                            </li>
+                                        )}
+                                        {profile?.role === UserRole.TEACHER && (
+                                            <li>
+                                                <Link to="/teacher/dashboard" className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
+                                                    <HiOutlineSquares2X2 className="w-5 h-5" />
+                                                    Faculty Dashboard
+                                                </Link>
+                                            </li>
+                                        )}
                                         <li>
                                             <Link to="/profile" className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
                                                 <HiOutlineUserCircle className="w-5 h-5" />
