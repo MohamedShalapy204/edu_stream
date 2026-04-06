@@ -149,12 +149,8 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                     <div className="flex gap-4">
                         {step < 3 ? (
                             <button
-                                type="button"
+                                type="submit"
                                 className="btn btn-primary h-14 px-10 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all group no-animation border-none"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setStep((s) => s + 1);
-                                }}
                             >
                                 Advance
                                 <HiOutlineChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
