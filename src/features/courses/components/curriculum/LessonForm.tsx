@@ -1,65 +1,89 @@
 import React, { useState } from 'react';
-import { useCreateLesson } from '@/features/courses/hooks/useLessonActions';
+import { useCreateLesson, useUpdateLesson } from '@/features/courses/hooks/useLessonActions';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import { HiOutlineDocument } from 'react-icons/hi2';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import type { ILesson } from '@/features/courses/types/courseTypes';
 
 interface LessonFormProps {
     sectionId: string;
     courseId: string;
     nextOrder: number;
+    initialData?: ILesson;
     onCancel: () => void;
     onSuccess: () => void;
 }
 
-export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nextOrder, onCancel, onSuccess }) => {
-    const { mutate: createLesson, isPending } = useCreateLesson();
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [videoUrl, setVideoUrl] = useState('');
+export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nextOrder, initialData, onCancel, onSuccess }) => {
+    const { mutate: createLesson, isPending: isCreating } = useCreateLesson();
+    const { mutate: updateLesson, isPending: isUpdating } = useUpdateLesson();
+
+    const [title, setTitle] = useState(initialData?.title || '');
+    const [description, setDescription] = useState(initialData?.description || '');
+    const [videoUrl, setVideoUrl] = useState(initialData?.video_url || '');
     const [files, setFiles] = useState<File[]>([]);
-    const [isFree, setIsFree] = useState(false);
+    const [isFree, setIsFree] = useState(initialData?.is_free || false);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+
+    const isEditMode = Boolean(initialData);
+    const isPending = isCreating || isUpdating;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!title.trim()) return;
 
         setIsUploading(true);
-        let uploadedFileIds: string[] = [];
+        let finalDocumentIds: string[] = initialData?.document_ids || [];
 
         try {
             if (files.length > 0) {
                 const progresses = new Array(files.length).fill(0);
-                const uploadPromises = files.map((file, idx) => storageService.uploadFile(file, (p) => {
+                const uploadPromises = files.map((file: File, idx: number) => storageService.uploadFile(file, (p) => {
                     progresses[idx] = p.progress;
                     const total = progresses.reduce((a, b) => a + b, 0) / files.length;
                     setUploadProgress(total);
                 }));
                 const uploadedFiles = await Promise.all(uploadPromises);
-                uploadedFileIds = uploadedFiles.map(f => f.$id);
+                const newDocumentIds = uploadedFiles.map((f: { $id: string }) => f.$id);
+                // For now, we append new documents to existing ones
+                finalDocumentIds = [...finalDocumentIds, ...newDocumentIds];
             }
 
-            createLesson(
-                {
-                    section_id: sectionId,
-                    course_id: courseId,
-                    title,
-                    description,
-                    video_url: videoUrl ? videoUrl : undefined,
-                    document_ids: uploadedFileIds.length > 0 ? uploadedFileIds : undefined,
-                    is_free: isFree,
-                    order: nextOrder
-                },
-                {
-                    onSuccess: () => {
-                        setIsUploading(false);
-                        onSuccess();
-                    },
-                    onError: () => setIsUploading(false)
-                }
-            );
+            const payload = {
+                section_id: sectionId,
+                course_id: courseId,
+                title,
+                description,
+                video_url: videoUrl ? videoUrl : undefined,
+                document_ids: finalDocumentIds.length > 0 ? finalDocumentIds : undefined,
+                is_free: isFree,
+                order: initialData ? initialData.order : nextOrder
+            };
+
+            if (isEditMode && initialData) {
+                updateLesson(
+                    { lessonId: initialData.$id, data: payload },
+                    {
+                        onSuccess: () => {
+                            setIsUploading(false);
+                            onSuccess();
+                        },
+                        onError: () => setIsUploading(false)
+                    }
+                );
+            } else {
+                createLesson(
+                    payload,
+                    {
+                        onSuccess: () => {
+                            setIsUploading(false);
+                            onSuccess();
+                        },
+                        onError: () => setIsUploading(false)
+                    }
+                );
+            }
         } catch (error) {
             console.error('Failed to upload file', error);
             setIsUploading(false);
@@ -69,7 +93,9 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
     return (
         <form onSubmit={handleSubmit} className="p-6 bg-white rounded-2xl border border-primary/20 shadow-xl space-y-5 animate-in slide-in-from-top-4 duration-300">
             <div className="flex items-center justify-between border-b border-base-content/5 pb-4">
-                <h5 className="text-sm font-black uppercase tracking-widest text-primary">New Lesson</h5>
+                <h5 className="text-sm font-black uppercase tracking-widest text-primary">
+                    {isEditMode ? 'Refine Lesson' : 'New Lesson'}
+                </h5>
                 <button type="button" onClick={onCancel} className="text-xs font-bold text-base-content/40 hover:text-base-content">Cancel</button>
             </div>
 
@@ -109,7 +135,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                         />
                         <div className={`w-full h-12 flex items-center justify-between px-4 rounded-xl border-2 border-dashed transition-all ${files.length > 0 ? 'bg-primary/5 border-primary/30 text-primary' : 'bg-base-200/50 border-base-content/10 group-hover:bg-base-200 group-hover:border-primary/20'}`}>
                             <span className="text-sm font-bold truncate max-w-[80%]">
-                                {files.length > 0 ? `${files.length} Document(s) Attached` : 'Attach Documents (PDF, ZIP, etc) - Optional'}
+                                {files.length > 0 ? `${files.length} Document(s) Attached` : isEditMode ? 'Update/Add Documents (Optional)' : 'Attach Documents (PDF, ZIP, etc) - Optional'}
                             </span>
                             <HiOutlineDocument className="w-5 h-5 opacity-50" />
                         </div>
@@ -127,7 +153,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
             <div className="pt-2 flex flex-col items-end gap-3">
                 {isUploading && uploadProgress > 0 && (
                     <div className="w-full sm:w-1/2 px-2">
-                        <ProgressBar progress={uploadProgress} label="Uploading Attachments" />
+                        <ProgressBar progress={uploadProgress} label="Synchronizing Attachments" />
                     </div>
                 )}
                 <button
@@ -135,7 +161,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                     disabled={isPending || isUploading || !title.trim()}
                     className="btn btn-primary h-12 px-8 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:shadow-xl transition-all border-none"
                 >
-                    {isPending || isUploading ? <span className="loading loading-spinner loading-xs" /> : 'Save Lesson'}
+                    {isPending || isUploading ? <span className="loading loading-spinner loading-xs" /> : isEditMode ? 'Refine Segment' : 'Save Lesson'}
                 </button>
             </div>
         </form>

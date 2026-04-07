@@ -3,8 +3,7 @@ import NotFound from '@/pages/errors/NotFound';
 import { RoleGuard, UserRole } from '@/features/auth';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import { TeacherDashboard, ManageCoursePage } from '@/features/teacher';
-import StudentDashboard from '@/features/student/pages/StudentDashboard';
-import LearningTheatre from '@/features/student/pages/LearningTheatre';
+import { StudentDashboard, LearningTheatre, EnrollmentGuard } from '@/features/student';
 import { ProtectedLayoutWrapper } from './ProtectedLayoutWrapper';
 
 // TODO: Fix potential naming collisions if any arise from consolidating teacher features
@@ -25,10 +24,21 @@ export const protectedRoutes = [
             },
             {
                 path: 'student',
-                element: <RoleGuard allowedRoles={[UserRole.STUDENT]}><Outlet /></RoleGuard>,
                 children: [
-                    { path: 'dashboard', element: <StudentDashboard /> },
-                    { path: 'learn/:id', element: <LearningTheatre /> },
+                    {
+                        path: 'dashboard',
+                        element: <RoleGuard allowedRoles={[UserRole.STUDENT]}><StudentDashboard /></RoleGuard>
+                    },
+                    {
+                        path: 'learn/:id',
+                        element: (
+                            <RoleGuard allowedRoles={[UserRole.STUDENT, UserRole.TEACHER]}>
+                                <EnrollmentGuard>
+                                    <LearningTheatre />
+                                </EnrollmentGuard>
+                            </RoleGuard>
+                        )
+                    },
                 ]
             },
             {

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { HiChevronDown, HiOutlineDocumentText, HiOutlineVideoCamera, HiPlus, HiOutlineTrash, HiArrowUp, HiArrowDown } from 'react-icons/hi2';
-import type { ISection } from '@/features/courses/types/courseTypes';
+import { HiChevronDown, HiOutlineDocumentText, HiOutlineVideoCamera, HiPlus, HiOutlineTrash, HiArrowUp, HiArrowDown, HiOutlinePencilSquare } from 'react-icons/hi2';
+import type { ISection, ILesson } from '@/features/courses/types/courseTypes';
 import { useGetSectionLessons, useUpdateLesson, useDeleteLesson } from '@/features/courses/hooks/useLessonActions';
 import { LessonForm } from './LessonForm';
+import { useState } from 'react';
 
 interface SectionItemProps {
     section: ISection;
@@ -16,6 +16,7 @@ interface SectionItemProps {
 export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalSections, onMoveUp, onMoveDown, onDelete }) => {
     const [isExpanded, setIsExpanded] = useState(true);
     const [isAddingLesson, setIsAddingLesson] = useState(false);
+    const [editingLessonId, setEditingLessonId] = useState<string | null>(null);
 
     // Auto-fetch lessons when expanded
     const { data: lessons, isLoading } = useGetSectionLessons(section.$id);
@@ -41,6 +42,11 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
         if (window.confirm('Are you sure you want to delete this lesson?')) {
             deleteLesson(lessonId);
         }
+    };
+
+    const handleEditLesson = (e: React.MouseEvent, lessonId: string) => {
+        e.stopPropagation();
+        setEditingLessonId(lessonId);
     };
 
     return (
@@ -84,28 +90,43 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
                             <div className="py-4 text-center"><span className="loading loading-spinner text-primary/20" /></div>
                         ) : (
                             lessons?.documents.map((lesson, lessonIdx) => (
-                                <div key={lesson.$id} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-base-content/5 shadow-sm group hover:border-primary/20 transition-colors">
-                                    <div className="flex items-center gap-4">
-                                        <div className="text-base-content/20 group-hover:text-primary transition-colors">
-                                            {lesson.video_url ? <HiOutlineVideoCamera className="w-5 h-5" /> : <HiOutlineDocumentText className="w-5 h-5" />}
+                                editingLessonId === lesson.$id ? (
+                                    <LessonForm
+                                        key={lesson.$id}
+                                        sectionId={section.$id}
+                                        courseId={section.course_id}
+                                        nextOrder={lesson.order}
+                                        initialData={lesson as unknown as ILesson}
+                                        onCancel={() => setEditingLessonId(null)}
+                                        onSuccess={() => setEditingLessonId(null)}
+                                    />
+                                ) : (
+                                    <div key={lesson.$id} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-base-content/5 shadow-sm group hover:border-primary/20 transition-colors">
+                                        <div className="flex items-center gap-4">
+                                            <div className="text-base-content/20 group-hover:text-primary transition-colors">
+                                                {lesson.video_url || lesson.video_id ? <HiOutlineVideoCamera className="w-5 h-5" /> : <HiOutlineDocumentText className="w-5 h-5" />}
+                                            </div>
+                                            <span className="text-sm font-bold text-base-content">{lesson.title}</span>
                                         </div>
-                                        <span className="text-sm font-bold text-base-content">{lesson.title}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        {lesson.is_free && <span className="px-2 py-0.5 rounded-md bg-success/10 text-success text-[9px] font-black uppercase tracking-widest mr-2">Free</span>}
+                                        <div className="flex items-center gap-2">
+                                            {lesson.is_free && <span className="px-2 py-0.5 rounded-md bg-success/10 text-success text-[9px] font-black uppercase tracking-widest mr-2">Free</span>}
 
-                                        {/* Lesson Controls */}
-                                        <button disabled={lessonIdx === 0} onClick={(e) => handleMoveLesson(e, lessonIdx, 'up')} className="btn btn-xs btn-ghost btn-square opacity-0 group-hover:opacity-100 disabled:opacity-10 transition-opacity">
-                                            <HiArrowUp className="w-3.5 h-3.5" />
-                                        </button>
-                                        <button disabled={lessonIdx === (lessons?.documents.length || 0) - 1} onClick={(e) => handleMoveLesson(e, lessonIdx, 'down')} className="btn btn-xs btn-ghost btn-square opacity-0 group-hover:opacity-100 disabled:opacity-10 transition-opacity">
-                                            <HiArrowDown className="w-3.5 h-3.5" />
-                                        </button>
-                                        <button onClick={(e) => handleDeleteLesson(e, lesson.$id)} className="btn btn-xs btn-ghost btn-square text-error opacity-0 group-hover:opacity-100 transition-opacity ml-1 hover:bg-error/10">
-                                            <HiOutlineTrash className="w-3.5 h-3.5" />
-                                        </button>
+                                            {/* Lesson Controls */}
+                                            <button onClick={(e) => handleEditLesson(e, lesson.$id)} className="btn btn-xs btn-ghost btn-square opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary">
+                                                <HiOutlinePencilSquare className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button disabled={lessonIdx === 0} onClick={(e) => handleMoveLesson(e, lessonIdx, 'up')} className="btn btn-xs btn-ghost btn-square opacity-0 group-hover:opacity-100 disabled:opacity-10 transition-opacity">
+                                                <HiArrowUp className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button disabled={lessonIdx === (lessons?.documents.length || 0) - 1} onClick={(e) => handleMoveLesson(e, lessonIdx, 'down')} className="btn btn-xs btn-ghost btn-square opacity-0 group-hover:opacity-100 disabled:opacity-10 transition-opacity">
+                                                <HiArrowDown className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button onClick={(e) => handleDeleteLesson(e, lesson.$id)} className="btn btn-xs btn-ghost btn-square text-error opacity-0 group-hover:opacity-100 transition-opacity ml-1 hover:bg-error/10">
+                                                <HiOutlineTrash className="w-3.5 h-3.5" />
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                )
                             ))
                         )}
 

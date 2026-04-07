@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { type FC } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
     HiOutlineChevronLeft,
@@ -10,7 +10,8 @@ import {
     HiOutlinePlay,
     HiOutlineLockClosed,
     HiOutlineUser,
-    HiOutlineCalendar
+    HiOutlineCalendar,
+    HiOutlineAcademicCap
 } from 'react-icons/hi2';
 import { useGetCourseById } from '@/features/courses';
 import { useGetSections } from '@/hooks/useSections';
@@ -18,19 +19,50 @@ import { useGetLessons } from '@/hooks/useLessons';
 import { useCurrentAccount } from '@/features/auth';
 import { useUser } from '@/hooks/useUser';
 import { storageService } from '@/services/appwrite/storage/storageService';
+import { useGetEnrolledCourses, useEnrollCourse } from '@/features/student/hooks/useStudent';
 
-const CourseDetailPage: React.FC = () => {
+const CourseDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const { data: account } = useCurrentAccount();
 
     // ── Data Fetching ──
     const { data: course, isLoading: courseLoading } = useGetCourseById(id!);
     const { data: teacher } = useUser(course?.teacher_id || '');
     const { data: sections, isLoading: sectionsLoading } = useGetSections(id!);
+    const { data: enrolledCourses } = useGetEnrolledCourses(account?.$id);
+    const { mutate: enroll, isPending: enrolling } = useEnrollCourse(account?.$id || '');
+
+    const isEnrolled = enrolledCourses?.some(ec => ec.course.$id === id);
+    const isOwner = course?.teacher_id === account?.$id;
 
     // Fetch lessons for the first section as a preview if needed
     const firstSectionId = sections?.documents[0]?.$id;
     const { data: previewLessons } = useGetLessons(firstSectionId || '');
+
+    const handleEnroll = () => {
+        if (!account) {
+            navigate('/login');
+            return;
+        }
+
+        if (isEnrolled) {
+            navigate(`/student/learn/${id}`);
+            return;
+        }
+
+        // If it's free OR if the current user is the owner, allow immediate Master Enrollment
+        if (course?.price === 0 || isOwner) {
+            enroll(id!, {
+                onSuccess: () => {
+                    navigate(`/student/learn/${id}`);
+                }
+            });
+        } else {
+            // TODO: In a real app we would redirect to a checkout page
+            alert("Scholarly tribute processing is currently being harmonized. Paid enrollment will be available soon.");
+        }
+    };
 
     // TODO: Add loading skeleton
     if (courseLoading || sectionsLoading) {
@@ -102,9 +134,9 @@ const CourseDetailPage: React.FC = () => {
 
                     <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-base-content/5">
                         <Link to={`/teachers/${course.teacher_id}`} className="flex items-center gap-4 group cursor-pointer text-left">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-[1rem] flex items-center justify-center text-primary shadow-premium border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 transition-all">
+                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-primary shadow-premium border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 transition-all">
                                 {teacher?.avatar_url ? (
-                                    <img src={teacher.avatar_url} alt={teacher.name} className="w-full h-full rounded-[1rem] object-cover" />
+                                    <img src={teacher.avatar_url} alt={teacher.name} className="w-full h-full rounded-2xl object-cover" />
                                 ) : (
                                     <HiOutlineUser className="w-6 h-6" />
                                 )}
@@ -158,8 +190,31 @@ const CourseDetailPage: React.FC = () => {
                                 {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">$199.99</span>}
                             </div>
 
-                            <button className="w-full py-5 bg-primary hover:bg-primary/90 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-primary/20 ring-1 ring-white/20 active:scale-[0.98]">
-                                Enroll and Begin Mastery
+                            <button
+                                onClick={handleEnroll}
+                                disabled={enrolling}
+                                className={`w-full py-5 flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl ring-1 ring-white/20 active:scale-[0.98]
+                                    ${isEnrolled
+                                        ? 'bg-base-content text-white hover:bg-base-content/90'
+                                        : 'bg-primary hover:bg-primary/90 text-white shadow-primary/20'
+                                    }
+                                    ${enrolling ? 'opacity-70 cursor-not-allowed' : ''}
+                                `}
+                            >
+                                {enrolling ? (
+                                    <span className="loading loading-spinner loading-xs" />
+                                ) : isEnrolled ? (
+                                    <>
+                                        <HiOutlineAcademicCap className="w-5 h-5" />
+                                        Enter Theatre
+                                    </>
+                                ) : isOwner ? (
+                                    'Self-Enroll (Internal Access)'
+                                ) : course?.price === 0 ? (
+                                    'Enroll for Free'
+                                ) : (
+                                    'Enroll and Begin Mastery'
+                                )}
                             </button>
 
                             <div className="space-y-5 pt-4">

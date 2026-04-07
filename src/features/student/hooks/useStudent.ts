@@ -47,3 +47,14 @@ export const useUpdateLastAccessed = (userId: string) => {
         },
     });
 };
+
+export const useEnrollCourse = (userId: string) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (courseId: string) => studentApi.enrollInCourse(userId, courseId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: studentKeys.enrollments(userId) });
+        },
+    });
+};

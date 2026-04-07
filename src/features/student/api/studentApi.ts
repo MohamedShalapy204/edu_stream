@@ -65,5 +65,49 @@ export const studentApi = {
             console.error('[studentApi.getEnrolledCourses]', error);
             throw error;
         }
+    },
+
+    /**
+     * enrollInCourse
+     * Creates a new 'active' subscription record for the student to grant 
+     * immediate access to the Learning Theatre.
+     */
+    async enrollInCourse(userId: string, courseId: string): Promise<ISubscription> {
+        try {
+            // Check for existing active enrollment to avoid duplicates
+            const existing = await databases.listDocuments<ISubscription>(
+                appwriteConfig.databaseId,
+                appwriteConfig.subscriptionsCollectionId,
+                [
+                    Query.equal('user_id', userId),
+                    Query.equal('course_id', courseId),
+                    Query.equal('status', 'active')
+                ]
+            );
+
+            if (existing.total > 0) {
+                return existing.documents[0];
+            }
+
+            const now = new Date();
+            const tenYearsLater = new Date();
+            tenYearsLater.setFullYear(now.getFullYear() + 10);
+
+            return await databases.createDocument<ISubscription>(
+                appwriteConfig.databaseId,
+                appwriteConfig.subscriptionsCollectionId,
+                'unique()',
+                {
+                    user_id: userId,
+                    course_id: courseId,
+                    status: 'active',
+                    start_date: now.toISOString(),
+                    end_date: tenYearsLater.toISOString(),
+                }
+            );
+        } catch (error) {
+            console.error('[studentApi.enrollInCourse]', error);
+            throw error;
+        }
     }
 };

@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import uiReducer from "./slices/uiSlice"
+import theatreReducer from "../features/student/store/theatreSlice"
 
 export const store = configureStore({
   reducer: {
     ui: uiReducer,
+    theatre: theatreReducer,
   },
 })
 
