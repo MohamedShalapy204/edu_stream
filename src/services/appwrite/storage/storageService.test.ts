@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { storageService } from './storageService';
-import { storage, appwriteConfig } from '../config';
+import { storage } from '../config';
 
 vi.mock('../config', () => ({
     storage: {
