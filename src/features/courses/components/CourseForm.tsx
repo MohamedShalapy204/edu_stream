@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto } from 'react-icons/hi2';
 import type { ICourse } from '@/features/courses';
@@ -24,7 +24,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
     );
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<CourseFormData>({
-        resolver: zodResolver(courseSchema) as any,
+        resolver: zodResolver(courseSchema) as Resolver<CourseFormData>,
         defaultValues: {
             title: initialData?.title || '',
             description: initialData?.description || '',

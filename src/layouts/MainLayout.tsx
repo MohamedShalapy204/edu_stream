@@ -7,10 +7,15 @@ import {
     HiOutlineBookOpen,
     HiOutlineUserCircle,
     HiOutlineChevronDown,
-    HiOutlineAcademicCap
+    HiOutlineAcademicCap,
+    HiOutlineSun,
+    HiOutlineMoon
 } from 'react-icons/hi2';
 import { useLogout, useCurrentAccount, UserRole } from '@/features/auth';
 import { useCurrentUser } from '@/hooks/useUser';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { toggleTheme } from '@/store/slices/uiSlice';
+import { useEffect } from 'react';
 
 interface MainLayoutProps {
     isPublic?: boolean;
@@ -19,9 +24,15 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useAppDispatch();
+    const theme = useAppSelector((state) => state.ui.theme);
     const { data: account } = useCurrentAccount();
     const { data: profile } = useCurrentUser();
     const { mutate: logout, isPending } = useLogout();
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     const handleLogout = () => {
         logout(undefined, {
@@ -102,6 +113,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
 
                         {/* Actions Section */}
                         <div className="flex items-center gap-6">
+                            {/* Theme Toggle Button */}
+                            <button
+                                onClick={() => dispatch(toggleTheme())}
+                                className="w-10 h-10 rounded-xl bg-base-200 flex items-center justify-center text-base-content/60 hover:text-primary hover:bg-primary/10 transition-all shadow-premium/5 group"
+                                aria-label="Toggle Theme"
+                            >
+                                {theme === 'light' ? (
+                                    <HiOutlineMoon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                ) : (
+                                    <HiOutlineSun className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                )}
+                            </button>
                             {account ? (
                                 <div className="dropdown dropdown-end">
                                     <label tabIndex={0} className="group flex items-center gap-4 cursor-pointer p-1 rounded-2xl hover:bg-base-200 transition-all">

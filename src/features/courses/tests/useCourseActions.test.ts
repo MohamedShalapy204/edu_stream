@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@/test-utils';
 import { useGetCourses, useGetCourseById, useCreateCourse, useUpdateCourse, useDeleteCourse } from '../hooks/useCourseActions';
 import { courseApi } from '../api/courseApi';
-import { Query } from 'appwrite';
+// No Query import needed
 
 vi.mock('../api/courseApi');
 

@@ -41,6 +41,9 @@ export interface IAppwriteDoc {
     $sequence: number;
 }
 
+// ── Shared Course Entities ──
+export * from '@/features/courses/types/courseTypes';
+
 // ── Interfaces ──
 
 // moved to @/features/auth/types

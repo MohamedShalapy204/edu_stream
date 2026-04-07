@@ -13,5 +13,6 @@ class MockObserver {
   disconnect = vi.fn();
 }
 
-global.IntersectionObserver = MockObserver as any;
-global.ResizeObserver = MockObserver as any;
+// Use vi.stubGlobal for better environment isolation in Vitest
+vi.stubGlobal('IntersectionObserver', MockObserver);
+vi.stubGlobal('ResizeObserver', MockObserver);

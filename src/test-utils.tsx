@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { type PropsWithChildren, type ReactElement } from 'react';
 import { render as rtlRender, type RenderOptions } from '@testing-library/react';
 import { renderHook as rtlRenderHook, type RenderHookOptions } from '@testing-library/react';
