@@ -29,3 +29,5 @@ dist-ssr
 context/*
 .claude/*
 .kilo/*
+.agent/*
+.specify/*
