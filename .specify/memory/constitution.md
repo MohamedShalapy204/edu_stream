@@ -1,9 +1,9 @@
 <!--
 Sync Impact Report:
-Version change: 1.1.0 -> 1.2.0
+Version change: 1.2.0 -> 1.3.0
 Modified principles:
-- Added Principle IV. Exact Data Model Consistency (ERD)
-- Added Principle V. Product Scope & Quality Gates (PRD)
+- Added Principle VI. Performance & Security Best Practices
+- Added Principle VII. Human-in-the-Loop Constraint
 Templates requiring updates: (✅ updated / ⚠ pending) 
 - .specify/templates/plan-template.md (✅ updated - dynamic gates)
 - .specify/templates/spec-template.md (✅ updated - dynamic constraints)
@@ -29,10 +29,17 @@ The database definitions and Appwrite Collections must perfectly match `context/
 ### V. Product Scope & Quality Gates (PRD)
 Features must trace back to the requirements in `context/PRD.md`. Development must respect Non-Functional Requirements including: < 2s load time targets, JWT authentication, precise Role-Based Access Control (Student, Teacher, Admin), and Content Protection techniques (device limits, basic visual watermarking).
 
+### VI. Performance & Security Best Practices
+- **Security Checkpoints**: Ensure strict Zod validation on inputs on both client and database functions. Apply correct Appwrite collection limits. Tokens, device tracking logic, and Appwrite document permissions must rigorously restrict cross-tenant views.
+- **Performance Thresholds**: Code must be audited to ensure compliance with the < 2s load time. Lazy load non-critical React chunks. Leverage React Query’s built-in caching where data is mostly static. 
+
+### VII. Human-in-the-Loop Constraint 
+The AI must strictly await explicit human approval before executing any destructive operations. No major Git branch changes (like push/merge), large architectural rewrites, or database schema mutations should be fully executed automatically without prompting for the user's manual "Continue" or "Approve" statement. AI acts as an advisory implementer but the Human steers.
+
 ## Governance
 
 - **Amendment Procedure:** Amendments require documentation and updating this constitution file to reflect new phases or design decisions. All PRs must verify compliance with PRD and ERD boundaries.
 - **Versioning Policy:** Major version bumps for architectural shifts, minor for new phases or principles, patch for clarifications.
 - **Compliance Review Expectations:** All pull requests, tasks, and feature specifications must verify compliance with the `context/implementation_plan.md`, Phase 6 goals, `context/PRD.md`, and `context/ERD.md`. Complexity that breaks FSD must be strictly justified in architecture documents.
 
-**Version**: 1.2.0 | **Ratified**: 2026-04-09 | **Last Amended**: 2026-04-09
+**Version**: 1.3.0 | **Ratified**: 2026-04-09 | **Last Amended**: 2026-04-09
