@@ -33,7 +33,7 @@ describe('DocumentTabs', () => {
       />
     );
 
-    const activeTab = screen.getByText('Doc 1').closest('a');
+    const activeTab = screen.getByText('Doc 1').closest('[role="tab"]');
     expect(activeTab).toHaveClass('tab-active');
   });
 

@@ -101,7 +101,7 @@ const LearningTheatre: FC = () => {
     if (isLoading) {
         return (
             <div className="fixed inset-0 bg-base-100 flex items-center justify-center z-50">
-                <span className="loading loading-spinner text-primary loading-lg" />
+                <span role="progressbar" className="loading loading-spinner text-primary loading-lg" />
             </div>
         );
     }
@@ -183,16 +183,14 @@ const LearningTheatre: FC = () => {
 
             {/* Main Stage Center */}
             <div className="flex-1 h-screen bg-black/5 p-4 md:p-8 md:pt-24 flex items-center justify-center relative overflow-hidden transition-all duration-500">
-                <div 
-                    className={`w-full h-full max-w-[100%] mx-auto rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden ${
-                        isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'
-                    }`}
+                <div
+                    className={`w-full h-full max-w-full mx-auto rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden ${isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'
+                        }`}
                 >
                     {activeLesson ? (
                         <>
-                            <div className={`transition-all duration-500 flex flex-col ${
-                                isWorkspaceActive ? 'h-1/2 lg:h-full lg:w-1/2' : 'h-full w-full'
-                            }`} data-testid="video-player-container">
+                            <div className={`transition-all duration-500 flex flex-col ${isWorkspaceActive ? 'h-1/2 lg:h-full lg:w-1/2' : 'h-full w-full'
+                                }`} data-testid="video-player-container">
                                 <TheatrePlayer
                                     lesson={activeLesson}
                                     isCompleted={isCompleted}
@@ -200,7 +198,7 @@ const LearningTheatre: FC = () => {
                                     onNextLesson={handleNextLesson}
                                 />
                             </div>
-                            
+
                             {isWorkspaceActive && (
                                 <div className="h-1/2 lg:h-full lg:w-1/2 p-4 animate-in fade-in slide-in-from-right-4 duration-500">
                                     <DocumentController />
