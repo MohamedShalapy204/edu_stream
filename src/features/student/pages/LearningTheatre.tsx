@@ -15,6 +15,10 @@ import type { ICourseProgress } from '../types';
 import { CurriculumSidebar } from '../components/CurriculumSidebar';
 import { TheatrePlayer } from '../components/TheatrePlayer';
 import { DocumentHub } from '../components/DocumentHub';
+import DocumentController from '../components/LearningTheatre/DocumentController';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useEffect } from 'react';
+import { resetTheatre } from '../store/learningTheatreSlice';
 
 const LearningTheatre: FC = () => {
     const { id: courseId } = useParams<{ id: string }>();
@@ -30,6 +34,11 @@ const LearningTheatre: FC = () => {
 
     const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(true);
     const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
+
+    // Redux State for Learning Theatre
+    const dispatch = useAppDispatch();
+    const { openDocuments } = useAppSelector((state) => state.learningTheatre.documents);
+    const isWorkspaceActive = openDocuments.length > 0;
 
     // Progress Hooks
     const { data: allProgress } = useGetStudentProgress(user?.$id);
@@ -58,6 +67,13 @@ const LearningTheatre: FC = () => {
         }
         return sorted[0].$id;
     }, [selectedLessonId, isLoading, lessons, courseProgress.last_accessed_lesson]);
+
+    // Reset theatre state when lesson changes
+    useEffect(() => {
+        if (activeLessonId) {
+            dispatch(resetTheatre());
+        }
+    }, [activeLessonId, dispatch]);
 
     const handleLessonSelect = (lessonId: string) => {
         setSelectedLessonId(lessonId);
@@ -167,14 +183,30 @@ const LearningTheatre: FC = () => {
 
             {/* Main Stage Center */}
             <div className="flex-1 h-screen bg-black/5 p-4 md:p-8 md:pt-24 flex items-center justify-center relative overflow-hidden transition-all duration-500">
-                <div className="w-full h-full max-w-(--breakpoint-2xl) mx-auto rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex flex-col relative z-10 overflow-hidden">
+                <div 
+                    className={`w-full h-full max-w-[100%] mx-auto rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden ${
+                        isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'
+                    }`}
+                >
                     {activeLesson ? (
-                        <TheatrePlayer
-                            lesson={activeLesson}
-                            isCompleted={isCompleted}
-                            onMarkCompleted={handleMarkComplete}
-                            onNextLesson={handleNextLesson}
-                        />
+                        <>
+                            <div className={`transition-all duration-500 flex flex-col ${
+                                isWorkspaceActive ? 'h-1/2 lg:h-full lg:w-1/2' : 'h-full w-full'
+                            }`} data-testid="video-player-container">
+                                <TheatrePlayer
+                                    lesson={activeLesson}
+                                    isCompleted={isCompleted}
+                                    onMarkCompleted={handleMarkComplete}
+                                    onNextLesson={handleNextLesson}
+                                />
+                            </div>
+                            
+                            {isWorkspaceActive && (
+                                <div className="h-1/2 lg:h-full lg:w-1/2 p-4 animate-in fade-in slide-in-from-right-4 duration-500">
+                                    <DocumentController />
+                                </div>
+                            )}
+                        </>
                     ) : (
                         <div className="flex-1 flex flex-col justify-center items-center text-base-content/30 p-12 text-center">
                             <h2 className="text-3xl font-heading font-black mb-4 tracking-tight">Select a Segment</h2>
@@ -210,4 +242,3 @@ const LearningTheatre: FC = () => {
 };
 
 export default LearningTheatre;
-

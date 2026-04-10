@@ -11,8 +11,8 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Ensure DaisyUI is installed and configured in `tailwind.config.ts`
-- [ ] T002 Configure Redux Toolkit store structure for Student feature inside `src/features/student/store/`
+- [x] T001 Ensure DaisyUI is installed and configured in `tailwind.config.ts`
+- [x] T002 Configure Redux Toolkit store structure for Student feature inside `src/features/student/store/`
 
 ---
 
@@ -22,8 +22,8 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Create `src/features/student/types/learningTheatreTypes.ts` mapping the definitions from `data-model.md`
-- [ ] T004 [P] Establish `src/features/student/store/learningTheatreSlice.ts` to manage `LearningTheatreState` and `DocumentControllerState` using Redux Toolkit.
+- [x] T003 Create `src/features/student/types/learningTheatreTypes.ts` mapping the definitions from `data-model.md`
+- [x] T004 [P] Establish `src/features/student/store/learningTheatreSlice.ts` to manage `LearningTheatreState` and `DocumentControllerState` using Redux Toolkit.
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -39,14 +39,14 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T005 [P] [US1] Create unit tests for PDF switching logic in `src/features/student/tests/DocumentViewer.test.tsx`
-- [ ] T006 [P] [US1] Create unit tests for DocumentTabs in `src/features/student/tests/DocumentTabs.test.tsx`
+- [x] T005 [P] [US1] Create unit tests for PDF switching logic in `src/features/student/tests/DocumentViewer.test.tsx`
+- [x] T006 [P] [US1] Create unit tests for DocumentTabs in `src/features/student/tests/DocumentTabs.test.tsx`
 
 ### Implementation for User Story 1
 
-- [ ] T007 [P] [US1] Implement `src/features/student/components/LearningTheatre/DocumentTabs.tsx` to handle active PDF selection using DaisyUI tab components.
-- [ ] T008 [P] [US1] Implement `src/features/student/components/LearningTheatre/DocumentViewer.tsx` to handle the native `<object>` rendering and optional side-by-side splitting logic.
-- [ ] T009 [US1] Integrate `DocumentTabs` and `DocumentViewer` state transitions via actions emitted to `learningTheatreSlice.ts`.
+- [x] T007 [P] [US1] Implement `src/features/student/components/LearningTheatre/DocumentTabs.tsx` to handle active PDF selection using DaisyUI tab components.
+- [x] T008 [P] [US1] Implement `src/features/student/components/LearningTheatre/DocumentViewer.tsx` to handle the native `<object>` rendering and optional side-by-side splitting logic.
+- [x] T009 [US1] Integrate `DocumentTabs` and `DocumentViewer` state transitions via actions emitted to `learningTheatreSlice.ts`.
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently. PDF viewers work smoothly.
 
@@ -60,12 +60,12 @@
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T010 [P] [US2] Create layout unit tests in `src/features/student/tests/LearningTheatre.test.tsx` to ensure central video player and correct responsive classes are present.
+- [x] T010 [P] [US2] Create layout unit tests in `src/features/student/tests/LearningTheatre.test.tsx` to ensure central video player and correct responsive classes are present.
 
 ### Implementation for User Story 2
 
-- [ ] T011 [US2] Update `src/features/student/pages/LearningTheatre.tsx` to import the new `DocumentViewer`, positioning it using Tailwind CSS Flexbox/Grid responsive utilities.
-- [ ] T012 [US2] Update `src/features/student/pages/StudentDashboard.tsx` container styles to ensure layout accommodates the internal `LearningTheatre.tsx` dimensions appropriately cleanly on small screens.
+- [x] T011 [US2] Update `src/features/student/pages/LearningTheatre.tsx` to import the new `DocumentViewer`, positioning it using Tailwind CSS Flexbox/Grid responsive utilities.
+- [x] T012 [US2] Update `src/features/student/pages/StudentDashboard.tsx` container styles to ensure layout accommodates the internal `LearningTheatre.tsx` dimensions appropriately cleanly on small screens.
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently. Layout is fully responsive.
 
@@ -79,12 +79,12 @@
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T013 [P] [US3] Add tests for loading/error state rendering and ARIA focus in `src/features/student/tests/LearningTheatreState.test.tsx`.
+- [x] T013 [P] [US3] Add tests for loading/error state rendering and ARIA focus in `src/features/student/tests/LearningTheatreState.test.tsx`.
 
 ### Implementation for User Story 3
 
-- [ ] T014 [US3] Implement dedicated loading, empty, and error fallback components and swap them conditionally in `src/features/student/pages/LearningTheatre.tsx`.
-- [ ] T015 [US3] Add comprehensive ARIA tags, strict `tabIndex` controls, and `onKeyDown` handlers to `DocumentTabs.tsx` and interactive areas.
+- [x] T014 [US3] Implement dedicated loading, empty, and error fallback components and swap them conditionally in `src/features/student/pages/LearningTheatre.tsx`.
+- [x] T015 [US3] Add comprehensive ARIA tags, strict `tabIndex` controls, and `onKeyDown` handlers to `DocumentTabs.tsx` and interactive areas.
 
 **Checkpoint**: All user stories should now be independently functional with full state stability and accessibility compliant interaction.
 
@@ -94,8 +94,8 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T016 [P] Verify native OS memory delegation logic functions smoothly on large PDF load trials without memory leaks.
-- [ ] T017 Audit CSS implementations to remove unneeded overhead, ensuring compliance with the < 2s load time constraint per constitution.
+- [x] T016 [P] Verify native OS memory delegation logic functions smoothly on large PDF load trials without memory leaks.
+- [x] T017 Audit CSS implementations to remove unneeded overhead, ensuring compliance with the < 2s load time constraint per constitution.
 
 ---
 
