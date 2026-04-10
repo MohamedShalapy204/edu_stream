@@ -26,6 +26,9 @@ dist-ssr
 # more
 .agents/*
 .env
-context/*
+# context/*
 .claude/*
 .kilo/*
+# .agent/*
+# .specify/*
+.opencode/*
