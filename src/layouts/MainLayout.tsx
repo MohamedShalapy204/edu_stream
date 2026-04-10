@@ -201,7 +201,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                     <div className="absolute bottom-0 left-0 w-120 h-120 rounded-full blur-[100px] bg-secondary/10 translate-y-1/3 -translate-x-1/4" />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+                <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-12 pb-32 md:py-12">
                     <Outlet />
                 </div>
             </main>
@@ -218,6 +218,52 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                     </div>
                 </div>
             </footer>
+            {/* ── MOBILE BOTTOM NAVIGATION ───────────────────────────────────── */}
+            <nav className="md:hidden fixed bottom-6 left-6 right-6 z-50">
+                <div className="bg-base-100/60 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] shadow-premium-lg px-4 h-20 flex items-center justify-around relative overflow-hidden">
+                    {/* Active Indicator Background */}
+                    <div className="absolute inset-x-4 h-full pointer-events-none flex justify-around items-center">
+                        {[
+                            { path: '/courses' },
+                            ...(profile?.role === UserRole.TEACHER ? [{ path: '/teacher/dashboard' }] : []),
+                            ...(profile?.role === UserRole.STUDENT ? [{ path: '/student/dashboard' }] : []),
+                            { path: '/profile' }
+                        ].map((item, idx) => {
+                            const isActive = location.pathname.startsWith(item.path);
+                            return (
+                                <div key={idx} className="w-16 h-16 flex items-center justify-center relative">
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="mobile-nav-pill"
+                                            className="absolute inset-0 bg-primary/10 rounded-3xl"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {[
+                        { name: 'Library', path: '/courses', icon: HiOutlineBookOpen },
+                        ...(profile?.role === UserRole.TEACHER ? [{ name: 'Faculty', path: '/teacher/dashboard', icon: HiOutlineSquares2X2 }] : []),
+                        ...(profile?.role === UserRole.STUDENT ? [{ name: 'Portal', path: '/student/dashboard', icon: HiOutlineAcademicCap }] : []),
+                        { name: 'Profile', path: '/profile', icon: HiOutlineUserCircle },
+                    ].map((item) => {
+                        const isActive = location.pathname.startsWith(item.path);
+                        return (
+                            <Link
+                                key={item.name}
+                                to={item.path}
+                                className={`relative flex flex-col items-center justify-center gap-1.5 w-16 h-16 transition-all ${isActive ? 'text-primary' : 'text-base-content/30'}`}
+                            >
+                                <item.icon className={`w-5 h-5 transition-transform ${isActive ? 'scale-110' : 'active:scale-90'}`} />
+                                <span className="text-[8px] uppercase font-black tracking-widest">{item.name}</span>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </nav>
         </div>
     );
 };
