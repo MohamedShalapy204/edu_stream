@@ -27,4 +27,5 @@ export interface IUser extends IAppwriteDoc {
     role: UserRole;
     avatar_url?: string;
     bio?: string;
+    vodafone_cash_number?: string | null;
 }

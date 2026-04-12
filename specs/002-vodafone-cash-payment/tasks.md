@@ -15,15 +15,15 @@
 
 **Purpose**: Core infrastructure, types, schema updates, and configurations that block subsequent feature development.
 
-- [ ] T001 [P] Ensure Appwrite Database is configured per `quickstart.md` (Users, Courses, VodafoneEnrollments, Storage Bucket)
-- [ ] T002 [P] Update env variables and configuration in `src/services/appwrite/config.ts`
-- [ ] T003 [P] Add React Query keys namespace for `vodafoneEnrollments` in `src/keys/queryKeys.ts`
-- [ ] T004 [P] Extend interfaces `IUser` and `ICourse` in `src/features/auth/types/index.ts` and `src/features/courses/types/courseTypes.ts`
-- [ ] T005 Create models in `src/features/payment/types/index.ts` (`VodafoneEnrollmentStatus`, `IVodafoneEnrollment`, `IVodafoneEnrollmentView`)
-- [ ] T006 [P] Update schemas in `src/features/courses/schemas/courseSchema.ts` & create `src/features/payment/schemas/paymentSchema.ts`
-- [ ] T007 Register new routes in `src/routes/protected.tsx`
-- [ ] T007b [P] Write integration test in `src/features/payment/tests/` to explicitly verify unauthenticated guests hitting `/payment/:courseId` redirect to login
-- [ ] T008 [P] Update allowed fields in `src/features/courses/api/courseApi.ts`
+- [X] T001 [P] Ensure Appwrite Database is configured per `quickstart.md` (Users, Courses, VodafoneEnrollments, Storage Bucket)
+- [X] T002 [P] Update env variables and configuration in `src/services/appwrite/config.ts`
+- [X] T003 [P] Add React Query keys namespace for `vodafoneEnrollments` in `src/keys/queryKeys.ts`
+- [X] T004 [P] Extend interfaces `IUser` and `ICourse` in `src/features/auth/types/index.ts` and `src/features/courses/types/courseTypes.ts`
+- [X] T005 Create models in `src/features/payment/types/index.ts` (`VodafoneEnrollmentStatus`, `IVodafoneEnrollment`, `IVodafoneEnrollmentView`)
+- [X] T006 [P] Update schemas in `src/features/courses/schemas/courseSchema.ts` & create `src/features/payment/schemas/paymentSchema.ts`
+- [X] T007 Register new routes in `src/routes/protected.tsx`
+- [X] T007b [P] Write integration test in `src/features/payment/tests/` to explicitly verify unauthenticated guests hitting `/payment/:courseId` redirect to login
+- [X] T008 [P] Update allowed fields in `src/features/courses/api/courseApi.ts`
 
 **Checkpoint**: Core foundation established. Types, query keys, routes, and DB layers are ready.
 
