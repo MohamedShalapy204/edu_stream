@@ -5,6 +5,7 @@ import Dashboard from '@/pages/dashboard/Dashboard';
 import { TeacherDashboard, ManageCoursePage } from '@/features/teacher';
 import { StudentDashboard, LearningTheatre, EnrollmentGuard } from '@/features/student';
 import { PaymentPage, CourseEnrollmentDashboard } from '@/features/payment';
+import Profile from '@/features/auth/routes/Profile';
 import { ProtectedLayoutWrapper } from './ProtectedLayoutWrapper';
 
 // TODO: Fix potential naming collisions if any arise from consolidating teacher features
@@ -14,6 +15,7 @@ export const protectedRoutes = [
         element: <ProtectedLayoutWrapper />,
         children: [
             { path: 'dashboard', element: <Dashboard /> },
+            { path: 'profile', element: <Profile /> },
             {
                 path: 'teacher',
                 element: <RoleGuard allowedRoles={[UserRole.TEACHER]}><Outlet /></RoleGuard>,

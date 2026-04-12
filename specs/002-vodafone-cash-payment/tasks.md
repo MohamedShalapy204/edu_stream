@@ -33,9 +33,9 @@
 
 **Goal**: Allow teachers to input a Vodafone Cash number and "allow resubmission" toggle during course creation.
 
-- [ ] T009 [P] [US1] Create reusable `VodafoneNumberInput.tsx` in `src/features/payment/components/`
-- [ ] T010 [US1] Integrate `VodafoneNumberInput` and resubmission settings into `src/features/courses/components/CourseForm.tsx` (conditionally shown for Paid courses)
-- [ ] T011 [US1] Extend teacher's main profile edit page to set a global default `vodafone_cash_number` 
+- [X] T009 [P] [US1] Create reusable `VodafoneNumberInput.tsx` in `src/features/payment/components/`
+- [X] T010 [US1] Integrate `VodafoneNumberInput` and resubmission settings into `src/features/courses/components/CourseForm.tsx` (conditionally shown for Paid courses)
+- [X] T011 [US1] Extend teacher's main profile edit page to set a global default `vodafone_cash_number` 
 
 **Checkpoint**: Teachers can save and update payment numbers on their courses independently.
 
