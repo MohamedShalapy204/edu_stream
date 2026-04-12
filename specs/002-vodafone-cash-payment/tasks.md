@@ -45,12 +45,12 @@
 
 **Goal**: Student navigates to the payment page, sees instructions, and confirms payment. Wait for approval.
 
-- [ ] T012 [P] [US2] Create Appwrite storage API functions for receipts in `src/features/payment/api/storageApi.ts`
-- [ ] T012b [P] [US2] Create `vodafoneEnrollmentApi.ts` logic for fetching and creating enrollments in `src/features/payment/api/`
-- [ ] T013 [P] [US2] Create React query hooks `useCreateVodafoneEnrollment` (incorporating image upload) and `useCheckVodafoneEnrollment` in `src/features/payment/hooks/useVodafoneEnrollment.ts`
-- [ ] T014 [P] [US2] Create UI components `PaymentInstructionsCard.tsx` (now with upload input) and `EnrollmentStatusBadge.tsx` in `src/features/payment/components/`
-- [ ] T015 [US2] Construct the full `PaymentPage.tsx` interface in `src/features/payment/pages/PaymentPage.tsx` (incorporates API hooks, file state, and UI)
-- [ ] T016 [US3] Add "Go to Payment" redirect logic for paid courses without active subscriptions in the student path.
+- [X] T012 [P] [US2] Create Appwrite storage API functions for receipts in `src/features/payment/api/storageApi.ts`
+- [X] T012b [P] [US2] Create `vodafoneEnrollmentApi.ts` logic for fetching and creating enrollments in `src/features/payment/api/`
+- [X] T013 [P] [US2] Create React query hooks `useCreateVodafoneEnrollment` (incorporating image upload) and `useCheckVodafoneEnrollment` in `src/features/payment/hooks/useVodafoneEnrollment.ts`
+- [X] T014 [P] [US2] Create UI components `PaymentInstructionsCard.tsx` (now with upload input) and `EnrollmentStatusBadge.tsx` in `src/features/payment/components/`
+- [X] T015 [US2] Construct the full `PaymentPage.tsx` interface in `src/features/payment/pages/PaymentPage.tsx` (incorporates API hooks, file state, and UI)
+- [X] T016 [US3] Add "Go to Payment" redirect logic for paid courses without active subscriptions in the student path.
 
 **Checkpoint**: Students can individually trigger manual enrollments and arrive in a `Pending` state.
 
