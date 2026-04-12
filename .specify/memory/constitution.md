@@ -1,13 +1,12 @@
 <!--
 Sync Impact Report:
-Version change: 1.2.0 -> 1.3.0
+Version change: 1.3.0 -> 1.4.0
 Modified principles:
-- Added Principle VI. Performance & Security Best Practices
-- Added Principle VII. Human-in-the-Loop Constraint
+- Added Principle VIII. State & Context Persistence (.specify/ tracking)
 Templates requiring updates: (✅ updated / ⚠ pending) 
 - .specify/templates/plan-template.md (✅ updated - dynamic gates)
-- .specify/templates/spec-template.md (✅ updated - dynamic constraints)
-- .specify/templates/tasks-template.md (✅ updated - dynamic categorizations)
+- .specify/templates/spec-template.md (⚠ pending - future tasks will inherit new logic)
+- .specify/templates/tasks-template.md (⚠ pending - final polish phase should include documentation sync)
 -->
 
 # EduStream Constitution
@@ -36,10 +35,13 @@ Features must trace back to the requirements in `context/PRD.md`. Development mu
 ### VII. Human-in-the-Loop Constraint 
 The AI must strictly await explicit human approval before executing any destructive operations. No major Git branch changes (like push/merge), large architectural rewrites, or database schema mutations should be fully executed automatically without prompting for the user's manual "Continue" or "Approve" statement. AI acts as an advisory implementer but the Human steers.
 
+### VIII. State & Context Persistence (.specify/ tracking)
+Every major architectural update, file structure evolution, database schema migration (e.g., new collections or fields), and core logic decision MUST be explicitly documented within the `.specify/` system (in `.specify/memory/` documents, new templates, or centralized tracking files). Future AI agents rely on `.specify` as the single source of truth; therefore, the agent must continuously snapshot systemic knowledge into these directories rather than relying purely on conversational memory or scattered root docs.
+
 ## Governance
 
 - **Amendment Procedure:** Amendments require documentation and updating this constitution file to reflect new phases or design decisions. All PRs must verify compliance with PRD and ERD boundaries.
 - **Versioning Policy:** Major version bumps for architectural shifts, minor for new phases or principles, patch for clarifications.
-- **Compliance Review Expectations:** All pull requests, tasks, and feature specifications must verify compliance with the `context/implementation_plan.md`, Phase 6 goals, `context/PRD.md`, and `context/ERD.md`. Complexity that breaks FSD must be strictly justified in architecture documents.
+- **Compliance Review Expectations:** All pull requests, tasks, and feature specifications must verify compliance with the `context/implementation_plan.md`, Phase 6 goals, `context/PRD.md`, `context/ERD.md`, and the requirement to persist knowledge in `.specify/`.
 
-**Version**: 1.3.0 | **Ratified**: 2026-04-09 | **Last Amended**: 2026-04-09
+**Version**: 1.4.0 | **Ratified**: 2026-04-09 | **Last Amended**: 2026-04-12

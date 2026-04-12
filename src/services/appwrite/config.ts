@@ -19,6 +19,7 @@ export const appwriteConfig = {
     reviewsCollectionId: import.meta.env.VITE_APPWRITE_REVIEWS_COLLECTION_ID,
     notificationsCollectionId: import.meta.env.VITE_APPWRITE_NOTIFICATIONS_COLLECTION_ID,
     contentAccessCollectionId: import.meta.env.VITE_APPWRITE_CONTENT_ACCESS_COLLECTION_ID,
+    vodafoneEnrollmentsCollectionId: import.meta.env.VITE_APPWRITE_VODAFONE_ENROLLMENTS_COLLECTION_ID,
 }
 
 export const client = new Client();

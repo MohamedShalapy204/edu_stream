@@ -46,7 +46,7 @@ When creating a new paid course, the teacher must specify which Vodafone Cash nu
 
 ### User Story 3 – Student Views Payment Instructions and Submits Enrollment Request (Priority: P2)
 
-When a student clicks "Enroll" on a paid course, they are redirected to a dedicated payment page showing the course Vodafone Cash number, the course price, and instructions for sending payment via Vodafone Cash. After the student has sent the money, they confirm on the page, placing their enrollment in a "Pending Approval" state.
+When a student clicks "Enroll" on a paid course, they are redirected to a dedicated payment page showing the course Vodafone Cash number, the course price, and instructions for sending payment via Vodafone Cash. After the student has sent the money, they MUST upload a screenshot/image of the transaction receipt and confirm on the page, placing their enrollment in a "Pending Approval" state.
 
 **Why this priority**: Core student-facing flow. Depends on P1 teacher stories being complete. Enables the teacher's approval dashboard.
 
@@ -56,7 +56,7 @@ When a student clicks "Enroll" on a paid course, they are redirected to a dedica
 
 1. **Given** a logged-in student browsing a paid course, **When** they click "Enroll", **Then** they are redirected to the payment instructions page for that course.
 2. **Given** the student on the payment page, **When** the page loads, **Then** it clearly displays: the course name, course price, the teacher's Vodafone Cash number, and step-by-step payment instructions.
-3. **Given** a student who has sent the payment externally, **When** they click "I've Sent the Payment", **Then** their enrollment is recorded with status "Pending Approval" and they see a confirmation message.
+3. **Given** a student who has sent the payment externally, **When** they upload a valid receipt screenshot and click "I've Sent the Payment", **Then** their enrollment is recorded with status "Pending Approval" and they see a confirmation message.
 4. **Given** a student who already has a Pending or Approved enrollment for the course, **When** they visit the course page, **Then** the Enroll button is replaced by their enrollment status.
 5. **Given** a student navigating to the payment page for a free course directly via URL, **When** the page loads, **Then** they are redirected to the standard enrollment flow.
 
@@ -64,7 +64,7 @@ When a student clicks "Enroll" on a paid course, they are redirected to a dedica
 
 ### User Story 4 – Teacher Reviews and Approves/Denies Student Enrollment (Priority: P2)
 
-The teacher accesses a per-course enrollment dashboard where they see all students who have submitted payment confirmations. For each student the dashboard shows their name, email, enrollment date, and current status. The teacher can approve or deny each student individually.
+The teacher accesses a per-course enrollment dashboard where they see all students who have submitted payment confirmations. For each student the dashboard shows their name, email, enrollment date, a thumbnail/link to view their uploaded transaction receipt, and their current status. The teacher can review the receipt and approve or deny each student individually.
 
 **Why this priority**: Closes the payment loop. Without approval, enrolled students cannot access course content. Directly impacts teacher trust in the system.
 
@@ -72,7 +72,8 @@ The teacher accesses a per-course enrollment dashboard where they see all studen
 
 **Acceptance Scenarios**:
 
-1. **Given** a teacher on the course enrollment dashboard, **When** the page loads, **Then** a list of all enrollments is displayed with columns: student name, email, enrollment date, and status (Pending / Approved / Denied).
+1. **Given** a teacher on the course enrollment dashboard, **When** the page loads, **Then** a list of all enrollments is displayed with columns: student name, email, enrollment date, receipt image link, and status (Pending / Approved / Denied).
+1b. **Given** a teacher on the enrollment dashboard, **When** they click to view a receipt, **Then** the uploaded transaction screenshot opens in a modal or new tab for verification.
 2. **Given** a teacher viewing a Pending enrollment, **When** they click "Approve", **Then** the enrollment status changes to "Approved" and the student gains access to the course content.
 3. **Given** a teacher viewing a Pending enrollment, **When** they click "Deny", **Then** the enrollment status changes to "Denied" and the student loses access to/cannot access the course content.
 4. **Given** a teacher on the dashboard, **When** there are no pending enrollments, **Then** an empty-state message is clearly shown.
@@ -152,12 +153,15 @@ A teacher with multiple active courses wants to immediately see which courses ha
 - **FR-021**: Each course card on the teacher dashboard MUST display a pending enrollment count badge when one or more enrollments are in Pending status. The badge MUST disappear when no pending enrollments remain.
 - **FR-022**: The teacher dashboard MUST include a dedicated "Pending Enrollments" section that aggregates all Pending enrollments across all the teacher's courses, displaying: course name, student name, student email, and submission date. Clicking an item navigates directly to the relevant course enrollment dashboard.
 - **FR-023**: At the moment a student confirms payment, the system MUST record a snapshot of the Vodafone Cash number they were shown on the payment page into the Enrollment record. This snapshot MUST be displayed to the teacher on the enrollment dashboard for audit and dispute-resolution purposes.
+- **FR-024**: The per-course enrollment dashboard MUST be reachable from two entry points: (1) a "Manage Enrollments" button visible to the teacher on the individual course detail or course edit page, and (2) by clicking any enrollment row in the global "Pending Enrollments" section on the teacher dashboard, which navigates directly to that course's enrollment dashboard.
+- **FR-025**: Students MUST upload a screenshot/image of their Vodafone Cash transaction receipt to submit a payment confirmation successfully.
+- **FR-026**: The system MUST securely store uploaded receipts and provide the course teacher with a UI to view them on the per-course enrollment dashboard.
 
 ### Key Entities *(include if feature involves data)*
 
 - **TeacherPaymentProfile**: Represents a teacher's saved default Vodafone Cash number. Belongs to a user with teacher role. Has one number per teacher.
 - **CoursePaymentSettings**: Stores the Vodafone Cash number assigned to a specific course and the re-submission policy flag (`allow_resubmission: boolean`). Belongs to a course. One-to-one relationship. Exists only for paid courses.
-- **Enrollment**: Records a student's enrollment attempt for a course. Attributes: student reference, course reference, status (Pending / Approved / Denied), payment_number_shown (snapshot of the Vodafone Cash number displayed to the student at confirmation time), submission timestamp, review timestamp, reviewed-by reference. Multiple Enrollment records may exist for the same (student, course) pair when re-submission is enabled (only one may be Pending or Approved at a time).
+- **Enrollment**: Records a student's enrollment attempt for a course. Attributes: student reference, course reference, status (Pending / Approved / Denied), payment_number_shown (snapshot of the Vodafone Cash number displayed to the student at confirmation time), receipt_image_id, receipt_image_url, submission timestamp, review timestamp. Multiple Enrollment records may exist for the same (student, course) pair when re-submission is enabled (only one may be Pending or Approved at a time).
 
 ---
 
@@ -184,7 +188,7 @@ A teacher with multiple active courses wants to immediately see which courses ha
 - Push notifications or emails for status changes (e.g., "Your enrollment was approved") are desirable improvements but are out of scope for v1; students check the status manually.
 - Vodafone Cash numbers must be exactly 11 digits and begin with the prefix `010` (Vodafone Egypt network). Numbers starting with 011 (e&/Etisalat), 012 (Orange), or 015 (WE) cannot receive Vodafone Cash transfers and are therefore invalid for this feature.
 - A teacher can have at most one default Vodafone Cash number but may use different numbers per course.
-- The enrollment dashboard is accessible from the teacher's course management area (e.g., a "Manage Enrollments" button on the course detail or teacher dashboard).
+- The per-course enrollment dashboard is accessible via two entry points: (1) a "Manage Enrollments" button on the individual course detail/edit page visible only to the course's teacher, and (2) by clicking through from the global "Pending Enrollments" aggregated list on the teacher dashboard. Both paths lead to the same enrollment dashboard screen.
 - The student dashboard already exists and shows enrolled courses; this feature adds enrollment status badges to that existing view.
 - The course access control (what a student can and cannot view based on enrollment status) is enforced at the application routing/guard level.
 
@@ -198,3 +202,4 @@ A teacher with multiple active courses wants to immediately see which courses ha
 - Q: How should the teacher be made aware of new pending enrollments without full notification support? → A: Both (D) — a pending count badge on each course card in the teacher dashboard, AND a dedicated global "Pending Enrollments" aggregated list across all courses in the teacher dashboard.
 - Q: Should the enrollment record store a snapshot of the Vodafone Cash number the student was shown at payment time? → A: Yes (A) — the number is snapshotted into the Enrollment record (`payment_number_shown`) at confirmation time for audit and dispute-resolution purposes.
 - Q: Should the system enforce that the Vodafone Cash number starts with `010` (Vodafone Egypt only) or accept any Egyptian mobile prefix? → A: Enforce `010` prefix only (A) — numbers starting with 011, 012, or 015 cannot receive Vodafone Cash transfers and must be rejected with a clear validation error.
+- Q: Where exactly is the per-course enrollment dashboard accessible from? → A: Both (C) — a "Manage Enrollments" button on the individual course detail/edit page, AND by clicking through from the global Pending Enrollments list on the teacher dashboard.
