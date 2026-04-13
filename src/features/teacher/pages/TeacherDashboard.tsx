@@ -44,8 +44,13 @@ const TeacherDashboard: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="max-w-7xl mx-auto px-6 lg:px-12 py-12 selection:bg-primary/20"
+            className="max-w-7xl mx-auto px-6 lg:px-12 py-12 selection:bg-primary/20 relative"
         >
+            {/* Global Ambient Background */}
+            <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[150px] bg-primary/5 -translate-y-1/2 translate-x-1/3" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] bg-secondary/5 translate-y-1/4 -translate-x-1/4" />
+            </div>
             {/* ── Scholarly Header ── */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
                 <div className="space-y-3">

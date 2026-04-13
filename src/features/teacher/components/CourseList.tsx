@@ -18,15 +18,15 @@ interface CourseListProps {
 export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollments = [] }) => {
     if (!courses || courses.length === 0) {
         return (
-            <div className="bg-white/40 backdrop-blur-3xl rounded-4xl p-32 text-center shadow-premium border border-dashed border-base-content/10 transition-all">
-                <div className="bg-primary/5 p-10 h-24 w-24 rounded-4xl inline-flex items-center justify-center mb-8 text-primary/30">
-                    <HiPlus className="w-10 h-10" />
+            <div className="bg-white/40 backdrop-blur-3xl rounded-4xl p-32 text-center shadow-premium border border-dashed border-primary/20 transition-all group">
+                <div className="bg-primary/10 p-10 h-28 w-28 rounded-[2.5rem] inline-flex items-center justify-center mb-8 text-primary shadow-lg shadow-primary/10 group-hover:scale-110 transition-transform duration-500">
+                    <HiPlus className="w-12 h-12" />
                 </div>
-                <h3 className="text-2xl font-heading font-black text-base-content mb-3 tracking-tight italic">The archives are silent.</h3>
-                <p className="text-base-content/40 text-base font-medium mb-12 max-w-xs mx-auto leading-relaxed">Your intellectual contributions are awaiting their first chapter.</p>
+                <h3 className="text-3xl font-heading font-black text-base-content mb-4 tracking-tight">The archives are silent.</h3>
+                <p className="text-base-content/40 text-lg font-medium mb-12 max-w-sm mx-auto leading-relaxed">Your intellectual contributions are awaiting their first chapter.</p>
                 <Link
                     to="/teacher/courses/new"
-                    className="inline-flex items-center px-10 py-4 bg-white text-base-content font-black text-[10px] uppercase tracking-widest hover:bg-base-100 shadow-premium rounded-2xl transition-all active:scale-95 border border-base-content/5"
+                    className="inline-flex items-center px-12 py-5 bg-primary text-primary-content font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/25 hover:shadow-2xl hover:-translate-y-0.5 rounded-2xl transition-all active:scale-95 border-none"
                 >
                     Initiate New Course
                 </Link>
@@ -107,9 +107,9 @@ export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollme
                                     <p className="text-[8px] font-black text-base-content/30 uppercase tracking-[0.2em] mb-1">Acquisition</p>
                                     <p className="text-sm font-black text-base-content/80">${course.price || 0}</p>
                                 </div>
-                                <div className="px-3 py-1 rounded-lg bg-amber-400/5 border border-amber-400/10">
-                                    <p className="text-[8px] font-black text-amber-600/40 uppercase tracking-[0.2em] mb-1 text-center">Mastery</p>
-                                    <p className="text-sm font-black text-amber-600/80 text-center">{course.rating || '4.8'}</p>
+                                <div className="px-3 py-1.5 rounded-lg bg-primary/5 border border-primary/10">
+                                    <p className="text-[8px] font-black text-primary/40 uppercase tracking-[0.2em] mb-1 text-center">Mastery</p>
+                                    <p className="text-sm font-black text-primary/80 text-center">{course.rating || '4.8'}</p>
                                 </div>
                             </div>
                         </div>

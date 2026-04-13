@@ -6,10 +6,14 @@ import { HiOutlineArrowRight, HiOutlineSparkles } from 'react-icons/hi2';
 export const Hero: React.FC = () => {
     return (
         <section className="relative pt-20 pb-32 overflow-hidden">
-            {/* Ambient background glows */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none opacity-20">
-                <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary/20 blur-[120px] -translate-y-1/2" />
-                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/10 blur-[100px]" />
+            {/* Ambient background glows — more intentional indigo mesh */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none overflow-hidden">
+                {/* Primary top-left bloom */}
+                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/12 blur-[140px] -translate-y-1/2" />
+                {/* Secondary bottom-right bloom */}
+                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/8 blur-[100px]" />
+                {/* Subtle indigo stripe across mid */}
+                <div className="absolute top-1/2 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/15 to-transparent -translate-y-1/2" />
             </div>
 
             <div className="container mx-auto px-6 lg:px-12 text-center lg:text-left flex flex-col lg:flex-row items-center gap-16">
@@ -20,9 +24,9 @@ export const Hero: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
                     >
-                        <HiOutlineSparkles className="w-3.5 h-3.5" />
+                        <HiOutlineSparkles className="w-3.5 h-3.5 text-accent" />
                         The Digital Atheneum is Open
                     </motion.div>
 
@@ -55,14 +59,34 @@ export const Hero: React.FC = () => {
                         className="flex flex-col sm:flex-row items-center gap-6 pt-4"
                     >
                         <Link to="/register">
-                            <button className="btn btn-primary h-16 px-10 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-premium hover:scale-[1.02] active:scale-[0.98] transition-all border-none">
+                            <button className="btn btn-primary h-16 px-10 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-premium hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] transition-all border-none">
                                 Begin Enrollment
-                                <HiOutlineArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                <HiOutlineArrowRight className="ml-3 w-4 h-4" />
                             </button>
                         </Link>
-                        <Link to="/courses" className="text-xs font-black uppercase tracking-[0.3em] text-base-content/40 hover:text-primary transition-colors py-4">
+                        <Link to="/courses" className="text-xs font-black uppercase tracking-[0.3em] text-base-content/40 hover:text-primary transition-colors py-4 relative group">
                             Explore Curriculum
+                            <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                         </Link>
+                    </motion.div>
+
+                    {/* Subtle stat row */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.0, duration: 0.8 }}
+                        className="flex items-center gap-8 pt-4"
+                    >
+                        {[
+                            { value: '42k+', label: 'Active Scholars' },
+                            { value: '300+', label: 'Curated Courses' },
+                            { value: '98%', label: 'Satisfaction' },
+                        ].map((stat) => (
+                            <div key={stat.label} className="text-left">
+                                <div className="text-xl font-heading font-black text-primary">{stat.value}</div>
+                                <div className="text-[9px] uppercase font-black tracking-[0.2em] text-base-content/30">{stat.label}</div>
+                            </div>
+                        ))}
                     </motion.div>
                 </div>
 
@@ -74,24 +98,42 @@ export const Hero: React.FC = () => {
                     className="flex-1 relative hidden lg:block"
                 >
                     <div className="relative z-10 w-full aspect-square max-w-lg mx-auto overflow-hidden rounded-[4rem] bg-base-200 shadow-premium p-1">
-                        <div className="w-full h-full rounded-[3.9rem] bg-white flex items-center justify-center p-12 overflow-hidden relative group">
+                        <div className="w-full h-full rounded-[3.9rem] flex items-center justify-center p-12 overflow-hidden relative group"
+                            style={{ background: 'oklch(0.975 0.01 268)' }}>
                             {/* Scholarly Abstract Visual */}
-                            <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-secondary/5" />
-                            <div className="w-full h-full border border-base-content/5 rounded-3xl flex items-center justify-center relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
-                                <span className="text-[240px] font-heading font-black italic text-primary/10 select-none">E</span>
-                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-white to-transparent" />
+                            <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-accent/5" />
+                            {/* Concentric ring decorations */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full border border-primary/8" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 rounded-full border border-primary/12" />
+                            <div className="w-full h-full border border-primary/8 rounded-3xl flex items-center justify-center relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
+                                <span className="text-[240px] font-heading font-black italic text-primary/15 select-none">E</span>
+                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-[oklch(0.975_0.01_268)] to-transparent" />
                             </div>
                         </div>
                     </div>
-                    {/* Floating accents */}
+                    {/* Floating accent card */}
                     <motion.div
-                        animate={{ y: [0, -80, 0] }}
+                        animate={{ y: [0, -12, 0] }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -top-12 -right-12 w-48 h-48 glass rounded-[3rem] p-1 shadow-premium hidden lg:block"
+                        className="absolute z-10 -top-12 -right-12 w-48 h-48 glass rounded-[3rem] p-1 shadow-premium hidden lg:block"
                     >
                         <div className="w-full h-full rounded-[2.8rem] bg-white/50 backdrop-blur-xl flex flex-col items-center justify-center gap-2">
                             <span className="text-3xl font-heading font-black text-primary">42k</span>
                             <span className="text-[8px] uppercase font-black tracking-[0.2em] text-base-content/40">Active Scholars</span>
+                        </div>
+                    </motion.div>
+                    {/* Second floating chip — emerald accent */}
+                    <motion.div
+                        animate={{ y: [0, 10, 0] }}
+                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                        className="absolute -bottom-6 -left-8 w-36 h-16 glass rounded-2xl p-1 shadow-premium hidden lg:flex items-center justify-center gap-3"
+                    >
+                        <div className="w-6 h-6 rounded-lg bg-accent/15 flex items-center justify-center">
+                            <div className="w-2 h-2 rounded-full bg-accent" />
+                        </div>
+                        <div>
+                            <div className="text-[9px] font-black uppercase tracking-widest text-accent">Live</div>
+                            <div className="text-[8px] font-medium text-base-content/40">300+ Courses</div>
                         </div>
                     </motion.div>
                 </motion.div>

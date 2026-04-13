@@ -54,12 +54,16 @@ const CoursesPage: React.FC = () => {
             />
 
             {/* Curated Wisdom Results */}
-            <div className="container mx-auto px-6 lg:px-12 py-20 bg-slate-50/30">
-                <div className="flex items-center gap-3 mb-12 px-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-base-content/30">
+            <div className="container mx-auto px-6 lg:px-12 py-20 relative">
+                {/* Visual anchor / section gradient */}
+                <div className="absolute top-0 left-0 right-0 h-40 bg-linear-to-b from-primary/5 to-transparent pointer-events-none" />
+                
+                <div className="flex items-center gap-3 mb-12 px-2 relative z-10">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
                         {filteredCourses.length} Records Identified
                     </span>
+                    <div className="flex-1 h-px bg-primary/10 ml-4" />
                 </div>
 
                 <CourseGrid

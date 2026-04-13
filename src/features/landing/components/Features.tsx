@@ -7,30 +7,44 @@ import {
     HiOutlineGlobeAlt
 } from 'react-icons/hi2';
 
+// ⚠️ Tailwind requires static class strings — never interpolate color tokens.
+// Each feature has its own explicit color set for safe purging.
 const featureList = [
     {
         title: "Curated Mastery",
         description: "Not just courses, but paths of wisdom. Every curriculum is vetted for maximal scholarly impact and intellectual depth.",
         icon: HiOutlineAcademicCap,
-        color: "primary"
+        iconBg: "bg-primary/8",
+        iconColor: "text-primary",
+        iconHoverBg: "group-hover:bg-primary/15",
+        accentBar: "bg-primary",
     },
     {
         title: "Institutional Trust",
         description: "Built on resilient protocols. Your data and progress are safeguarded by advanced encryption and verifiable integrity.",
         icon: HiOutlineShieldCheck,
-        color: "secondary"
+        iconBg: "bg-accent/8",
+        iconColor: "text-accent",
+        iconHoverBg: "group-hover:bg-accent/15",
+        accentBar: "bg-accent",
     },
     {
         title: "No-Line Interface",
         description: "A frictionless canvas for the mind. We remove the borders between your thoughts and the knowledge they seek.",
         icon: HiOutlineCubeTransparent,
-        color: "accent"
+        iconBg: "bg-info/8",
+        iconColor: "text-info",
+        iconHoverBg: "group-hover:bg-info/15",
+        accentBar: "bg-info",
     },
     {
         title: "Global Atheneum",
         description: "Connect with a borderless library of intelligence. A unified platform for the world's most ambitious learners.",
         icon: HiOutlineGlobeAlt,
-        color: "info"
+        iconBg: "bg-secondary/8",
+        iconColor: "text-secondary",
+        iconHoverBg: "group-hover:bg-secondary/15",
+        accentBar: "bg-secondary",
     }
 ];
 
@@ -53,9 +67,12 @@ export const Features: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.6 }}
-                            className="p-8 rounded-[2.5rem] bg-base-200 shadow-premium hover:scale-[1.03] transition-all duration-300 group"
+                            className="relative p-8 rounded-[2.5rem] bg-base-200 shadow-premium hover:scale-[1.03] transition-all duration-300 group overflow-hidden"
                         >
-                            <div className={`w-14 h-14 rounded-2xl bg-${f.color}/5 flex items-center justify-center text-${f.color} mb-8 transition-all group-hover:scale-110 group-hover:bg-${f.color}/10`}>
+                            {/* Colored top-accent bar */}
+                            <div className={`absolute top-0 left-8 right-8 h-0.5 ${f.accentBar} opacity-40 rounded-full transition-all duration-300 group-hover:opacity-80 group-hover:left-4 group-hover:right-4`} />
+
+                            <div className={`w-14 h-14 rounded-2xl ${f.iconBg} ${f.iconHoverBg} flex items-center justify-center ${f.iconColor} mb-8 transition-all group-hover:scale-110`}>
                                 <f.icon className="w-7 h-7" />
                             </div>
                             <h3 className="text-xl font-heading font-black text-base-content mb-4 tracking-tight">{f.title}</h3>

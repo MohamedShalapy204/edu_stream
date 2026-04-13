@@ -8,6 +8,36 @@ interface UserLandingProps {
     account: IAccount;
 }
 
+// Each shortcut card has a distinct, purposeful color identity
+const shortcuts = [
+    {
+        to: '/dashboard',
+        icon: HiOutlineRocketLaunch,
+        title: 'Enter Dashboard',
+        desc: 'Access your active courses, assignments, and academic progress in the central hub.',
+        // Indigo — primary action
+        iconBg: 'bg-primary/8',
+        iconColor: 'text-primary',
+        iconHoverBg: 'group-hover:bg-primary/15',
+        hoverBorder: 'hover:border-primary/15',
+        hoverRing: 'group-hover:shadow-primary/8',
+        accentTop: 'bg-primary',
+    },
+    {
+        to: '/courses',
+        icon: HiOutlineAcademicCap,
+        title: 'Browse Catalog',
+        desc: 'Discover new domains of knowledge curated by the world\'s leading intelligence.',
+        // Emerald — exploration / discovery
+        iconBg: 'bg-accent/8',
+        iconColor: 'text-accent',
+        iconHoverBg: 'group-hover:bg-accent/15',
+        hoverBorder: 'hover:border-accent/15',
+        hoverRing: 'group-hover:shadow-accent/8',
+        accentTop: 'bg-accent',
+    },
+];
+
 export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
     return (
         <div className="min-h-[80vh] flex flex-col pt-20 pb-32 animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -18,7 +48,7 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
                     >
                         Welcome Back, Scholar
                     </motion.div>
@@ -31,43 +61,38 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
                 {/* Dashboard Shortcuts Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-                    {/* Resume Learning */}
-                    <Link to="/dashboard" className="group">
-                        <div className="p-8 h-full rounded-[2.5rem] bg-base-200 shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-primary/10">
-                            <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform">
-                                <HiOutlineRocketLaunch className="w-7 h-7" />
-                            </div>
-                            <h3 className="text-2xl font-heading font-black text-base-content mb-4 tracking-tight">Enter Dashboard</h3>
-                            <p className="text-sm font-medium leading-relaxed text-base-content/50">
-                                Access your active courses, assignments, and academic progress in the central hub.
-                            </p>
-                        </div>
-                    </Link>
+                    {shortcuts.map((s) => (
+                        <Link key={s.to} to={s.to} className="group">
+                            <div className={`relative p-8 h-full rounded-[2.5rem] bg-base-200 shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent ${s.hoverBorder} overflow-hidden`}>
+                                {/* Colored top accent bar */}
+                                <div className={`absolute top-0 left-8 right-8 h-0.5 ${s.accentTop} opacity-30 rounded-b-full group-hover:opacity-70 group-hover:left-4 group-hover:right-4 transition-all duration-300`} />
 
-                    {/* Explore Courses */}
-                    <Link to="/courses" className="group">
-                        <div className="p-8 h-full rounded-[2.5rem] bg-base-200 shadow-premium hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-secondary/10">
-                            <div className="w-14 h-14 rounded-2xl bg-secondary/5 flex items-center justify-center text-secondary mb-8 group-hover:scale-110 transition-transform">
-                                <HiOutlineAcademicCap className="w-7 h-7" />
+                                <div className={`w-14 h-14 rounded-2xl ${s.iconBg} ${s.iconHoverBg} flex items-center justify-center ${s.iconColor} mb-8 group-hover:scale-110 transition-all duration-300`}>
+                                    <s.icon className="w-7 h-7" />
+                                </div>
+                                <h3 className="text-2xl font-heading font-black text-base-content mb-4 tracking-tight group-hover:text-primary transition-colors duration-300">{s.title}</h3>
+                                <p className="text-sm font-medium leading-relaxed text-base-content/50">
+                                    {s.desc}
+                                </p>
                             </div>
-                            <h3 className="text-2xl font-heading font-black text-base-content mb-4 tracking-tight">Browse Catalog</h3>
-                            <p className="text-sm font-medium leading-relaxed text-base-content/50">
-                                Discover new domains of knowledge curated by the world's leading intelligence.
-                            </p>
-                        </div>
-                    </Link>
+                        </Link>
+                    ))}
 
-                    {/* Bookmarks Placeholder */}
-                    <div className="p-8 h-full rounded-[2.5rem] bg-base-200/50 border border-dashed border-base-content/10 flex flex-col justify-center items-center text-center opacity-60">
-                        <HiOutlineBookmark className="w-10 h-10 text-base-content/20 mb-4" />
+                    {/* Your Library — placeholder with a distinct muted style */}
+                    <div className="p-8 h-full rounded-[2.5rem] bg-base-200/40 border border-dashed border-primary/10 flex flex-col justify-center items-center text-center opacity-50 hover:opacity-70 transition-opacity duration-300">
+                        <div className="w-14 h-14 rounded-2xl bg-base-content/5 flex items-center justify-center mb-6">
+                            <HiOutlineBookmark className="w-7 h-7 text-base-content/20" />
+                        </div>
                         <span className="text-xs font-black uppercase tracking-widest text-base-content/40">Your Library</span>
-                        <p className="text-[10px] font-medium mt-2">Saved resources will appear here.</p>
+                        <p className="text-[10px] font-medium mt-2 text-base-content/30 max-w-48">Saved resources will appear here.</p>
                     </div>
 
                 </div>
 
                 {/* Motivational Quote */}
-                <footer className="mt-32 pt-12 border-t border-base-content/5 text-center sm:text-left">
+                <footer className="mt-32 pt-12 border-t border-primary/8 text-center sm:text-left">
+                    {/* Thin indigo rule above quote */}
+                    <div className="w-12 h-0.5 bg-primary/30 mb-6 hidden sm:block rounded-full" />
                     <p className="text-sm font-heading italic text-base-content/40 max-w-lg leading-relaxed">
                         "The Digital Atheneum is not merely a platform, but a sanctuary for the mind. We are honored to be part of your academic mastery."
                     </p>

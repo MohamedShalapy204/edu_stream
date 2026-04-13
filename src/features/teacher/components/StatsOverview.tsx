@@ -18,9 +18,9 @@ const STAT_ICONS: Record<string, React.ElementType> = {
 };
 
 const STAT_COLORS: Record<string, string> = {
-    learners: 'text-primary bg-primary/5',
-    courses: 'text-secondary bg-secondary/5',
-    revenue: 'text-success bg-success/5',
+    learners: 'text-primary bg-primary/10 shadow-lg shadow-primary/20',
+    courses: 'text-secondary bg-secondary/10 shadow-lg shadow-secondary/20',
+    revenue: 'text-success bg-success/10 shadow-lg shadow-success/20',
 };
 
 /**

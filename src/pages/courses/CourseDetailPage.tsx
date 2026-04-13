@@ -132,9 +132,9 @@ const CourseDetailPage: FC = () => {
                         {course.description || "Engage in a profound study of this domain through structured curriculum and expert oversight."}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-base-content/5">
+                    <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-primary/10">
                         <Link to={`/teachers/${course.teacher_id}`} className="flex items-center gap-4 group cursor-pointer text-left">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-primary shadow-premium border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 transition-all">
+                            <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary shadow-premium border border-primary/5 group-hover:border-primary/20 group-hover:bg-primary/10 transition-all duration-300">
                                 {teacher?.avatar_url ? (
                                     <img src={teacher.avatar_url} alt={teacher.name} className="w-full h-full rounded-2xl object-cover" />
                                 ) : (
@@ -142,25 +142,25 @@ const CourseDetailPage: FC = () => {
                                 )}
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest mb-1 group-hover:text-primary/50 transition-colors">Instructor</p>
+                                <p className="text-[9px] font-black text-primary/40 uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">Instructor</p>
                                 <p className="text-sm font-black text-base-content/80 group-hover:text-primary transition-colors">{teacher?.name || 'Academic Expert'}</p>
                             </div>
                         </Link>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-base-content/20 shadow-premium">
+                            <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary/60 shadow-premium border border-primary/5">
                                 <HiOutlineClock className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest">Temporal Study</p>
+                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">Temporal Study</p>
                                 <p className="text-sm font-black text-base-content/80">{course.duration ? Math.round(course.duration / 60) : 'Undefined'} Hours</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-base-content/20 shadow-premium">
+                            <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary/60 shadow-premium border border-primary/5">
                                 <HiOutlineGlobeAlt className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest">Language</p>
+                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">Language</p>
                                 <p className="text-sm font-black text-base-content/80">{course.language ?? 'Undefined'}</p>
                             </div>
                         </div>
@@ -184,10 +184,10 @@ const CourseDetailPage: FC = () => {
 
                         <div className="p-10 flex flex-col gap-8">
                             <div className="flex items-end gap-3">
-                                <span className="text-5xl font-black text-base-content tracking-tighter">
-                                    {course.price === 0 ? 'FREE' : `$${course.price.toFixed(2)}`}
+                                <span className="text-5xl font-black text-primary tracking-tighter">
+                                    {course.price === 0 ? 'FREE' : `EGP ${course.price.toFixed(0)}`}
                                 </span>
-                                {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">$199.99</span>}
+                                {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">EGP 1,999</span>}
                             </div>
 
                             <button
@@ -218,16 +218,16 @@ const CourseDetailPage: FC = () => {
                             </button>
 
                             <div className="space-y-5 pt-4">
-                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-base-content/40">
-                                    <HiOutlineCheckBadge className="w-5 h-5 text-success/60" />
+                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
+                                    <HiOutlineCheckBadge className="w-5 h-5 text-accent" />
                                     Full Lifetime Access
                                 </div>
-                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-base-content/40">
-                                    <HiOutlineTrophy className="w-5 h-5 text-amber-500/60" />
+                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
+                                    <HiOutlineTrophy className="w-5 h-5 text-amber-500" />
                                     Credential of Achievement
                                 </div>
-                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-base-content/40">
-                                    <HiOutlineCalendar className="w-5 h-5 text-primary/60" />
+                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
+                                    <HiOutlineCalendar className="w-5 h-5 text-primary" />
                                     Permanent Content Updates
                                 </div>
                             </div>
@@ -252,15 +252,15 @@ const CourseDetailPage: FC = () => {
 
                 <div className="space-y-6">
                     {sections?.documents.map((section, idx) => (
-                        <div key={section.$id} className="bg-white/40 backdrop-blur-xl border border-white shadow-premium rounded-[2.5rem] overflow-hidden group hover:border-primary/10 transition-colors">
-                            <div className="p-8 bg-base-200/20 border-b border-base-content/5 flex items-center justify-between">
+                        <div key={section.$id} className="bg-white/40 backdrop-blur-xl border border-primary/5 shadow-premium rounded-[2.5rem] overflow-hidden group hover:border-primary/20 transition-all duration-500">
+                            <div className="p-8 bg-primary/5 border-b border-primary/5 flex items-center justify-between">
                                 <div className="flex items-center gap-6">
-                                    <span className="w-10 h-10 flex items-center justify-center bg-white border border-base-content/5 rounded-xl text-xs font-black text-base-content/30 shadow-sm">
+                                    <span className="w-12 h-12 flex items-center justify-center bg-primary text-primary-content rounded-2xl text-xs font-black shadow-lg shadow-primary/20">
                                         {(idx + 1).toString().padStart(2, '0')}
                                     </span>
-                                    <h3 className="text-xl font-heading font-black text-base-content/80 group-hover:text-primary transition-colors">{section.title}</h3>
+                                    <h3 className="text-xl font-heading font-black text-base-content group-hover:text-primary transition-colors">{section.title}</h3>
                                 </div>
-                                <span className="text-[9px] font-black text-base-content/30 uppercase tracking-[0.2em]">Curriculum Module</span>
+                                <span className="text-[9px] font-black text-primary/30 uppercase tracking-[0.2em] px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">Curriculum Module</span>
                             </div>
 
                             <div className="divide-y divide-base-content/5">

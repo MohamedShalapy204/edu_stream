@@ -124,7 +124,7 @@ const LearningTheatre: FC = () => {
             <div className="absolute top-6 left-6 z-60 flex gap-3">
                 <button
                     onClick={() => navigate('/student/dashboard')}
-                    className="h-12 px-6 bg-base-content text-white rounded-full flex items-center gap-3 font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:-translate-y-1 transition-all group"
+                    className="h-12 px-6 bg-primary text-primary-content rounded-full flex items-center gap-3 font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:-translate-y-1 hover:shadow-primary/30 active:scale-95 transition-all group border-none"
                 >
                     <HiOutlineArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                     Exit Theatre
@@ -132,7 +132,10 @@ const LearningTheatre: FC = () => {
 
                 <button
                     onClick={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
-                    className="h-12 w-12 bg-white/80 backdrop-blur-xl border border-white text-base-content rounded-full flex items-center justify-center shadow-xl hover:bg-white transition-all active:scale-95"
+                    className={`h-12 w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
+                        ${isLeftSidebarOpen 
+                            ? 'bg-primary text-primary-content border-primary/20' 
+                            : 'bg-white/80 border-white text-base-content hover:bg-white'}`}
                     title={isLeftSidebarOpen ? "Maximize Stage" : "Show Curriculum"}
                 >
                     {isLeftSidebarOpen ? <HiOutlineXMark className="w-5 h-5" /> : <HiOutlineBars3BottomLeft className="w-5 h-5" />}
@@ -143,7 +146,10 @@ const LearningTheatre: FC = () => {
             <div className="absolute top-6 right-6 z-60">
                 <button
                     onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-                    className="h-12 w-12 bg-white/80 backdrop-blur-xl border border-white text-base-content rounded-full flex items-center justify-center shadow-xl hover:bg-white transition-all active:scale-95"
+                    className={`h-12 w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
+                        ${isRightSidebarOpen 
+                            ? 'bg-primary text-primary-content border-primary/20' 
+                            : 'bg-white/80 border-white text-base-content hover:bg-white'}`}
                     title={isRightSidebarOpen ? "Maximize Stage" : "Show Workspace"}
                 >
                     {isRightSidebarOpen ? <HiOutlineXMark className="w-5 h-5" /> : <HiOutlineBars3BottomRight className="w-5 h-5" />}
@@ -161,7 +167,10 @@ const LearningTheatre: FC = () => {
                         className="h-screen bg-base-100 border-r border-base-content/5 relative shadow-2xl overflow-hidden pt-24"
                     >
                         {/* Visual gradient backdrop */}
-                        <div className="absolute inset-0 bg-linear-to-b from-primary/5 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-linear-to-b from-primary/10 via-primary/5 to-transparent pointer-events-none" />
+                        
+                        {/* Decorative bloom */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl opacity-50 -translate-y-12 translate-x-12" />
 
                         <div className="relative h-full z-10 flex flex-col w-96">
                             <div className="p-8 pb-4">
@@ -182,7 +191,12 @@ const LearningTheatre: FC = () => {
             </AnimatePresence>
 
             {/* Main Stage Center */}
-            <div className="flex-1 h-screen bg-black/5 p-4 md:p-8 md:pt-24 flex items-center justify-center relative overflow-hidden transition-all duration-500">
+            <div className="flex-1 h-screen bg-base-200 p-4 md:p-8 md:pt-24 flex items-center justify-center relative overflow-hidden transition-all duration-500">
+                {/* Ambient stage glows */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none overflow-hidden">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[160px] opacity-40" />
+                    <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[140px] opacity-30" />
+                </div>
                 <div
                     className={`w-full h-full max-w-full mx-auto rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden ${isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'
                         }`}

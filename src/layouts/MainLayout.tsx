@@ -55,12 +55,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                         {/* Brand Section */}
                         <div className="flex items-center gap-12">
                             <Link to="/" className="flex items-center gap-3 group">
-                                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-content text-lg font-black shadow-premium group-hover:scale-105 transition-all">
+                                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-content text-lg font-black shadow-premium group-hover:scale-110 group-hover:shadow-primary/20 transition-all duration-500">
                                     E
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="font-heading text-xl font-black tracking-tighter leading-none">EDU<span className="text-primary italic font-medium">stream</span></span>
-                                    <span className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/30 mt-0.5">Atheneum Editorial</span>
+                                    <span className="font-heading text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500">EDU<span className="text-gradient-brand italic font-medium">stream</span></span>
+                                    <span className="text-[10px] uppercase font-black tracking-[0.2em] text-primary/40 mt-0.5">Atheneum Editorial</span>
                                 </div>
                             </Link>
 
@@ -207,13 +207,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
             </main>
 
             {/* ── FOOTER ─────────────────────────────────────────────────── */}
-            <footer className="py-12 bg-base-200/30">
+            <footer className="py-12 bg-base-200/30 border-t border-primary/5">
                 <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div className="flex items-center gap-3 opacity-30 grayscale saturate-0 hover:opacity-100 hover:grayscale-0 hover:saturate-100 transition-all cursor-default">
-                        <div className="w-6 h-6 rounded-lg bg-base-content flex items-center justify-center text-base-100 text-[8px] font-black">E</div>
-                        <span className="text-[10px] uppercase font-black tracking-[0.3em]">EDUstream Intelligence</span>
+                    <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-all cursor-default group">
+                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-content text-[10px] font-black group-hover:scale-110 transition-transform">E</div>
+                        <span className="text-[10px] uppercase font-black tracking-[0.3em] text-primary/80">EDUstream Intelligence</span>
                     </div>
-                    <div className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/20">
+                    <div className="text-[10px] uppercase font-black tracking-[0.2em] text-primary/20">
                         &copy; 2026 Digital Atheneum. All Protocols Reserved.
                     </div>
                 </div>
@@ -235,7 +235,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                     {isActive && (
                                         <motion.div
                                             layoutId="mobile-nav-pill"
-                                            className="absolute inset-0 bg-primary/10 rounded-3xl"
+                                            className="absolute inset-0 bg-primary/20 rounded-3xl ring-1 ring-primary/20 backdrop-blur-md shadow-lg shadow-primary/10"
                                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                                         />
                                     )}
