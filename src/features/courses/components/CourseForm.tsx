@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, type SubmitHandler, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto } from 'react-icons/hi2';
+import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto, HiOutlineBanknotes } from 'react-icons/hi2';
 import type { ICourse } from '@/features/courses';
 import { courseSchema, type CourseInput } from '../schemas/courseSchema';
+import { VodafoneNumberInput } from '@/features/payment';
 import { storageService } from '@/services/appwrite/storage/storageService';
+import { useCurrentUser } from '@/hooks/useUser';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 
 export type CourseFormData = CourseInput;
@@ -17,13 +19,14 @@ interface CourseFormProps {
 }
 
 const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoading, uploadProgress = 0 }) => {
+    const { data: currentUser } = useCurrentUser();
     const [step, setStep] = useState(1);
     const [preview, setPreview] = useState<string | null>(
         initialData?.thumbnail_url ||
         (initialData?.thumbnail_id ? storageService.getFilePreview(initialData.thumbnail_id).toString() : null)
     );
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<CourseFormData>({
+    const { register, handleSubmit, setValue, watch, trigger, formState: { errors } } = useForm<CourseFormData>({
         resolver: zodResolver(courseSchema) as Resolver<CourseFormData>,
         defaultValues: {
             title: initialData?.title || '',
@@ -33,8 +36,12 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
             categories: initialData?.categories || [],
             thumbnail_id: initialData?.thumbnail_id || '',
             language: initialData?.language || 'English',
+            vodafone_cash_number: initialData?.vodafone_cash_number || '',
+            allow_resubmission: initialData?.allow_resubmission || false,
         }
     });
+
+    const price = watch('price');
 
     React.useEffect(() => {
         return () => {
@@ -55,11 +62,16 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
         }
     };
 
-    const handleFinalSubmit: SubmitHandler<CourseFormData> = (data) => {
-        if (step !== 3) {
-            setStep((s) => s + 1);
-            return;
+    const handleStepAdvance = async () => {
+        if (step === 1) {
+            const result = await trigger(['title', 'description', 'price', 'categories', 'language']);
+            if (result) setStep(2);
+        } else if (step === 2) {
+            setStep(3);
         }
+    };
+
+    const handleFinalSubmit: SubmitHandler<CourseFormData> = (data) => {
         onSubmit(data);
     };
 
@@ -146,10 +158,12 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         <div className="space-y-3 text-left">
                             <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Curricular Brief</label>
                             <textarea
-                                className="w-full h-40 bg-surface-50 rounded-3xl p-6 text-foreground font-semibold placeholder:text-muted-foreground italic focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none border-none"
+                                id="description"
+                                className={`w-full h-40 bg-surface-50 rounded-3xl p-6 text-foreground font-semibold placeholder:text-muted-foreground italic focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none border-none ${errors.description ? 'ring-2 ring-destructive/20' : ''}`}
                                 placeholder="Describe your course goal and what students will learn..."
                                 {...register('description')}
                             />
+                            {errors.description && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.description.message}</p>}
                         </div>
                     </div>
                 )}
@@ -198,6 +212,68 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                 </button>
                             </div>
                         </div>
+
+                        {price > 0 && (
+                            <div className="space-y-8 p-10 bg-surface-50 rounded-[3rem] border border-muted/20 animate-in fade-in zoom-in duration-500">
+                                <div className="flex items-center gap-4 mb-2">
+                                    <div className="p-3 bg-primary/10 rounded-2xl">
+                                        <HiOutlineBanknotes className="w-6 h-6 text-primary" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-lg font-black tracking-tight">Payment Settings</h4>
+                                        <p className="text-xs text-muted-foreground font-medium">Configure manual Vodafone Cash enrollment</p>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                                    <div className="space-y-4">
+                                        <VodafoneNumberInput
+                                            label="Course Payment Number"
+                                            register={register('vodafone_cash_number')}
+                                            error={errors.vodafone_cash_number}
+                                            description="Students will transfer the tuition to this number."
+                                        />
+
+                                        {currentUser?.vodafone_cash_number && (
+                                            <div className="flex items-center gap-3 px-4 py-2 bg-primary/5 rounded-xl border border-primary/10 w-fit animate-in fade-in slide-in-from-left-2 duration-500">
+                                                <input
+                                                    id="use_default"
+                                                    type="checkbox"
+                                                    className="checkbox checkbox-primary checkbox-xs rounded-md"
+                                                    onChange={(e) => {
+                                                        if (e.target.checked && currentUser.vodafone_cash_number) {
+                                                            setValue('vodafone_cash_number', currentUser.vodafone_cash_number, { shouldValidate: true });
+                                                        }
+                                                    }}
+                                                />
+                                                <label htmlFor="use_default" className="text-[10px] font-black text-primary/80 uppercase tracking-widest cursor-pointer select-none">
+                                                    Use my global default number
+                                                </label>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="space-y-3 pt-2">
+                                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Re-submission Policy</label>
+                                        <div className="flex items-center gap-6 p-4 bg-white rounded-2xl border border-muted/10 group cursor-pointer hover:bg-surface-50 transition-all relative h-14">
+                                            <div className="relative flex items-center">
+                                                <input
+                                                    id="allow_resubmission"
+                                                    type="checkbox"
+                                                    className="peer w-6 h-6 rounded-lg opacity-0 absolute cursor-pointer z-10"
+                                                    {...register('allow_resubmission')}
+                                                />
+                                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-white flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
+                                                    <HiOutlineChevronRight className="w-4 h-4 text-white transition-transform scale-0 peer-checked:scale-100" />
+                                                </div>
+                                            </div>
+                                            <label htmlFor="allow_resubmission" className="text-[10px] font-black text-foreground uppercase tracking-widest cursor-pointer select-none">Allow denied students to retry</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="flex items-center gap-6 p-8 bg-primary/5 rounded-[2.5rem] border border-primary/5 group cursor-pointer hover:bg-primary/10 transition-all relative">
                             <div className="relative flex items-center">
                                 <input
@@ -228,7 +304,8 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                     <div className="flex gap-4">
                         {step < 3 ? (
                             <button
-                                type="submit"
+                                type="button"
+                                onClick={handleStepAdvance}
                                 className="btn btn-primary h-14 px-10 rounded-4xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all group no-animation border-none"
                             >
                                 Advance

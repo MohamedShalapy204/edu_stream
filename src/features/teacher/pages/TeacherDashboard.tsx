@@ -7,7 +7,9 @@ import { useCurrentAccount } from '@/features/auth';
 import { StatsOverview } from '../components/StatsOverview';
 import { CourseList } from '../components/CourseList';
 import { EnrollmentLedger } from '../components/EnrollmentLedger';
+import { PendingEnrollmentsPanel } from '../components/PendingEnrollmentsPanel';
 import { useTeacherStats } from '../hooks/useTeacherStats';
+import { useGetPendingVodafoneEnrollments } from '../hooks/useEnrollments';
 
 /**
  * 🏛️ TeacherDashboard (Domain Page)
@@ -18,6 +20,10 @@ import { useTeacherStats } from '../hooks/useTeacherStats';
 const TeacherDashboard: React.FC = () => {
     const { data: account } = useCurrentAccount();
     const { data: courses, isLoading, error } = useGetTeacherCourses(account?.$id || '');
+
+    // Fetch pending enrollments across all courses for notification badges
+    const courseIds = courses?.documents.map(c => c.$id) || [];
+    const { data: pendingEnrollments } = useGetPendingVodafoneEnrollments(courseIds);
 
     // Compute scholarly metrics from the synchronized records
     const stats = useTeacherStats(courses?.documents as unknown as ICourse[]);
@@ -67,6 +73,9 @@ const TeacherDashboard: React.FC = () => {
                 <StatsOverview stats={stats} />
             </div>
 
+            {/* ── Actionable Alerts ── */}
+            <PendingEnrollmentsPanel courses={courses?.documents as unknown as ICourse[]} />
+
             {/* ── Curriculum Catalog (Course List) ── */}
             <div className="space-y-10">
                 <div className="flex items-center gap-4">
@@ -80,7 +89,10 @@ const TeacherDashboard: React.FC = () => {
                     </div>
                 )}
 
-                <CourseList courses={courses?.documents as unknown as ICourse[]} />
+                <CourseList 
+                    courses={courses?.documents as unknown as ICourse[]} 
+                    pendingEnrollments={pendingEnrollments}
+                />
             </div>
 
             {/* ── Scholarly Roster (Enrollments) ── */}

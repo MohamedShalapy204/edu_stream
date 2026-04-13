@@ -37,4 +37,13 @@ export const queryKeys = {
         mine: ['notifications', 'mine'] as const,
         unreadCount: ['notifications', 'unread'] as const,
     },
+    vodafoneEnrollments: {
+        all: ['vodafone_enrollments'] as const,
+        byCourse: (courseId: string) => ['vodafone_enrollments', 'course', courseId] as const,
+        byStudent: (studentId: string) => ['vodafone_enrollments', 'student', studentId] as const,
+        check: (courseId: string, studentId: string) =>
+            ['vodafone_enrollments', 'check', courseId, studentId] as const,
+        allPendingByTeacher: (teacherId: string) =>
+            ['vodafone_enrollments', 'pending', teacherId] as const,
+    },
 } as const;

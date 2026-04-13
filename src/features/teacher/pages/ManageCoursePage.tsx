@@ -7,6 +7,7 @@ import { CurriculumEditor, type ICourse } from '@/features/courses';
 import { useCreateCourse, useUpdateCourse, useGetCourseById, useDeleteCourse } from '@/features/courses';
 import { useCurrentAccount } from '@/features/auth';
 import type { CourseInput } from '@/features/courses/schemas/courseSchema';
+import CourseEnrollmentDashboard from '@/features/payment/components/CourseEnrollmentDashboard';
 
 /**
  * 🏛️ ManageCoursePage
@@ -20,7 +21,7 @@ const ManageCoursePage: React.FC = () => {
     const isEditMode = Boolean(id);
     const { data: account } = useCurrentAccount();
 
-    const [activeTab, setActiveTab] = useState<'details' | 'curriculum'>('details');
+    const [activeTab, setActiveTab] = useState<'details' | 'curriculum' | 'enrollments'>('details');
     const [uploadProgress, setUploadProgress] = useState(0);
 
     const { data: course, isLoading: isLoadingCourse, error: fetchError } = useGetCourseById(id || '');
@@ -128,6 +129,12 @@ const ManageCoursePage: React.FC = () => {
                     >
                         Syllabus & Curriculum
                     </button>
+                    <button
+                        onClick={() => setActiveTab('enrollments')}
+                        className={`pb-4 px-2 text-sm font-black uppercase tracking-widest transition-all ${activeTab === 'enrollments' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
+                    >
+                        Manage Enrollments
+                    </button>
                 </div>
             )}
 
@@ -144,7 +151,7 @@ const ManageCoursePage: React.FC = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full translate-x-24 -translate-y-24 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
 
                 <div className="relative z-10">
-                    {!isEditMode || activeTab === 'details' ? (
+                    {(!isEditMode || activeTab === 'details') && (
                         <>
                             <CourseForm
                                 initialData={course as unknown as ICourse}
@@ -168,8 +175,14 @@ const ManageCoursePage: React.FC = () => {
                                 </div>
                             )}
                         </>
-                    ) : (
+                    )}
+                    
+                    {isEditMode && activeTab === 'curriculum' && (
                         <CurriculumEditor courseId={id!} />
+                    )}
+
+                    {isEditMode && activeTab === 'enrollments' && id && (
+                        <CourseEnrollmentDashboard courseId={id} />
                     )}
                 </div>
             </div>

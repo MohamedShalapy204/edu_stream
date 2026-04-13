@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useCurrentAccount } from '@/features/auth';
 import { useGetCourseById } from '@/features/courses/hooks/useCourseActions';
 import { useGetEnrolledCourses } from '../hooks/useStudent';
+import { useCourseEnrollmentStatus } from '@/features/payment/hooks/useVodafoneEnrollment';
 
 interface EnrollmentGuardProps {
     children: ReactNode;
@@ -21,14 +22,23 @@ export const EnrollmentGuard: FC<EnrollmentGuardProps> = ({ children }) => {
 
     const { data: course, isLoading: isCourseLoading } = useGetCourseById(courseId || '');
     const { data: enrolledCourses, isLoading: isEnrollmentLoading } = useGetEnrolledCourses(user?.$id);
+    const { data: vodafoneStatus, isLoading: isVodafoneLoading } = useCourseEnrollmentStatus(courseId || '', user?.$id || '');
 
-    const isLoading = isCourseLoading || isEnrollmentLoading;
+    const isLoading = isCourseLoading || isEnrollmentLoading || isVodafoneLoading;
 
     const hasAccess = useMemo(() => {
         if (!user || !course) return false;
         if (course.teacher_id === user.$id) return true; // Owners have bypass access
-        return enrolledCourses?.some(ec => ec.course.$id === courseId);
-    }, [user, course, enrolledCourses, courseId]);
+        
+        // 1. Check master subscription table
+        const hasSubscription = enrolledCourses?.some(ec => ec.course.$id === courseId);
+        if (hasSubscription) return true;
+
+        // 2. Check approved Vodafone manual enrollment status (Fallback/Redundancy)
+        if (vodafoneStatus?.status === 'approved') return true;
+
+        return false;
+    }, [user, course, enrolledCourses, courseId, vodafoneStatus]);
 
     if (isLoading) {
         return (

@@ -1,7 +1,6 @@
 // ── Constants ──
 
-import { UserRole } from '@/features/auth';
-export { UserRole };
+export * from './user';
 
 
 export const SubscriptionStatus = {

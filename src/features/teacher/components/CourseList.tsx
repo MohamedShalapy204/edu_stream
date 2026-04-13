@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { HiPlus, HiCube, HiOutlinePencil, HiOutlineArrowTopRightOnSquare } from 'react-icons/hi2';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import type { ICourse } from '../../courses';
+import type { IVodafoneEnrollment } from '@/features/payment/types';
 
 interface CourseListProps {
     courses: ICourse[];
+    pendingEnrollments?: (IVodafoneEnrollment)[];
 }
 
 /**
@@ -13,7 +15,7 @@ interface CourseListProps {
  * 
  * An editorial-style ledger for managing course records.
  */
-export const CourseList: React.FC<CourseListProps> = ({ courses }) => {
+export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollments = [] }) => {
     if (!courses || courses.length === 0) {
         return (
             <div className="bg-white/40 backdrop-blur-3xl rounded-4xl p-32 text-center shadow-premium border border-dashed border-base-content/10 transition-all">
@@ -52,12 +54,24 @@ export const CourseList: React.FC<CourseListProps> = ({ courses }) => {
                                     <HiCube className="w-16 h-16" />
                                 </div>
                             )}
-                            <div className="absolute top-4 left-4">
+                            <div className="absolute top-4 left-4 flex flex-col gap-2">
                                 {course.is_published ? (
-                                    <span className="bg-success text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-success/20 ring-1 ring-white/20">Active</span>
+                                    <span className="bg-success text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-success/20 ring-1 ring-white/20 w-fit">Active</span>
                                 ) : (
-                                    <span className="bg-base-content/40 text-black text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg ring-1 ring-white/20">Draft</span>
+                                    <span className="bg-base-content/40 text-black text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg ring-1 ring-white/20 w-fit">Draft</span>
                                 )}
+
+                                {(() => {
+                                    const pendingCount = pendingEnrollments.filter(e => e.course_id === course.$id).length;
+                                    if (pendingCount > 0) {
+                                        return (
+                                            <span className="bg-warning text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-warning/20 ring-1 ring-white/20 animate-pulse w-fit">
+                                                {pendingCount} Pending
+                                            </span>
+                                        );
+                                    }
+                                    return null;
+                                })()}
                             </div>
                         </div>
                         <div className="flex-1 min-w-0 flex flex-col">
