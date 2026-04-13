@@ -60,14 +60,14 @@
 
 **Goal**: Teacher can review enrollments per-course and globally, and can approve or deny them.
 
-- [ ] T017 [P] [US4] Extend `src/features/teacher/api/enrollmentApi.ts` with manual `approve` (creates appwrite Subscription + changes state) and `deny` logic
-- [ ] T018 [P] [US4] Create corresponding mutations / hooks in `src/features/teacher/hooks/useEnrollments.ts`
-- [ ] T019 [P] [US4] Build generic `ReceiptImageModal.tsx` in `src/features/payment/components/` for viewing transactions
-- [ ] T019b [US4] Build `CourseEnrollmentDashboard.tsx` in `src/features/payment/components/` integrating the image modal
-- [ ] T020 [US4] Safely mount `CourseEnrollmentDashboard` inside the "Manage Enrollments" tab in `src/features/teacher/pages/ManageCoursePage.tsx`
-- [ ] T021 [P] [US6] Render pending status badge in `src/features/teacher/components/CourseList.tsx`
-- [ ] T022 [P] [US6] Build `PendingEnrollmentsPanel.tsx` in `src/features/teacher/components/`
-- [ ] T023 [US6] Integrate `PendingEnrollmentsPanel` directly into `src/features/teacher/pages/TeacherDashboard.tsx`
+- [X] T017 [P] [US4] Extend `src/features/teacher/api/enrollmentApi.ts` with manual `approve` (creates appwrite Subscription + changes state) and `deny` logic
+- [X] T018 [P] [US4] Create corresponding mutations / hooks in `src/features/teacher/hooks/useEnrollments.ts`
+- [X] T019 [P] [US4] Build generic `ReceiptImageModal.tsx` in `src/features/payment/components/` for viewing transactions
+- [X] T019b [US4] Build `CourseEnrollmentDashboard.tsx` in `src/features/payment/components/` integrating the image modal
+- [X] T020 [US4] Safely mount `CourseEnrollmentDashboard` inside the "Manage Enrollments" tab in `src/features/teacher/pages/ManageCoursePage.tsx`
+- [X] T021 [P] [US6] Render pending status badge in `src/features/teacher/components/CourseList.tsx`
+- [X] T022 [P] [US6] Build `PendingEnrollmentsPanel.tsx` in `src/features/teacher/components/`
+- [X] T023 [US6] Integrate `PendingEnrollmentsPanel` directly into `src/features/teacher/pages/TeacherDashboard.tsx`
 
 **Checkpoint**: Teachers can approve enrollments independently. The lifecycle is complete.
 

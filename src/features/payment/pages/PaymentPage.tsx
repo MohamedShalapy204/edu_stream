@@ -99,7 +99,7 @@ const PaymentPage: React.FC = () => {
                     </p>
 
                     {enrollmentStatus.status === 'approved' && (
-                        <button onClick={() => navigate(`/learn/${courseId}`)} className="btn btn-primary mt-6 rounded-2xl px-10 h-14 font-black uppercase tracking-[0.2em] text-xs">
+                        <button onClick={() => navigate(`/student/learn/${courseId}`)} className="btn btn-primary mt-6 rounded-2xl px-10 h-14 font-black uppercase tracking-[0.2em] text-xs">
                             Enter Theatre
                         </button>
                     )}
