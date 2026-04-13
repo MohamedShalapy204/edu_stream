@@ -82,7 +82,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                                 <motion.div
                                                     layoutId="nav-underline"
                                                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
-                                                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                                    transition={{ type: "spring", stiffness: 380, damping: 45 }}
                                                 />
                                             )}
                                         </Link>
@@ -207,7 +207,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
             </main>
 
             {/* ── FOOTER ─────────────────────────────────────────────────── */}
-            <footer className="py-12 bg-base-200/30 border-t border-primary/5">
+            <footer className="py-12 bg-base-200 border-t border-base-content/5">
                 <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-all cursor-default group">
                         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-content text-[10px] font-black group-hover:scale-110 transition-transform">E</div>
@@ -236,7 +236,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                         <motion.div
                                             layoutId="mobile-nav-pill"
                                             className="absolute inset-0 bg-primary/20 rounded-3xl ring-1 ring-primary/20 backdrop-blur-md shadow-lg shadow-primary/10"
-                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                            transition={{ type: "spring", stiffness: 380, damping: 45 }}
                                         />
                                     )}
                                 </div>

@@ -21,9 +21,9 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
   const exhibits = lesson.document_ids || [];
 
   return (
-    <div className="h-full w-full bg-white/40 backdrop-blur-3xl border-l border-white/50 flex flex-col shadow-inner overflow-hidden">
+    <div className="h-full w-full bg-base-100 border-l border-base-content/5 flex flex-col overflow-hidden">
       {/* Hub Header */}
-      <div className="p-6 border-b border-base-content/5 flex-none bg-white/20 backdrop-blur-md z-20">
+      <div className="p-6 border-b border-base-content/5 flex-none bg-base-200/50 z-20">
         <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-base-content/40">Resource Catalog</h3>
       </div>
 
@@ -63,7 +63,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                   key={docId}
                   className={`group p-4 rounded-2xl border transition-all flex items-center justify-between shadow-sm ${isOpened
                     ? 'bg-primary/5 border-primary/20'
-                    : 'bg-white/40 border-white/40 hover:bg-primary/5 hover:border-primary/20'
+                    : 'bg-base-200 border-base-content/5 hover:bg-primary/5 hover:border-primary/20'
                     }`}
                 >
                   <div

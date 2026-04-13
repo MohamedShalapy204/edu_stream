@@ -30,7 +30,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
         : 0;
 
     return (
-        <div className={`bg-white/40 backdrop-blur-3xl p-6 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-transparent hover:border-primary/10 ring-1 ring-base-content/5 flex flex-col h-full overflow-hidden ${isDenied ? 'opacity-75' : ''}`}>
+        <div className={`bg-base-100 p-6 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-base-content/5 flex flex-col h-full overflow-hidden ${isDenied ? 'opacity-75' : ''}`}>
 
             {/* Colored left accent bar — emerald for enrolled, amber for pending, rose for denied */}
             <div className={`absolute left-0 top-6 bottom-6 w-0.5 rounded-r-full transition-all duration-300 ${
@@ -44,11 +44,13 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
             }`} />
 
             {/* Thumbnail */}
-            <div className="w-full h-48 bg-base-200/50 rounded-3xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 shadow-inner border border-white/40 mb-6">
+            <div className="w-full h-48 bg-base-200 rounded-3xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 border border-base-content/5 mb-6">
                 {course.thumbnail_id ? (
                     <img
                         src={storageService.getFilePreview(course.thumbnail_id)}
                         alt={course.title}
+                        loading="lazy"
+                        decoding="async"
                         className={`w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out ${isDenied ? 'sepia-[0.5]' : ''}`}
                     />
                 ) : (
@@ -60,7 +62,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                     {vodafoneEnrollment ? (
                         <EnrollmentStatusBadge status={vodafoneEnrollment.status} className="scale-75 origin-top-left" />
                     ) : (
-                        <span className="bg-primary/90 text-primary-content backdrop-blur-sm text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg ring-1 ring-white/20 flex items-center gap-2">
+                        <span className="bg-primary text-primary-content text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                             Direct Enrollment
                         </span>

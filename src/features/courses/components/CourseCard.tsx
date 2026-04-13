@@ -25,36 +25,34 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            whileHover={{ y: -8 }}
             transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
             className="group relative"
         >
             <Link to={`/courses/${course.$id}`} className="block h-full">
-                <div className="relative h-full flex flex-col bg-white/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/40 shadow-premium overflow-hidden transition-all duration-500 group-hover:shadow-2xl group-hover:border-primary/25">
-
-                    {/* Colored top-accent stripe — appears on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-primary/60 via-primary to-accent/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+                <div className="relative h-full flex flex-col bg-base-100 rounded-[2.5rem] border border-base-content/10 shadow-premium overflow-hidden transition-[transform,shadow,border-color] duration-500 group-hover:shadow-2xl group-hover:border-primary/25 group-hover:-translate-y-2">
 
                     {/* Visual Anchor (Thumbnail) */}
                     <div className="relative aspect-16/10 overflow-hidden">
                         <img
                             src={thumbnailUrl}
                             alt={course.title}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover grayscale-20 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
                         />
                         <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-70" />
 
-                        {/* Price Badge */}
-                        <div className="absolute bottom-4 right-4 px-4 py-1.5 bg-primary/90 backdrop-blur-md text-primary-content text-xs font-black rounded-xl shadow-lg ring-1 ring-white/20">
+                        {/* Price Badge — Solid, not glass */}
+                        <div className="absolute bottom-4 right-4 px-4 py-1.5 bg-primary text-primary-content text-xs font-black rounded-xl shadow-lg">
                             {course.price === 0 ? 'COMPLIMENTARY' : `EGP ${course.price.toFixed(0)}`}
                         </div>
 
-                        {/* Category Tag — tinted indigo instead of plain white */}
+                        {/* Category Tag — Solid background */}
                         <div className="absolute top-4 left-4 flex gap-2">
                             {course.categories?.slice(0, 1).map((cat) => (
                                 <span
                                     key={cat}
-                                    className="px-3 py-1 bg-primary/80 backdrop-blur-md text-[9px] font-black uppercase tracking-[0.15em] text-primary-content rounded-lg shadow-sm ring-1 ring-white/10"
+                                    className="px-3 py-1 bg-base-100/90 text-[9px] font-black uppercase tracking-[0.15em] text-base-content rounded-lg shadow-sm"
                                 >
                                     {cat}
                                 </span>
@@ -85,10 +83,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                                 </div>
                             </div>
 
-                            {/* Rating — amber is intentional and semantic here */}
-                            <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-400/8 border border-amber-400/15">
-                                <HiStar className="w-3 h-3 text-amber-500" />
-                                <span className="text-xs font-black text-amber-600/90">{course.rating || '4.8'}</span>
+                            {/* Rating — Solid semantic tag */}
+                            <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-warning/10 border border-warning/15">
+                                <HiStar className="w-3 h-3 text-warning" />
+                                <span className="text-xs font-black text-warning">{course.rating || '4.8'}</span>
                             </div>
                         </div>
                     </div>

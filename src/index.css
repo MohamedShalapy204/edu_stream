@@ -50,8 +50,13 @@
 
 @layer base {
   * {
-    @apply border-transparent outline-none selection:bg-primary/20 selection:text-primary;
+    @apply border-transparent selection:bg-primary/20 selection:text-primary;
     transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
   }
 
   html {
@@ -65,18 +70,17 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/70 backdrop-blur-3xl shadow-premium;
+    @apply bg-base-100/80 backdrop-blur-xl shadow-premium border border-base-content/5;
   }
 
   /* A card surface with a warm indigo-tinted background */
   .surface-elevated {
-    @apply bg-white shadow-card rounded-3xl;
+    @apply bg-base-100 shadow-card rounded-3xl border border-base-content/5;
   }
 
   /* Surfaces tinted toward the brand indigo */
   .surface-tinted {
-    background: oklch(0.975 0.008 268);
-    @apply shadow-card rounded-3xl;
+    @apply bg-base-200/40 shadow-card rounded-3xl border border-base-content/5;
   }
 
   /* Gradient text — indigo to secondary */

@@ -36,8 +36,8 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
         lessons.filter(l => l.section_id === sectionId).sort((a, b) => a.order - b.order);
 
     return (
-        <div className="h-full w-full bg-white/40 backdrop-blur-3xl border-l border-white/50 flex flex-col shadow-inner">
-            <div className="p-6 border-b border-primary/5">
+        <div className="h-full w-full bg-base-200 border-l border-base-content/5 flex flex-col">
+            <div className="p-6 border-b border-base-content/5">
                 <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40">Curriculum Index</h3>
                 <div className="mt-4 bg-primary/5 rounded-full h-1.5 overflow-hidden">
                     <motion.div
@@ -62,7 +62,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                     const isExpanded = expandedSections[section.$id];
 
                     return (
-                        <div key={section.$id} className="bg-base-100/50 rounded-2xl border border-white/40 overflow-hidden shadow-sm">
+                        <div key={section.$id} className="bg-base-100 rounded-2xl border border-base-content/5 overflow-hidden shadow-sm">
                             <button
                                 onClick={() => toggleSection(section.$id)}
                                 className="w-full p-4 flex items-center justify-between hover:bg-base-200/50 transition-colors"

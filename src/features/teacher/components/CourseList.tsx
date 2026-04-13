@@ -18,8 +18,8 @@ interface CourseListProps {
 export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollments = [] }) => {
     if (!courses || courses.length === 0) {
         return (
-            <div className="bg-white/40 backdrop-blur-3xl rounded-4xl p-32 text-center shadow-premium border border-dashed border-primary/20 transition-all group">
-                <div className="bg-primary/10 p-10 h-28 w-28 rounded-[2.5rem] inline-flex items-center justify-center mb-8 text-primary shadow-lg shadow-primary/10 group-hover:scale-110 transition-transform duration-500">
+            <div className="bg-base-100 rounded-4xl p-32 text-center border border-base-content/10 transition-all group">
+                <div className="bg-primary/5 p-10 h-28 w-28 rounded-[2.5rem] inline-flex items-center justify-center mb-8 text-primary group-hover:scale-110 transition-transform duration-500">
                     <HiPlus className="w-12 h-12" />
                 </div>
                 <h3 className="text-3xl font-heading font-black text-base-content mb-4 tracking-tight">The archives are silent.</h3>
@@ -39,14 +39,16 @@ export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollme
             {courses.map((course) => (
                 <div
                     key={course.$id}
-                    className="bg-white/40 backdrop-blur-3xl p-8 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-transparent hover:border-primary/10 ring-1 ring-base-content/5"
+                    className="bg-base-100 p-8 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-base-content/5"
                 >
                     <div className="flex flex-col sm:flex-row gap-8">
-                        <div className="w-full sm:w-44 h-36 bg-base-200/50 rounded-4xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 shadow-inner border border-white/40">
+                        <div className="w-full sm:w-44 h-36 bg-base-200 rounded-4xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 border border-base-content/5">
                             {course.thumbnail_id ? (
                                 <img
                                     src={storageService.getFilePreview(course.thumbnail_id)}
                                     alt={course.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out"
                                 />
                             ) : (
@@ -56,9 +58,9 @@ export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollme
                             )}
                             <div className="absolute top-4 left-4 flex flex-col gap-2">
                                 {course.is_published ? (
-                                    <span className="bg-success text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-success/20 ring-1 ring-white/20 w-fit">Active</span>
+                                    <span className="bg-success text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-success/10 w-fit">Active</span>
                                 ) : (
-                                    <span className="bg-base-content/40 text-black text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg ring-1 ring-white/20 w-fit">Draft</span>
+                                    <span className="bg-base-content/10 text-base-content/60 text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest w-fit">Draft</span>
                                 )}
 
                                 {(() => {
