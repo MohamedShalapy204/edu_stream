@@ -34,8 +34,9 @@
 | TailwindCSS v4 + Motion     | "Digital Atheneum" (Cinematic Aperture) theme fully integrated           |
 | Filtered Course Catalog     | Public courses listing with search, category filtering, and draft guards |
 | Phase 4 — Course Management | **100% Complete** (CRUD, Curriculum Editor, Reordering, Deletions)       |
+| Phase 5 — Payments          | **100% Complete** (Vodafone Cash manual flow, Receipt audit, Gating)    |
 | Phase 7 — Dashboards        | **Teacher Dashboard Complete** (Stats, Course Ledger, FSD Migration)     |
-| Vitest + RTL                | **100% Coverage on Auth and Teacher hooks/components**                   |
+| Vitest + RTL                | **100% Coverage on Auth, Teacher, and Payment hooks**                    |
 
 ---
 

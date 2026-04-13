@@ -1,9 +1,12 @@
 <!--
 Sync Impact Report:
-Version change: 1.3.0 -> 1.4.0
+Version change: 1.4.0 -> 1.5.0
 Modified principles:
-- Added Principle VIII. State & Context Persistence (.specify/ tracking)
+- Updated Principle VIII to mandate architecture snapshots.
+- Recorded implementation of Vodafone Cash manual payment flow.
 Templates requiring updates: (✅ updated / ⚠ pending) 
+- .specify/memory/architecture_snapshot_2026_04_13.md (✅ created)
+- context/ERD.md (✅ updated with Vodafone collection)
 - .specify/templates/plan-template.md (✅ updated - dynamic gates)
 - .specify/templates/spec-template.md (⚠ pending - future tasks will inherit new logic)
 - .specify/templates/tasks-template.md (⚠ pending - final polish phase should include documentation sync)

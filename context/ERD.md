@@ -283,6 +283,24 @@ Tracks user access per device.
 
 ---
 
+## 📱 10. VodafoneEnrollments 🚀
+
+Tracks manual Vodafone Cash payment submissions for approval.
+
+**Fields:**
+
+- id (PK)
+- student_id (FK -> Users.id)
+- course_id (FK -> Courses.id)
+- status (pending | approved | denied)
+- payment_number_shown (Snapshot of teacher's number at time of payment)
+- receipt_image_id (Appwrite Storage ID)
+- receipt_image_url
+- created_at (Appwrite internal: $createdAt)
+- updated_at (Appwrite internal: $updatedAt)
+
+---
+
 ## 🚀 Future Extensions
 
 - Certificates table
