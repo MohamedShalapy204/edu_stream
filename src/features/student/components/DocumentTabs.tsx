@@ -1,14 +1,14 @@
 import React from "react";
 import { motion } from "motion/react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setActiveTab, closeTab } from "../store/theatreSlice";
-import type { TheatreTab } from "../store/theatreSlice";
+import { setActiveDocument, closeDocument } from "../store/learningTheatreSlice";
+import type { Document } from "../types/learningTheatreTypes";
 import { X, FileText, Video, Info } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
 const DocumentTabs: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { tabs, activeTabId } = useAppSelector((state) => state.theatre);
+    const { openDocuments: tabs, activeDocumentId: activeTabId } = useAppSelector((state) => state.learningTheatre.documents);
 
     if (tabs.length === 0) return (
         <div className="h-12 flex items-center px-6 text-[10px] font-black uppercase tracking-[0.2em] text-base-content/20">
@@ -18,7 +18,7 @@ const DocumentTabs: React.FC = () => {
 
     return (
         <div className="flex items-center overflow-x-auto bg-white/5 backdrop-blur-3xl border-b border-white/5 scrollbar-hide shrink-0 h-12">
-            {tabs.map((tab: TheatreTab) => (
+            {tabs.map((tab: Document) => (
                 <div
                     key={tab.id}
                     className={cn(
@@ -27,7 +27,7 @@ const DocumentTabs: React.FC = () => {
                             ? "bg-base-100 text-base-content"
                             : "text-base-content/30 hover:bg-base-100/5 hover:text-base-content/60"
                     )}
-                    onClick={() => dispatch(setActiveTab(tab.id))}
+                    onClick={() => dispatch(setActiveDocument(tab.id))}
                 >
                     {/* Active Highlight */}
                     {activeTabId === tab.id && (
@@ -46,7 +46,7 @@ const DocumentTabs: React.FC = () => {
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            dispatch(closeTab(tab.id));
+                            dispatch(closeDocument(tab.id));
                         }}
                         className="opacity-0 group-hover:opacity-100 p-1 hover:bg-white/10 rounded-full transition-all"
                     >

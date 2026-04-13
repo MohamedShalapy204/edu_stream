@@ -27,7 +27,7 @@ const CourseEnrollmentDashboard: React.FC<CourseEnrollmentDashboardProps> = ({ c
 
     const handleDeny = (enrollmentId: string) => {
         if (!window.confirm('Are you sure you want to deny this payment?')) return;
-        
+
         deny(enrollmentId, {
             onSuccess: () => toast.error('Enrollment has been denied.'),
             onError: (e) => toast.error(e.message || 'Denial failed.')
@@ -65,7 +65,7 @@ const CourseEnrollmentDashboard: React.FC<CourseEnrollmentDashboardProps> = ({ c
 
             <div className="grid gap-4">
                 {pendingEnrollments.map((item) => (
-                    <div key={item.$id} className="bg-white rounded-[2rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-premium border border-muted/5 group transition-all hover:border-primary/20">
+                    <div key={item.$id} className="bg-white rounded-4xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-premium border border-muted/5 group transition-all hover:border-primary/20">
                         <div className="flex items-center gap-5 w-full md:w-auto">
                             <div className="w-14 h-14 bg-base-200/50 rounded-2xl flex items-center justify-center text-primary overflow-hidden shrink-0 shadow-inner">
                                 {item.user.avatar_url ? (
@@ -84,14 +84,14 @@ const CourseEnrollmentDashboard: React.FC<CourseEnrollmentDashboardProps> = ({ c
                         </div>
 
                         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                            <button 
+                            <button
                                 onClick={() => setSelectedReceipt(item.receipt_image_url)}
                                 className="btn btn-ghost bg-surface-50 hover:bg-surface-100 rounded-xl px-6 h-12 flex-1 md:flex-none text-xs font-bold"
                             >
                                 <HiOutlineDocumentText className="w-5 h-5 mr-2" />
                                 View Receipt
                             </button>
-                            <button 
+                            <button
                                 onClick={() => handleApprove(item.$id, item.student_id)}
                                 disabled={isApproving || isDenying}
                                 className="btn btn-success hover:bg-success/90 text-white rounded-xl px-6 h-12 flex-1 md:flex-none text-xs font-black shadow-lg shadow-success/20 outline-none border-none"
@@ -99,7 +99,7 @@ const CourseEnrollmentDashboard: React.FC<CourseEnrollmentDashboardProps> = ({ c
                                 <HiOutlineCheckCircle className="w-5 h-5 mr-2" />
                                 Approve
                             </button>
-                            <button 
+                            <button
                                 onClick={() => handleDeny(item.$id)}
                                 disabled={isApproving || isDenying}
                                 className="btn btn-ghost hover:bg-destructive/10 text-destructive rounded-xl px-4 h-12 flex-1 md:flex-none text-xs font-bold"
@@ -111,10 +111,10 @@ const CourseEnrollmentDashboard: React.FC<CourseEnrollmentDashboardProps> = ({ c
                 ))}
             </div>
 
-            <ReceiptImageModal 
-                isOpen={!!selectedReceipt} 
-                onClose={() => setSelectedReceipt(null)} 
-                imageUrl={selectedReceipt || ''} 
+            <ReceiptImageModal
+                isOpen={!!selectedReceipt}
+                onClose={() => setSelectedReceipt(null)}
+                imageUrl={selectedReceipt || ''}
             />
         </div>
     );
