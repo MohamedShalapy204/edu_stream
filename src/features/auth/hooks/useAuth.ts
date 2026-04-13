@@ -3,9 +3,8 @@ import { AppwriteException } from 'appwrite';
 import { queryKeys } from '@/keys/queryKeys';
 import * as authService from '../api/auth';
 import { avatars } from '@/services/appwrite/config';
-import * as userService from '../api/users';
+import * as userApi from '@/api/userApi';
 import type { LoginInput, RegisterInput } from '../schemas';
-
 export function useCurrentAccount() {
     return useQuery({
         queryKey: queryKeys.auth.session,
@@ -75,7 +74,7 @@ export function useRegister() {
                     const avatar_url = avatars.getInitials(data.name).toString();
 
                     // 3. Create DB Profile (Requires authenticated session)
-                    await userService.createUserDoc(newAccount.$id, {
+                    await userApi.createUserDoc(newAccount.$id, {
                         name: data.name,
                         email: data.email,
                         role: data.role,

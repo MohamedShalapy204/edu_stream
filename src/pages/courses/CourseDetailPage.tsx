@@ -59,8 +59,8 @@ const CourseDetailPage: FC = () => {
                 }
             });
         } else {
-            // TODO: In a real app we would redirect to a checkout page
-            alert("Scholarly tribute processing is currently being harmonized. Paid enrollment will be available soon.");
+            // Redirect to the Vodafone Cash Payment Gateway
+            navigate(`/payment/${id}`);
         }
     };
 

@@ -105,7 +105,7 @@ export const courseApi = {
             }
 
             // Remove internal properties and Appwrite system fields before sending
-            const allowedFields = ['title', 'description', 'price', 'is_published', 'categories', 'thumbnail_id', 'thumbnail_url', 'teacher_id', 'total_students', 'rating', 'duration', 'language'];
+            const allowedFields = ['title', 'description', 'price', 'is_published', 'categories', 'thumbnail_id', 'thumbnail_url', 'teacher_id', 'total_students', 'rating', 'duration', 'language', 'vodafone_cash_number', 'allow_resubmission'];
 
             const cleanedPayload: Record<string, unknown> = {};
             allowedFields.forEach(key => {

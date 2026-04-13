@@ -1,7 +1,8 @@
-import { Query } from 'appwrite';
+import { Query, ID } from 'appwrite';
 import { databases, appwriteConfig } from '@/services/appwrite/config';
 import type { IAppwriteDoc } from '@/types';
 import type { IUser } from '@/features/auth/types';
+import { type IVodafoneEnrollment, VodafoneEnrollmentStatus } from '@/features/payment/types';
 
 export interface ISubscription extends IAppwriteDoc {
     user_id: string;
@@ -62,5 +63,84 @@ export const enrollmentApi = {
             console.error('[enrollmentApi.getTeacherEnrollments]', error);
             throw error;
         }
+    },
+
+    async getPendingVodafoneEnrollments(courseIds: string[]): Promise<(IVodafoneEnrollment & { user: IUser })[]> {
+        if (!courseIds || courseIds.length === 0) return [];
+
+        try {
+            const enrollmentsRes = await databases.listDocuments<IVodafoneEnrollment>(
+                appwriteConfig.databaseId,
+                appwriteConfig.vodafoneEnrollmentsCollectionId,
+                [
+                    Query.equal('course_id', courseIds),
+                    Query.equal('status', VodafoneEnrollmentStatus.PENDING),
+                    Query.orderDesc('$createdAt'),
+                    Query.limit(50)
+                ]
+            );
+
+            const enrollments = enrollmentsRes.documents;
+            if (enrollments.length === 0) return [];
+
+            const uniqueUserIds = Array.from(new Set(enrollments.map(e => e.student_id)));
+
+            const userPromises = uniqueUserIds.map(id =>
+                databases.getDocument<IUser>(
+                    appwriteConfig.databaseId,
+                    appwriteConfig.usersCollectionId,
+                    id
+                ).catch(() => null)
+            );
+
+            const fetchedUsers = await Promise.all(userPromises);
+            const validUsers = fetchedUsers.filter(u => u !== null) as IUser[];
+            const usersById = new Map(validUsers.map(u => [u.$id, u]));
+
+            return enrollments.map(enrollment => ({
+                ...enrollment,
+                user: usersById.get(enrollment.student_id) as IUser
+            })).filter(data => data.user != null);
+        } catch (error) {
+            console.error('[enrollmentApi.getPendingVodafoneEnrollments]', error);
+            throw error;
+        }
+    },
+
+    async approveVodafoneEnrollment(enrollmentId: string, studentId: string, courseId: string): Promise<void> {
+        // 1. Update vodafone enrollment status
+        await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.vodafoneEnrollmentsCollectionId,
+            enrollmentId,
+            { status: VodafoneEnrollmentStatus.APPROVED }
+        );
+
+        // 2. Create actual Subscription
+        const now = new Date();
+        const futureDate = new Date();
+        futureDate.setFullYear(now.getFullYear() + 10); // Lifetime / 10 year access
+
+        await databases.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.subscriptionsCollectionId,
+            ID.unique(),
+            {
+                user_id: studentId,
+                course_id: courseId,
+                status: 'active',
+                start_date: now.toISOString(),
+                end_date: futureDate.toISOString()
+            }
+        );
+    },
+
+    async denyVodafoneEnrollment(enrollmentId: string): Promise<void> {
+        await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.vodafoneEnrollmentsCollectionId,
+            enrollmentId,
+            { status: VodafoneEnrollmentStatus.DENIED }
+        );
     }
 };

@@ -25,6 +25,8 @@ export interface ICourse extends IAppwriteDoc {
     rating?: number;
     duration?: number;
     language?: string;
+    vodafone_cash_number?: string | null;
+    allow_resubmission?: boolean;
 }
 
 export interface ICategory {

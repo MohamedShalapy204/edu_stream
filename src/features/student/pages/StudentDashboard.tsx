@@ -1,14 +1,62 @@
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { useCurrentAccount } from '@/features/auth';
 import { HiOutlineAcademicCap, HiOutlineBolt } from 'react-icons/hi2';
 import { useGetEnrolledCourses, useGetStudentProgress } from '../hooks/useStudent';
+import { useStudentVodafoneEnrollments } from '@/features/payment/hooks/useVodafoneEnrollment';
 import { EnrolledCourseCard } from '../components/EnrolledCourseCard';
+import { useGetCourses } from '@/features/courses/hooks/useCourseActions';
+import { type ICourse } from '@/features/courses';
+import { type IVodafoneEnrollment } from '@/features/payment/types';
+import { type ISubscription } from '@/types';
+
+interface DashboardItem {
+    subscription: ISubscription | null;
+    course: ICourse;
+    vodafoneEnrollment?: IVodafoneEnrollment;
+}
 
 const StudentDashboard: FC = () => {
     const { data: user } = useCurrentAccount();
-    const { data: enrolledCourses, isLoading } = useGetEnrolledCourses(user?.$id);
+    const { data: enrolledCourses, isLoading: isEnrolledLoading } = useGetEnrolledCourses(user?.$id);
+    const { data: vodafoneEnrollments, isLoading: isVodafoneLoading } = useStudentVodafoneEnrollments(user?.$id || '');
     const { data: allProgress } = useGetStudentProgress(user?.$id);
+    const { data: coursesData } = useGetCourses();
+
+    const isLoading = isEnrolledLoading || isVodafoneLoading;
+
+    // 🧠 Cognitive Merge: Combine active subscriptions with pending/denied Vodafone records
+    const dashboardItems = useMemo<DashboardItem[]>(() => {
+        const results: DashboardItem[] = [];
+        const enrolled = enrolledCourses || [];
+        const vodafone = vodafoneEnrollments || [];
+
+        // 1. Process active enrollments
+        enrolled.forEach(ec => {
+            results.push({
+                subscription: ec.subscription,
+                course: ec.course,
+                vodafoneEnrollment: vodafone.find(ve => ve.course_id === ec.course.$id)
+            });
+        });
+
+        // 2. Process pending/denied records that aren't active yet
+        vodafone.forEach(ve => {
+            const isActive = enrolled.some(ec => ec.course.$id === ve.course_id);
+            if (!isActive) {
+                const course = coursesData?.documents.find(c => c.$id === ve.course_id);
+                if (course) {
+                    results.push({
+                        subscription: null,
+                        course: course as ICourse,
+                        vodafoneEnrollment: ve
+                    });
+                }
+            }
+        });
+
+        return results;
+    }, [enrolledCourses, vodafoneEnrollments, coursesData]);
 
     return (
         <motion.div
@@ -34,13 +82,14 @@ const StudentDashboard: FC = () => {
                 <div className="flex items-center justify-center py-32">
                     <span className="loading loading-spinner text-primary loading-lg" />
                 </div>
-            ) : enrolledCourses && enrolledCourses.length > 0 ? (
+            ) : dashboardItems.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {enrolledCourses.map((enrolled) => (
+                    {dashboardItems.map((item) => (
                         <EnrolledCourseCard
-                            key={enrolled.subscription.$id}
-                            enrolledCourse={enrolled}
-                            progress={allProgress?.[enrolled.course.$id]}
+                            key={item.subscription?.$id || item.vodafoneEnrollment?.$id}
+                            enrolledCourse={item}
+                            progress={allProgress?.[item.course.$id]}
+                            vodafoneEnrollment={item.vodafoneEnrollment}
                         />
                     ))}
                 </div>
