@@ -1,42 +1,88 @@
 @import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+
 @plugin "daisyui";
+
+/* ── LIGHT THEME (Digital Atheneum) ── */
 @plugin "daisyui/theme" {
-  name: "digital-atheneum";
+  name: "light";
   default: true;
   prefersdark: false;
   color-scheme: "light";
 
-  /* ── Brand Surface Hierarchy ── */
-  --color-base-100: oklch(0.985 0.005 260); /* surface-50 */
-  --color-base-200: oklch(0.96 0.005 260);  /* surface-100 */
-  --color-base-300: oklch(0.92 0.005 260);  /* surface-200 */
+  /* Brand Surface Hierarchy */
+  --color-base-100: oklch(0.985 0.005 260);
+  --color-base-200: oklch(0.96 0.005 260);
+  --color-base-300: oklch(0.92 0.005 260);
   --color-base-content: oklch(0.20 0.01 260);
 
-  /* ── Core Brand colors (Indigo Editorial) ── */
+  /* Core Brand colors (Indigo Editorial) */
   --color-primary: oklch(0.35 0.18 268); 
   --color-primary-content: oklch(0.985 0 0);
   --color-secondary: oklch(0.40 0.20 260); 
   --color-secondary-content: oklch(0.985 0 0);
-  --color-accent: oklch(0.55 0.20 160); /* Emerald accent */
+  --color-accent: oklch(0.55 0.20 160);
   --color-accent-content: oklch(0.985 0 0);
 
-  /* ── Semantic Consistency ── */
+  /* Brand Gradient Tokens */
+  --brand-gradient-start: oklch(0.35 0.18 268);
+  --brand-gradient-end: oklch(0.50 0.22 250);
+
+  /* Semantic Consistency */
   --color-info: oklch(0.60 0.18 240);
   --color-success: oklch(0.60 0.18 145);
   --color-warning: oklch(0.75 0.18 75);
   --color-error: oklch(0.58 0.22 25);
 
-  /* ── Radius & Sizing ── */
+  /* Radius & Sizing */
   --radius-selector: 1rem;
   --radius-field: 2.25rem;
   --radius-box: 2.25rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
 
-  /* ── The No-Line Rule Implementation ── */
+  /* No-Line Rule */
   --border: 0rem;
-  --depth: 0.06; /* Corresponds to the 6% ambient shadow */
+  --depth: 0.06;
+  --noise: 0;
+}
+
+/* ── DARK THEME (Atheneum Nocturnal) ── */
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+  color-scheme: "dark";
+
+  /* Brand Surface Hierarchy (Deep Midnight Indigo) */
+  --color-base-100: oklch(0.12 0.025 268);
+  --color-base-200: oklch(0.08 0.025 268);
+  --color-base-300: oklch(0.05 0.025 268);
+  --color-base-content: oklch(0.98 0.005 260);
+
+  /* Core Brand colors (Vibrant indigo for high contrast) */
+  --color-primary: oklch(0.68 0.18 268); 
+  --color-primary-content: oklch(0.12 0.025 268);
+  --color-secondary: oklch(0.72 0.22 260); 
+  --color-secondary-content: oklch(0.12 0.025 268);
+  --color-accent: oklch(0.78 0.18 160);
+  --color-accent-content: oklch(0.12 0.025 268);
+
+  /* Brand Gradient Tokens */
+  --brand-gradient-start: oklch(0.68 0.18 268);
+  --brand-gradient-end: oklch(0.78 0.22 250);
+
+  /* Semantic Consistency */
+  --color-info: oklch(0.78 0.12 240);
+  --color-success: oklch(0.78 0.12 145);
+  --color-warning: oklch(0.88 0.12 75);
+  --color-error: oklch(0.72 0.18 25);
+
+  /* Radius & Sizing */
+  --radius-selector: 1rem;
+  --radius-field: 2.25rem;
+  --radius-box: 2.25rem;
+
+  /* No-Line Rule Refinement */
+  --border: 0rem;
+  --depth: 0.15; /* Increased depth for dark surfaces */
   --noise: 0;
 }
 
@@ -44,14 +90,37 @@
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   --font-heading: 'Newsreader', serif;
   
-  --shadow-premium: 0 25px 80px oklch(0.1 0.05 260 / 0.06);
-  --shadow-card: 0 10px 40px oklch(0.1 0.05 260 / 0.04);
+  --shadow-premium: 0 25px 80px oklch(0.1 0.05 260 / 0.12);
+  --shadow-card: 0 10px 40px oklch(0.1 0.05 260 / 0.08);
+
+  /* Sync Tailwind dark: variant with DaisyUI data-theme */
+  --variant-dark: &:where([data-theme="dark"], [data-theme="dark"] *);
 }
 
 @layer base {
   * {
-    @apply border-transparent selection:bg-primary/20 selection:text-primary;
-    transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    @apply border-transparent selection:bg-primary/30 selection:text-primary-content;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Defend against hardcoded white backgrounds in dark mode */
+  [data-theme="dark"] .bg-white,
+  [data-theme="dark"] .bg-white\/50,
+  [data-theme="dark"] .bg-white\/40,
+  [data-theme="dark"] .bg-white\/80 {
+    background-color: var(--color-base-100);
+    backdrop-filter: blur(24px);
+  }
+
+  /* Defend against hardcoded white focus states */
+  [data-theme="dark"] .focus\:bg-white:focus {
+    background-color: var(--color-base-100);
+    box-shadow: 0 0 0 2px var(--color-primary) !important;
+  }
+
+  /* Ensure text-base-content is visible */
+  [data-theme="dark"] .text-base-content\/40 {
+    color: oklch(var(--color-base-content) / 0.6); /* Increase visibility of secondary text in dark mode */
   }
 
   *:focus-visible {
@@ -73,33 +142,30 @@
     @apply bg-base-100/80 backdrop-blur-xl shadow-premium border border-base-content/5;
   }
 
-  /* A card surface with a warm indigo-tinted background */
   .surface-elevated {
     @apply bg-base-100 shadow-card rounded-3xl border border-base-content/5;
   }
 
-  /* Surfaces tinted toward the brand indigo */
   .surface-tinted {
     @apply bg-base-200/40 shadow-card rounded-3xl border border-base-content/5;
   }
 
-  /* Gradient text — indigo to secondary */
   .text-gradient-brand {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, oklch(0.35 0.18 268), oklch(0.50 0.22 250));
+    background-image: linear-gradient(135deg, var(--brand-gradient-start), var(--brand-gradient-end));
   }
 
-  /* Colored accent left-border for cards */
   .accent-border-l {
-    border-left: 3px solid oklch(0.35 0.18 268 / 0.4);
+    border-left: 3px solid var(--color-primary);
+    border-image: linear-gradient(to bottom, var(--color-primary), var(--color-secondary)) 1;
   }
 
-  /* Emerald accent left-border */
   .accent-border-l-success {
-    border-left: 3px solid oklch(0.55 0.20 160 / 0.5);
+    border-left: 3px solid var(--color-success);
   }
 
   .heading-serif {
     @apply font-heading text-4xl font-extrabold tracking-tight italic;
   }
 }
+

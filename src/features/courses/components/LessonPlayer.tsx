@@ -26,9 +26,9 @@ export const LessonPlayer: React.FC<LessonPlayerProps> = ({ lesson }) => {
 
     if (!hasVideoUrl && !hasAttachments) {
         return (
-            <div className="w-full aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 p-8 text-center">
+            <div className="w-full aspect-video rounded-2xl bg-base-200 border-2 border-dashed border-base-content/10 flex flex-col items-center justify-center text-base-content/40 p-8 text-center">
                 <AlertCircle size={48} strokeWidth={1.5} className="mb-4 opacity-50" />
-                <h3 className="text-lg font-bold text-slate-700">Content Unavailable</h3>
+                <h3 className="text-lg font-bold text-base-content/60">Content Unavailable</h3>
                 <p className="text-sm max-w-xs mt-1">
                     The content for this lesson is either missing or incorrectly configured.
                 </p>
@@ -72,11 +72,11 @@ export const LessonPlayer: React.FC<LessonPlayerProps> = ({ lesson }) => {
 
                     {documentIds.length === 1 ? (
                         /* Single Document - Render direct iframe preview */
-                        <div className="w-full aspect-3/4 sm:aspect-square bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 overflow-hidden shadow-sm flex flex-col">
-                            <div className="p-4 bg-white border-b border-slate-200 flex items-center justify-between">
+                        <div className="w-full aspect-3/4 sm:aspect-square bg-base-200 rounded-2xl border-2 border-dashed border-base-content/10 overflow-hidden shadow-sm flex flex-col">
+                            <div className="p-4 bg-base-100 border-b border-base-content/10 flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <FileText size={18} className="text-blue-600" />
-                                    <span className="font-bold text-slate-800 text-sm">{lesson.title} - Associated Document</span>
+                                    <span className="font-bold text-base-content text-sm">{lesson.title} - Associated Document</span>
                                 </div>
                                 <a
                                     href={storageService.getFileView(documentIds[0]).toString()}
@@ -101,7 +101,7 @@ export const LessonPlayer: React.FC<LessonPlayerProps> = ({ lesson }) => {
                                     href={storageService.getFileView(docId).toString()}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-start gap-4 p-4 rounded-2xl border border-base-content/10 bg-white hover:border-primary/30 hover:bg-primary/5 hover:-translate-y-1 transition-all group shadow-sm hover:shadow-md cursor-pointer"
+                                    className="flex items-start gap-4 p-4 rounded-2xl border border-base-content/10 bg-base-100 hover:border-primary/30 hover:bg-primary/5 hover:-translate-y-1 transition-all group shadow-sm hover:shadow-md cursor-pointer"
                                 >
                                     <div className="w-12 h-12 shrink-0 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <FileText size={24} strokeWidth={1.5} />

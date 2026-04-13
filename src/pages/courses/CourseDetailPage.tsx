@@ -88,7 +88,7 @@ const CourseDetailPage: FC = () => {
                 </div>
                 <Link
                     to="/courses"
-                    className="px-8 py-3 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-white/20 transition-all active:scale-95"
+                    className="px-8 py-3 bg-primary text-primary-content text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-white/20 transition-all active:scale-95"
                 >
                     Return to Catalog
                 </Link>
@@ -170,7 +170,7 @@ const CourseDetailPage: FC = () => {
                 {/* Right Column: Acquisition Card */}
                 <div className="lg:col-span-5 sticky top-28">
                     <div 
-                        className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 shadow-premium overflow-hidden ring-1 ring-base-content/5"
+                        className="bg-base-100/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 shadow-premium overflow-hidden ring-1 ring-base-content/5"
                         style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}
                     >
                         <div className="aspect-video relative group">
@@ -178,7 +178,7 @@ const CourseDetailPage: FC = () => {
                             <div className="absolute inset-0 bg-base-content/40 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer">
                                 <motion.div
                                     whileHover={{ scale: 1.1 }}
-                                    className="bg-white w-16 h-16 rounded-full flex items-center justify-center text-primary shadow-2xl"
+                                    className="bg-base-100 w-16 h-16 rounded-full flex items-center justify-center text-primary shadow-2xl"
                                 >
                                     <HiOutlinePlay className="w-6 h-6 ml-1" />
                                 </motion.div>
@@ -199,7 +199,7 @@ const CourseDetailPage: FC = () => {
                                 className={`w-full py-5 flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl ring-1 ring-white/20 active:scale-[0.98]
                                     ${isEnrolled
                                         ? 'bg-base-content text-white hover:bg-base-content/90'
-                                        : 'bg-primary hover:bg-primary/90 text-white shadow-primary/20'
+                                        : 'bg-primary hover:bg-primary/90 text-primary-content shadow-primary/20'
                                     }
                                     ${enrolling ? 'opacity-70 cursor-not-allowed' : ''}
                                 `}
@@ -255,7 +255,7 @@ const CourseDetailPage: FC = () => {
 
                 <div className="space-y-6">
                     {sections?.documents.map((section, idx) => (
-                        <div key={section.$id} className="bg-white/40 backdrop-blur-xl border border-primary/5 shadow-premium rounded-[2.5rem] overflow-hidden group hover:border-primary/20 transition-all duration-500">
+                        <div key={section.$id} className="bg-base-100/40 backdrop-blur-xl border border-primary/5 shadow-premium rounded-[2.5rem] overflow-hidden group hover:border-primary/20 transition-all duration-500">
                             <div className="p-8 bg-primary/5 border-b border-primary/5 flex items-center justify-between">
                                 <div className="flex items-center gap-6">
                                     <span className="w-12 h-12 flex items-center justify-center bg-primary text-primary-content rounded-2xl text-xs font-black shadow-lg shadow-primary/20">
@@ -283,7 +283,7 @@ const CourseDetailPage: FC = () => {
                     ))}
 
                     {sections?.total === 0 && (
-                        <div className="p-20 text-center bg-white/50 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/10">
+                        <div className="p-20 text-center bg-base-100/50 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/10">
                             <h3 className="font-black text-base-content/20 uppercase tracking-widest text-xs">Awaiting Curriculum Records</h3>
                         </div>
                     )}

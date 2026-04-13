@@ -92,7 +92,7 @@ const StudentDashboard: FC = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-4 mb-12 p-6 md:p-8 rounded-4xl md:rounded-[3rem] bg-white/50 backdrop-blur-xl ring-1 ring-primary/8 shadow-card"
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-4 mb-12 p-6 md:p-8 rounded-4xl md:rounded-[3rem] bg-base-100/50 backdrop-blur-xl ring-1 ring-primary/8 shadow-card"
                 >
                     <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-xl md:rounded-2xl bg-primary/8 flex items-center justify-center shrink-0">
@@ -140,7 +140,7 @@ const StudentDashboard: FC = () => {
                     ))}
                 </div>
             ) : (
-                <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] p-20 text-center shadow-premium border border-dashed border-primary/10 ring-1 ring-primary/5 relative overflow-hidden group">
+                <div className="bg-base-100/40 backdrop-blur-3xl rounded-[3rem] p-20 text-center shadow-premium border border-dashed border-primary/10 ring-1 ring-primary/5 relative overflow-hidden group">
                     <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full -translate-x-32 -translate-y-32 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
                     <div className="absolute bottom-0 right-0 w-48 h-48 bg-accent/5 rounded-full translate-x-24 translate-y-24 blur-2xl opacity-50" />
                     <div className="bg-primary/5 p-10 h-24 w-24 rounded-4xl inline-flex items-center justify-center mb-8 text-primary/40 relative z-10">
