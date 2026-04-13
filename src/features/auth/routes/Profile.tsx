@@ -45,29 +45,29 @@ const Profile: React.FC = () => {
     const isTeacher = profile?.role === UserRole.TEACHER;
 
     return (
-        <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div className="max-w-4xl mx-auto space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row items-center gap-8 bg-white dark:bg-surface-900 p-10 rounded-[3rem] shadow-premium">
+            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 bg-white dark:bg-surface-900 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
                 <div className="relative">
-                    <div className="w-32 h-32 rounded-[2.5rem] bg-linear-to-br from-primary to-secondary flex items-center justify-center text-white text-4xl font-black shadow-2xl">
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-[2rem] md:rounded-[2.5rem] bg-linear-to-br from-primary to-secondary flex items-center justify-center text-white text-3xl md:text-4xl font-black shadow-2xl">
                         {profile?.name?.[0]?.toUpperCase() || profile?.email?.[0]?.toUpperCase()}
                     </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
                     <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2">
-                        <h2 className="text-3xl font-black tracking-tighter">{profile?.name}</h2>
-                        <div className="flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full">
+                        <h2 className="text-2xl md:text-3xl font-black tracking-tighter">{profile?.name}</h2>
+                        <div className="flex items-center self-center md:self-auto gap-2 px-4 py-1.5 bg-primary/10 rounded-full">
                             <HiOutlineCheckBadge className="w-4 h-4 text-primary" />
                             <span className="text-[10px] uppercase font-black tracking-widest text-primary">{profile?.role} Scholar</span>
                         </div>
                     </div>
-                    <p className="text-muted-foreground font-medium max-w-md">{profile?.bio || 'No archival record of this scholar exists yet.'}</p>
+                    <p className="text-muted-foreground font-medium max-w-md text-sm md:text-base">{profile?.bio || 'No archival record of this scholar exists yet.'}</p>
                 </div>
             </div>
 
             {/* Settings Form */}
-            <form onSubmit={handleSubmit(onUpdateProfile)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-8 bg-white dark:bg-surface-900 p-10 rounded-[3rem] shadow-premium">
+            <form onSubmit={handleSubmit(onUpdateProfile)} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div className="space-y-6 md:space-y-8 bg-white dark:bg-surface-900 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="p-3 bg-secondary/10 rounded-2xl text-secondary">
                             <HiOutlineUserCircle className="w-6 h-6" />
@@ -77,14 +77,14 @@ const Profile: React.FC = () => {
 
                     <div className="space-y-3">
                         <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Scholarly Email</label>
-                        <div className="input input-bordered h-14 rounded-2xl bg-surface-50 border-none flex items-center px-6 font-semibold opacity-50 cursor-not-allowed">
+                        <div className="input input-bordered h-14 rounded-2xl bg-surface-50 border-none flex items-center px-6 font-semibold opacity-50 cursor-not-allowed text-sm">
                             {profile?.email}
                         </div>
                     </div>
                 </div>
 
                 {isTeacher && (
-                    <div className="space-y-8 bg-white dark:bg-surface-900 p-10 rounded-[3rem] shadow-premium">
+                    <div className="space-y-6 md:space-y-8 bg-white dark:bg-surface-900 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
                         <div className="flex items-center gap-4 mb-2">
                             <div className="p-3 bg-primary/10 rounded-2xl text-primary">
                                 <HiOutlineBanknotes className="w-6 h-6" />
@@ -102,7 +102,7 @@ const Profile: React.FC = () => {
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="btn btn-primary w-full h-14 rounded-2xl font-black text-xs uppercase tracking-[0.25em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
+                            className="btn btn-primary w-full h-14 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.25em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
                         >
                             {isPending ? <span className="loading loading-spinner" /> : 'Commit Changes'}
                         </button>

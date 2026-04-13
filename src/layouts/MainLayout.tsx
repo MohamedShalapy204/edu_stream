@@ -46,21 +46,20 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
 
     return (
         <div className="min-h-screen bg-base-100 flex flex-col selection:bg-primary/20 font-sans antialiased text-base-content overflow-x-hidden">
-
             {/* ── STICKY GLASS HEADER ─────────────────────────────────────── */}
             <header className="sticky top-0 z-50 w-full bg-base-100/60 backdrop-blur-2xl transition-all duration-500 border-none shadow-premium/5">
-                <div className="max-w-7xl mx-auto px-6 lg:px-12">
-                    <div className="flex h-20 items-center justify-between">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+                    <div className="flex h-16 md:h-20 items-center justify-between">
 
                         {/* Brand Section */}
-                        <div className="flex items-center gap-12">
-                            <Link to="/" className="flex items-center gap-3 group">
-                                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-content text-lg font-black shadow-premium group-hover:scale-110 group-hover:shadow-primary/20 transition-all duration-500">
+                        <div className="flex items-center gap-6 md:gap-12">
+                            <Link to="/" className="flex items-center gap-2 md:gap-3 group">
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-primary flex items-center justify-center text-primary-content text-base md:text-lg font-black shadow-premium group-hover:scale-110 group-hover:shadow-primary/20 transition-all duration-500">
                                     E
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="font-heading text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500">EDU<span className="text-gradient-brand italic font-medium">stream</span></span>
-                                    <span className="text-[10px] uppercase font-black tracking-[0.2em] text-primary/40 mt-0.5">Atheneum Editorial</span>
+                                    <span className="font-heading text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500">EDU<span className="text-gradient-brand italic font-medium">stream</span></span>
+                                    <span className="text-[8px] md:text-[10px] uppercase font-black tracking-[0.2em] text-primary/40 mt-0.5 hidden xs:block">Atheneum Editorial</span>
                                 </div>
                             </Link>
 
@@ -112,7 +111,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                         </div>
 
                         {/* Actions Section */}
-                        <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-3 md:gap-6">
                             {/* Theme Toggle Button */}
                             <button
                                 onClick={() => dispatch(toggleTheme())}
@@ -127,16 +126,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                             </button>
                             {account ? (
                                 <div className="dropdown dropdown-end">
-                                    <label tabIndex={0} className="group flex items-center gap-4 cursor-pointer p-1 rounded-2xl hover:bg-base-200 transition-all">
-                                        <div className="flex-col items-end text-right hidden sm:flex">
+                                    <label tabIndex={0} className="group flex items-center gap-3 md:gap-4 cursor-pointer p-0.5 md:p-1 rounded-2xl hover:bg-base-200 transition-all">
+                                        <div className="flex-col items-end text-right hidden lg:flex">
                                             <span className="text-[10px] uppercase font-black tracking-widest text-base-content/30">Scholar</span>
                                             <span className="text-xs font-black tracking-tight">{account.name || 'Anonymous'}</span>
                                         </div>
                                         {/* Scholarly Tile (Avatar) */}
-                                        <div className="w-10 h-10 rounded-[0.8rem] bg-linear-to-br from-primary to-secondary flex items-center justify-center text-primary-content text-sm font-black shadow-premium group-hover:scale-105 transition-all">
+                                        <div className="w-9 h-9 md:w-10 md:h-10 rounded-[0.7rem] md:rounded-[0.8rem] bg-linear-to-br from-primary to-secondary flex items-center justify-center text-primary-content text-sm font-black shadow-premium group-hover:scale-105 transition-all">
                                             {userInitial}
                                         </div>
-                                        <HiOutlineChevronDown className="w-3.5 h-3.5 text-base-content/20 group-hover:text-primary transition-all mr-1" />
+                                        <HiOutlineChevronDown className="w-3 h-3 md:w-3.5 md:h-3.5 text-base-content/20 group-hover:text-primary transition-all mr-1" />
                                     </label>
 
                                     <ul tabIndex={0} className="dropdown-content z-50 menu p-3 shadow-premium bg-base-100 rounded-3xl w-64 mt-4 border border-base-content/5 animate-in fade-in slide-in-from-top-4 duration-300">
@@ -181,9 +180,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                             ) : (
                                 isPublic && (
                                     <Link to="/login">
-                                        <button className="btn btn-primary h-12 rounded-2xl px-6 font-black text-xs uppercase tracking-[0.25em] shadow-premium hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all border-none">
+                                        <button className="btn btn-primary h-11 md:h-12 rounded-xl md:rounded-2xl px-4 md:px-6 font-black text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] shadow-premium hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all border-none">
                                             Identify
-                                            <HiOutlineArrowRightOnRectangle className="ml-2 w-4 h-4" />
+                                            <HiOutlineArrowRightOnRectangle className="ml-2 w-3.5 h-3.5 md:w-4 md:h-4" />
                                         </button>
                                     </Link>
                                 )
@@ -201,7 +200,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                     <div className="absolute bottom-0 left-0 w-120 h-120 rounded-full blur-[100px] bg-secondary/10 translate-y-1/3 -translate-x-1/4" />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-12 pb-32 md:py-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-8 md:pt-12 pb-32 md:pb-12">
                     <Outlet />
                 </div>
             </main>
@@ -213,16 +212,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-content text-[10px] font-black group-hover:scale-110 transition-transform">E</div>
                         <span className="text-[10px] uppercase font-black tracking-[0.3em] text-primary/80">EDUstream Intelligence</span>
                     </div>
-                    <div className="text-[10px] uppercase font-black tracking-[0.2em] text-primary/20">
+                    <div className="text-[10px] uppercase font-black tracking-[0.2em] text-primary/20 text-center md:text-left">
                         &copy; 2026 Digital Atheneum. All Protocols Reserved.
                     </div>
                 </div>
             </footer>
             {/* ── MOBILE BOTTOM NAVIGATION ───────────────────────────────────── */}
-            <nav className="md:hidden fixed bottom-6 left-6 right-6 z-50">
-                <div className="bg-base-100/60 backdrop-blur-2xl border border-white/20 rounded-[2.5rem] shadow-premium-lg px-4 h-20 flex items-center justify-around relative overflow-hidden">
+            <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50">
+                <div className="bg-base-100/80 backdrop-blur-2xl border border-white/20 rounded-[2rem] shadow-premium-lg px-2 h-18 flex items-center justify-around relative overflow-hidden">
                     {/* Active Indicator Background */}
-                    <div className="absolute inset-x-4 h-full pointer-events-none flex justify-around items-center">
+                    <div className="absolute inset-x-2 h-full pointer-events-none flex justify-around items-center">
                         {[
                             { path: '/courses' },
                             ...(profile?.role === UserRole.TEACHER ? [{ path: '/teacher/dashboard' }] : []),
@@ -231,11 +230,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                         ].map((item, idx) => {
                             const isActive = location.pathname.startsWith(item.path);
                             return (
-                                <div key={idx} className="w-16 h-16 flex items-center justify-center relative">
+                                <div key={idx} className="w-14 h-14 flex items-center justify-center relative">
                                     {isActive && (
                                         <motion.div
                                             layoutId="mobile-nav-pill"
-                                            className="absolute inset-0 bg-primary/20 rounded-3xl ring-1 ring-primary/20 backdrop-blur-md shadow-lg shadow-primary/10"
+                                            className="absolute inset-0 bg-primary/20 rounded-2xl ring-1 ring-primary/20 backdrop-blur-md shadow-lg shadow-primary/10"
                                             transition={{ type: "spring", stiffness: 380, damping: 45 }}
                                         />
                                     )}
@@ -255,10 +254,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                             <Link
                                 key={item.name}
                                 to={item.path}
-                                className={`relative flex flex-col items-center justify-center gap-1.5 w-16 h-16 transition-all ${isActive ? 'text-primary' : 'text-base-content/30'}`}
+                                className={`relative flex flex-col items-center justify-center gap-1 w-14 h-14 transition-all ${isActive ? 'text-primary' : 'text-base-content/30'}`}
                             >
-                                <item.icon className={`w-5 h-5 transition-transform ${isActive ? 'scale-110' : 'active:scale-90'}`} />
-                                <span className="text-[8px] uppercase font-black tracking-widest">{item.name}</span>
+                                <item.icon className={`w-4.5 h-4.5 transition-transform ${isActive ? 'scale-110' : 'active:scale-90'}`} />
+                                <span className="text-[7px] uppercase font-black tracking-widest">{item.name}</span>
                             </Link>
                         );
                     })}

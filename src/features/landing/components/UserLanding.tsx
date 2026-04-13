@@ -40,21 +40,21 @@ const shortcuts = [
 
 export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
     return (
-        <div className="min-h-[80vh] flex flex-col pt-20 pb-32 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <div className="container mx-auto px-6 lg:px-12">
+        <div className="min-h-[80vh] flex flex-col pt-12 md:pt-20 pb-20 md:pb-32 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <div className="w-full">
 
                 {/* Personalized Header */}
-                <header className="mb-20 space-y-4">
+                <header className="mb-12 md:mb-20 space-y-4">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
                     >
                         Welcome Back, Scholar
                     </motion.div>
-                    <h1 className="text-5xl lg:text-7xl font-heading font-black tracking-tight text-base-content leading-tight">
+                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black tracking-tight text-base-content leading-tight italic">
                         Continue your journey, <br />
-                        <span className="text-primary italic font-medium">{account.name.split(' ')[0]}</span>.
+                        <span className="text-primary not-italic font-medium">{account.name.split(' ')[0]}</span>.
                     </h1>
                 </header>
 

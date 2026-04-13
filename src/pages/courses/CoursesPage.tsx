@@ -54,7 +54,7 @@ const CoursesPage: React.FC = () => {
             />
 
             {/* Curated Wisdom Results */}
-            <div className="container mx-auto px-6 lg:px-12 py-20 relative">
+            <div className="py-12 md:py-20 relative">
                 {/* Visual anchor / section gradient */}
                 <div className="absolute top-0 left-0 right-0 h-40 bg-linear-to-b from-primary/5 to-transparent pointer-events-none" />
                 

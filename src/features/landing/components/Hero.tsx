@@ -16,15 +16,15 @@ export const Hero: React.FC = () => {
                 <div className="absolute top-1/2 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/15 to-transparent -translate-y-1/2" />
             </div>
 
-            <div className="container mx-auto px-6 lg:px-12 text-center lg:text-left flex flex-col lg:flex-row items-center gap-16">
+            <div className="container mx-auto px-6 lg:px-12 text-center lg:text-left flex flex-col lg:flex-row items-center gap-12 md:gap-16">
 
                 {/* Text Content */}
-                <div className="flex-1 space-y-10">
+                <div className="flex-1 space-y-8 md:space-y-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
                     >
                         <HiOutlineSparkles className="w-3.5 h-3.5 text-accent" />
                         The Digital Atheneum is Open
@@ -35,10 +35,10 @@ export const Hero: React.FC = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2, duration: 0.8, ease: "circOut" }}
-                            className="text-6xl lg:text-8xl font-heading font-black leading-[0.9] tracking-tighter text-base-content"
+                            className="text-5xl md:text-6xl lg:text-8xl font-heading font-black leading-[0.95] md:leading-[0.9] tracking-tighter text-base-content"
                         >
                             Knowledge,<br />
-                            <span className="text-primary italic font-medium">curated</span> for the<br />
+                            <span className="text-primary italic font-medium">curated</span> for <span className="hidden md:inline">the</span><br />
                             modern scholar.
                         </motion.h1>
 
@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 0.6, y: 0 }}
                             transition={{ delay: 0.4, duration: 0.8 }}
-                            className="max-w-xl text-xl lg:text-2xl font-medium leading-relaxed text-base-content/80 mx-auto lg:mx-0"
+                            className="max-w-xl text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-base-content/80 mx-auto lg:mx-0"
                         >
                             Access a library of world-class intelligence. Built for institutions that demand excellence and students who seek mastery.
                         </motion.p>
@@ -56,15 +56,15 @@ export const Hero: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.8 }}
-                        className="flex flex-col sm:flex-row items-center gap-6 pt-4"
+                        className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 pt-4"
                     >
-                        <Link to="/register">
-                            <button className="btn btn-primary h-16 px-10 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-premium hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] transition-all border-none">
+                        <Link to="/register" className="w-full sm:w-auto">
+                            <button className="btn btn-primary w-full h-14 md:h-16 px-8 md:px-10 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.3em] shadow-premium hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/25 active:scale-[0.98] transition-all border-none">
                                 Begin Enrollment
                                 <HiOutlineArrowRight className="ml-3 w-4 h-4" />
                             </button>
                         </Link>
-                        <Link to="/courses" className="text-xs font-black uppercase tracking-[0.3em] text-base-content/40 hover:text-primary transition-colors py-4 relative group">
+                        <Link to="/courses" className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-base-content/40 hover:text-primary transition-colors py-4 relative group">
                             Explore Curriculum
                             <span className="absolute -bottom-0.5 left-0 right-0 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                         </Link>
@@ -75,16 +75,16 @@ export const Hero: React.FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.0, duration: 0.8 }}
-                        className="flex items-center gap-8 pt-4"
+                        className="flex flex-wrap md:flex-nowrap justify-center lg:justify-start items-center gap-8 md:gap-10 pt-4"
                     >
                         {[
                             { value: '42k+', label: 'Active Scholars' },
                             { value: '300+', label: 'Curated Courses' },
                             { value: '98%', label: 'Satisfaction' },
                         ].map((stat) => (
-                            <div key={stat.label} className="text-left">
-                                <div className="text-xl font-heading font-black text-primary">{stat.value}</div>
-                                <div className="text-[9px] uppercase font-black tracking-[0.2em] text-base-content/30">{stat.label}</div>
+                            <div key={stat.label} className="text-center lg:text-left">
+                                <div className="text-lg md:text-xl font-heading font-black text-primary">{stat.value}</div>
+                                <div className="text-[8px] md:text-[9px] uppercase font-black tracking-[0.2em] text-base-content/30">{stat.label}</div>
                             </div>
                         ))}
                     </motion.div>

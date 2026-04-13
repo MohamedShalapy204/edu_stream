@@ -84,7 +84,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
             </div>
 
             {/* Action Footer */}
-            <div className="flex-none h-20 bg-white/60 backdrop-blur-2xl border-t border-white/50 flex items-center justify-between px-8 lg:px-12 z-10">
+            <div className="flex-none min-h-20 md:h-24 bg-white/60 backdrop-blur-2xl border-t border-white/50 flex flex-col sm:flex-row items-center justify-between px-6 md:px-12 py-4 sm:py-0 z-10 gap-4 sm:gap-0">
                 <div className="hidden sm:block">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 mb-1">Status</p>
                     <p className="text-sm font-bold text-base-content/60 italic">
@@ -92,25 +92,25 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4 w-full sm:w-auto">
+                <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto">
                     <button
                         onClick={onMarkCompleted}
                         disabled={isCompleted}
-                        className={`flex-1 sm:flex-none px-6 py-3.5 rounded-2xl flex items-center justify-center gap-3 font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300
+                        className={`flex-1 sm:flex-none px-5 md:px-6 py-3.5 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 md:gap-3 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300
                             ${isCompleted
                                 ? 'bg-success/10 text-success border border-success/20 shadow-sm'
                                 : 'bg-primary text-white shadow-xl shadow-primary/20 hover:shadow-2xl hover:-translate-y-0.5 active:scale-95'
                             }
                         `}
                     >
-                        {isCompleted && <HiOutlineCheckCircle className="w-5 h-5" />}
+                        {isCompleted && <HiOutlineCheckCircle className="w-4.5 h-4.5 md:w-5 md:h-5" />}
                         {isCompleted ? 'Segment Mastered' : 'Complete Lesson'}
                     </button>
 
                     {onNextLesson && (
                         <button
                             onClick={onNextLesson}
-                            className="flex-1 sm:flex-none px-6 py-3.5 rounded-2xl bg-base-content text-white font-black text-[10px] uppercase tracking-[0.2em] hover:bg-primary transition-all duration-300 shadow-xl active:scale-95"
+                            className="flex-1 sm:flex-none px-5 md:px-6 py-3.5 rounded-xl md:rounded-2xl bg-base-content text-white font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-primary transition-all duration-300 shadow-xl active:scale-95"
                         >
                             Continue
                         </button>

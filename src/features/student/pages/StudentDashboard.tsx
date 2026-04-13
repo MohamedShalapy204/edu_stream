@@ -69,17 +69,17 @@ const StudentDashboard: FC = () => {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20"
+            className="w-full py-10 md:py-20"
         >
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-10">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-10">
                 <div>
-                    <h1 className="text-4xl md:text-5xl font-heading font-black text-base-content tracking-tight mb-4 flex items-center gap-4">
+                    <h1 className="text-3xl md:text-5xl font-heading font-black text-base-content tracking-tight mb-3 md:mb-4 flex items-center gap-3 md:gap-4">
                         Learning Portal
-                        <div className="bg-primary/10 p-2 rounded-2xl">
-                            <HiOutlineAcademicCap className="w-8 h-8 text-primary" />
+                        <div className="bg-primary/10 p-2 rounded-xl md:rounded-2xl">
+                            <HiOutlineAcademicCap className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                         </div>
                     </h1>
-                    <p className="text-base-content/40 text-lg font-medium max-w-2xl leading-relaxed">
+                    <p className="text-base-content/40 text-sm md:text-lg font-medium max-w-2xl leading-relaxed">
                         Welcome back, <span className="text-primary font-bold">{user?.name}</span>. Access your active scholarly pursuits and continue your cognitive expansion.
                     </p>
                 </div>
@@ -91,33 +91,33 @@ const StudentDashboard: FC = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="grid grid-cols-3 gap-4 mb-12 p-6 rounded-3xl bg-white/50 backdrop-blur-xl ring-1 ring-primary/8 shadow-card"
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-4 mb-12 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] bg-white/50 backdrop-blur-xl ring-1 ring-primary/8 shadow-card"
                 >
                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-2xl bg-primary/8 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 rounded-xl md:rounded-2xl bg-primary/8 flex items-center justify-center shrink-0">
                             <HiOutlineAcademicCap className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                            <div className="text-2xl font-heading font-black text-primary">{totalEnrolled}</div>
-                            <div className="text-[9px] uppercase font-black tracking-widest text-base-content/30">Active Courses</div>
+                            <div className="text-xl md:text-2xl font-heading font-black text-primary">{totalEnrolled}</div>
+                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">Active Courses</div>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-2xl bg-accent/8 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 rounded-xl md:rounded-2xl bg-accent/8 flex items-center justify-center shrink-0">
                             <HiOutlineCheckCircle className="w-5 h-5 text-accent" />
                         </div>
                         <div>
-                            <div className="text-2xl font-heading font-black text-accent">{totalCompleted}</div>
-                            <div className="text-[9px] uppercase font-black tracking-widest text-base-content/30">Lessons Done</div>
+                            <div className="text-xl md:text-2xl font-heading font-black text-accent">{totalCompleted}</div>
+                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">Lessons Done</div>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${pendingCount > 0 ? 'bg-warning/10' : 'bg-base-200'}`}>
+                        <div className={`w-10 h-10 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0 ${pendingCount > 0 ? 'bg-warning/10' : 'bg-base-200'}`}>
                             <HiOutlineClock className={`w-5 h-5 ${pendingCount > 0 ? 'text-warning' : 'text-base-content/20'}`} />
                         </div>
                         <div>
-                            <div className={`text-2xl font-heading font-black ${pendingCount > 0 ? 'text-warning' : 'text-base-content/30'}`}>{pendingCount}</div>
-                            <div className="text-[9px] uppercase font-black tracking-widest text-base-content/30">Pending Review</div>
+                            <div className={`text-xl md:text-2xl font-heading font-black ${pendingCount > 0 ? 'text-warning' : 'text-base-content/30'}`}>{pendingCount}</div>
+                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">Pending Review</div>
                         </div>
                     </div>
                 </motion.div>

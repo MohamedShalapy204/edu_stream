@@ -61,7 +61,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                     </div>
 
                     {/* Content Ledger */}
-                    <div className="p-8 flex flex-col grow">
+                    <div className="p-6 md:p-8 flex flex-col grow">
                         <h3 className="text-xl font-heading font-black text-base-content leading-tight mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                             {course.title}
                         </h3>

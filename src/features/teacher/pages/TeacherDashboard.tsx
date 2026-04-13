@@ -44,7 +44,7 @@ const TeacherDashboard: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="max-w-7xl mx-auto px-6 lg:px-12 py-12 selection:bg-primary/20 relative"
+            className="w-full py-10 md:py-20 selection:bg-primary/20 relative"
         >
             {/* Global Ambient Background */}
             <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
@@ -52,21 +52,21 @@ const TeacherDashboard: React.FC = () => {
                 <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] bg-secondary/5 translate-y-1/4 -translate-x-1/4" />
             </div>
             {/* ── Scholarly Header ── */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
-                <div className="space-y-3">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 md:mb-16">
+                <div className="space-y-3 md:space-y-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/5 text-primary text-[9px] uppercase font-black tracking-[0.2em] ring-1 ring-primary/10">
                         Faculty Portal
                     </div>
-                    <h1 className="text-5xl lg:text-6xl font-heading font-black text-base-content tracking-tighter leading-tight text-balance">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-base-content tracking-tighter leading-tight text-balance">
                         Teacher <span className="text-primary italic font-medium italic-serif">Dashboard</span>
                     </h1>
-                    <p className="text-base-content/50 text-base font-medium leading-relaxed max-w-md border-l-2 border-primary/10 pl-5">
+                    <p className="text-base-content/50 text-sm md:text-base font-medium leading-relaxed max-w-md border-l-2 border-primary/10 pl-5">
                         Manage your curriculum and track scholarly achievement within the Atheneum.
                     </p>
                 </div>
                 <Link
                     to="/teacher/courses/new"
-                    className="group relative inline-flex items-center justify-center h-16 px-10 bg-primary text-white font-black text-[10px] uppercase tracking-[0.25em] rounded-4xl shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98] ring-1 ring-white/20"
+                    className="group relative inline-flex items-center justify-center h-14 md:h-16 px-8 md:px-10 bg-primary text-white font-black text-[9px] md:text-[10px] uppercase tracking-[0.25em] rounded-3xl md:rounded-4xl shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98] ring-1 ring-white/20"
                 >
                     <HiPlus className="w-5 h-5 mr-3 group-hover:rotate-90 transition-transform duration-500" />
                     Archive New Wisdom
