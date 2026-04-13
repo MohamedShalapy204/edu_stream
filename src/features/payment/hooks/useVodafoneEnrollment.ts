@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/keys/queryKeys';
-import { createEnrollment, getEnrollmentForCourse } from '../api/vodafoneEnrollmentApi';
+import { createEnrollment, getEnrollmentForCourse, getStudentEnrollments } from '../api/vodafoneEnrollmentApi';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import { VodafoneEnrollmentStatus } from '../types';
 
@@ -9,6 +9,14 @@ export function useCourseEnrollmentStatus(courseId: string, studentId: string) {
         queryKey: queryKeys.vodafoneEnrollments.check(courseId, studentId),
         queryFn: () => getEnrollmentForCourse(courseId, studentId),
         enabled: !!courseId && !!studentId,
+    });
+}
+
+export function useStudentVodafoneEnrollments(studentId: string) {
+    return useQuery({
+        queryKey: ['vodafone_enrollments', 'student', studentId],
+        queryFn: () => getStudentEnrollments(studentId),
+        enabled: !!studentId,
     });
 }
 

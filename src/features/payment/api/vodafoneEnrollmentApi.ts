@@ -25,3 +25,16 @@ export const getEnrollmentForCourse = async (courseId: string, studentId: string
 
     return response.documents[0] || null;
 };
+
+export const getStudentEnrollments = async (studentId: string) => {
+    const response = await databases.listDocuments<IVodafoneEnrollment>(
+        appwriteConfig.databaseId,
+        appwriteConfig.vodafoneEnrollmentsCollectionId,
+        [
+            Query.equal('student_id', studentId),
+            Query.orderDesc('$createdAt')
+        ]
+    );
+
+    return response.documents;
+};

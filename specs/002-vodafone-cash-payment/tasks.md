@@ -77,8 +77,8 @@
 
 **Goal**: Enforce access via `EnrollmentGuard` and indicate enrollment outcome on the student dashboard.
 
-- [ ] T024 [P] [US7] Modify `src/features/student/components/EnrollmentGuard.tsx` to grant access if a valid `Approved` VodafoneEnrollment is present.
-- [ ] T025 [US7] Update `src/features/student/pages/StudentDashboard.tsx` to decorate course cards with the `EnrollmentStatusBadge.tsx` based on their enrollment outcome.
+- [X] T024 [P] [US7] Modify `src/features/student/components/EnrollmentGuard.tsx` to grant access if a valid `Approved` VodafoneEnrollment is present.
+- [X] T025 [US7] Update `src/features/student/pages/StudentDashboard.tsx` to decorate course cards with the `EnrollmentStatusBadge.tsx` based on their enrollment outcome.
 
 ---
 
