@@ -44,7 +44,10 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
             }`} />
 
             {/* Thumbnail */}
-            <div className="w-full h-48 bg-base-200 rounded-3xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 border border-base-content/5 mb-6">
+            <div 
+                className="w-full h-48 bg-base-200 rounded-3xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 border border-base-content/5 mb-6"
+                style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}
+            >
                 {course.thumbnail_id ? (
                     <img
                         src={storageService.getFilePreview(course.thumbnail_id)}
@@ -118,6 +121,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                     {isEnrolled ? (
                         <Link
                             to={`/student/learn/${course.$id}`}
+                            viewTransition
                             className="w-full h-12 bg-primary text-primary-content rounded-2xl flex items-center justify-center gap-3 font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all shadow-lg active:scale-95 duration-200"
                         >
                             <HiOutlinePlay className="w-4 h-4" />
@@ -126,6 +130,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                     ) : (
                         <Link
                             to={`/payment/${course.$id}`}
+                            viewTransition
                             className={`w-full h-12 rounded-2xl flex items-center justify-center gap-3 font-black text-[10px] uppercase tracking-widest transition-all shadow-lg active:scale-95 duration-200 ${
                                 isPending
                                     ? 'bg-warning/10 text-warning border border-warning/25 hover:bg-warning/20 hover:shadow-warning/15'

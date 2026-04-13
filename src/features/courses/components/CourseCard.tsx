@@ -28,11 +28,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
             transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
             className="group relative"
         >
-            <Link to={`/courses/${course.$id}`} className="block h-full">
+            <Link to={`/courses/${course.$id}`} viewTransition className="block h-full">
                 <div className="relative h-full flex flex-col bg-base-100 rounded-[2.5rem] border border-base-content/10 shadow-premium overflow-hidden transition-[transform,shadow,border-color] duration-500 group-hover:shadow-2xl group-hover:border-primary/25 group-hover:-translate-y-2">
 
                     {/* Visual Anchor (Thumbnail) */}
-                    <div className="relative aspect-16/10 overflow-hidden">
+                    <div className="relative aspect-16/10 overflow-hidden" style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}>
                         <img
                             src={thumbnailUrl}
                             alt={course.title}

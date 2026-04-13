@@ -1,5 +1,6 @@
 import { type FC, useMemo } from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { useCurrentAccount } from '@/features/auth';
 import { HiOutlineAcademicCap, HiOutlineBolt, HiOutlineCheckCircle, HiOutlineClock } from 'react-icons/hi2';
 import { useGetEnrolledCourses, useGetStudentProgress } from '../hooks/useStudent';
@@ -149,12 +150,13 @@ const StudentDashboard: FC = () => {
                     <p className="text-base-content/40 text-lg font-medium mb-12 max-w-sm mx-auto relative z-10 leading-relaxed">
                         It appears your academic transcript is currently empty. Explore the course catalog to begin your journey.
                     </p>
-                    <a
-                        href="/courses"
+                    <Link
+                        to="/courses"
+                        viewTransition
                         className="relative z-10 inline-flex items-center px-10 py-4 bg-primary text-primary-content font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5 rounded-2xl transition-all duration-300"
                     >
                         Browse Curriculums
-                    </a>
+                    </Link>
                 </div>
             )}
         </motion.div>

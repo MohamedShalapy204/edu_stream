@@ -123,7 +123,7 @@ const LearningTheatre: FC = () => {
         return (
             <div className="fixed inset-0 bg-base-100 flex items-center justify-center z-50 flex-col gap-6">
                 <h1 className="text-3xl font-heading font-black tracking-tight">Course Not Found</h1>
-                <button onClick={() => navigate('/student/dashboard')} className="btn btn-primary rounded-full">Return Home</button>
+                <button onClick={() => navigate('/student/dashboard', { viewTransition: true })} className="btn btn-primary rounded-full">Return Home</button>
             </div>
         );
     }
@@ -136,7 +136,7 @@ const LearningTheatre: FC = () => {
             {/* ── STAGE CONTROLS ─────────────────────────────────────────── */}
             <div className="absolute top-4 md:top-6 left-4 md:left-6 z-60 flex gap-2 md:gap-3">
                 <button
-                    onClick={() => navigate('/student/dashboard')}
+                    onClick={() => navigate('/student/dashboard', { viewTransition: true })}
                     className="h-10 md:h-12 px-4 md:px-6 bg-primary text-primary-content rounded-full flex items-center gap-2 md:gap-3 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:-translate-y-1 hover:shadow-primary/30 active:scale-95 transition-all group border-none"
                 >
                     <HiOutlineArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform" />
@@ -208,6 +208,7 @@ const LearningTheatre: FC = () => {
                 <div
                     className={`w-full h-full max-w-full mx-auto rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden 
                         ${isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'}`}
+                    style={courseId ? { viewTransitionName: `course-thumbnail-${courseId}` } as React.CSSProperties : undefined}
                 >
                     {activeLesson ? (
                         <>

@@ -42,12 +42,12 @@ const CourseDetailPage: FC = () => {
 
     const handleEnroll = () => {
         if (!account) {
-            navigate('/login');
+            navigate('/login', { viewTransition: true });
             return;
         }
 
         if (isEnrolled) {
-            navigate(`/student/learn/${id}`);
+            navigate(`/student/learn/${id}`, { viewTransition: true });
             return;
         }
 
@@ -55,12 +55,12 @@ const CourseDetailPage: FC = () => {
         if (course?.price === 0 || isOwner) {
             enroll(id!, {
                 onSuccess: () => {
-                    navigate(`/student/learn/${id}`);
+                    navigate(`/student/learn/${id}`, { viewTransition: true });
                 }
             });
         } else {
             // Redirect to the Vodafone Cash Payment Gateway
-            navigate(`/payment/${id}`);
+            navigate(`/payment/${id}`, { viewTransition: true });
         }
     };
 
@@ -104,7 +104,7 @@ const CourseDetailPage: FC = () => {
         <div className="container mx-auto px-6 lg:px-12 py-12 animate-in fade-in duration-1000">
 
             {/* Breadcrumb / Back Navigation */}
-            <Link to="/courses" className="group inline-flex items-center gap-3 text-base-content/30 hover:text-primary transition-all mb-12">
+            <Link to="/courses" viewTransition className="group inline-flex items-center gap-3 text-base-content/30 hover:text-primary transition-all mb-12">
                 <div className="p-2 rounded-xl group-hover:bg-primary/5 transition-colors">
                     <HiOutlineChevronLeft className="w-5 h-5" />
                 </div>
@@ -169,7 +169,10 @@ const CourseDetailPage: FC = () => {
 
                 {/* Right Column: Acquisition Card */}
                 <div className="lg:col-span-5 sticky top-28">
-                    <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 shadow-premium overflow-hidden ring-1 ring-base-content/5">
+                    <div 
+                        className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 shadow-premium overflow-hidden ring-1 ring-base-content/5"
+                        style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}
+                    >
                         <div className="aspect-video relative group">
                             <img src={thumbnailUrl} alt={course.title} className="w-full h-full object-cover grayscale-10" />
                             <div className="absolute inset-0 bg-base-content/40 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer">
