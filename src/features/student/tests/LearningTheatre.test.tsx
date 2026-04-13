@@ -77,7 +77,7 @@ describe('LearningTheatre Layout', () => {
   it('renders the DocumentController alongside video player', () => {
     const store = createMockStore({
       documents: {
-        openDocuments: [{ id: 'doc1', title: 'Test Doc', url: 'test' }],
+        openDocuments: [{ id: 'doc1', title: 'Test Doc', url: 'test', type: 'doc' }],
         activeDocumentId: 'doc1',
         splitMode: false,
         secondaryDocumentId: null,
@@ -92,7 +92,7 @@ describe('LearningTheatre Layout', () => {
     );
 
     act(() => {
-      store.dispatch(openDocument({ id: 'doc1', title: 'Test Doc', url: 'test' }));
+      store.dispatch(openDocument({ id: 'doc1', title: 'Test Doc', url: 'test', type: 'doc' }));
     });
 
     expect(screen.getByTestId('document-controller')).toBeInTheDocument();

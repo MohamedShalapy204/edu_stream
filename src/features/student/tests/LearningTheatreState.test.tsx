@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import learningTheatreReducer from '../store/learningTheatreSlice';
+import type { LearningTheatreState } from '../types/learningTheatreTypes';
 import LearningTheatre from '../pages/LearningTheatre';
 import { useParams } from 'react-router-dom';
 
@@ -41,14 +42,14 @@ vi.mock('../hooks/useStudent', () => ({
     useUpdateLastAccessed: vi.fn(() => ({ mutate: vi.fn() })),
 }));
 
-const createMockStore = (initialState = {}) => {
+const createMockStore = (initialState: Partial<LearningTheatreState> = {}) => {
   return configureStore({
     reducer: {
       learningTheatre: learningTheatreReducer
     },
     preloadedState: {
       learningTheatre: {
-        status: 'playing',
+        status: 'playing' as const,
         error: null,
         documents: {
           openDocuments: [],

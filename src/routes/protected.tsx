@@ -4,7 +4,7 @@ import { RoleGuard, UserRole } from '@/features/auth';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import { TeacherDashboard, ManageCoursePage } from '@/features/teacher';
 import { StudentDashboard, LearningTheatre, EnrollmentGuard } from '@/features/student';
-import { PaymentPage, CourseEnrollmentDashboard } from '@/features/payment';
+import { PaymentPage } from '@/features/payment';
 import Profile from '@/features/auth/routes/Profile';
 import { ProtectedLayoutWrapper } from './ProtectedLayoutWrapper';
 
@@ -23,7 +23,6 @@ export const protectedRoutes = [
                     { path: 'dashboard', element: <TeacherDashboard /> },
                     { path: 'courses/new', element: <ManageCoursePage /> },
                     { path: 'courses/:id', element: <ManageCoursePage /> },
-                    { path: 'courses/:id/enrollments', element: <CourseEnrollmentDashboard /> },
                 ]
             },
             {

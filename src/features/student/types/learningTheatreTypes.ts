@@ -4,6 +4,7 @@ export interface Document {
   id: string;
   title: string;
   url: string;
+  type: 'video' | 'doc' | 'instructions';
 }
 
 export interface DocumentControllerState {

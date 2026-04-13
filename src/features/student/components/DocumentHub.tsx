@@ -71,7 +71,8 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                     onClick={() => dispatch(openDocument({
                       id: docId,
                       title: `Exhibit ${index + 1}`,
-                      url: url
+                      url: url,
+                      type: 'doc'
                     }))}
                   >
                     <p className="text-[10px] font-black uppercase tracking-widest text-primary/40 mb-0.5">Exhibit {index + 1}</p>

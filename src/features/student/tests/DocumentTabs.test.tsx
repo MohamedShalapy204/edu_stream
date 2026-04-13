@@ -5,8 +5,8 @@ import { type Document } from '../types/learningTheatreTypes';
 
 describe('DocumentTabs', () => {
   const mockDocuments: Document[] = [
-    { id: '1', title: 'Doc 1', url: 'url1' },
-    { id: '2', title: 'Doc 2', url: 'url2' },
+    { id: '1', title: 'Doc 1', url: 'url1', type: 'doc' },
+    { id: '2', title: 'Doc 2', url: 'url2', type: 'doc' },
   ];
 
   it('renders all open documents as tabs', () => {
