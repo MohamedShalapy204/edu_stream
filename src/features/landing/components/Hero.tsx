@@ -99,7 +99,7 @@ export const Hero: React.FC = () => {
                 >
                     <div className="relative z-10 w-full aspect-square max-w-lg mx-auto overflow-hidden rounded-[4rem] bg-base-200 shadow-premium p-1">
                         <div className="w-full h-full rounded-[3.9rem] flex items-center justify-center p-12 overflow-hidden relative group"
-                            style={{ background: 'oklch(0.975 0.01 268)' }}>
+                            style={{ background: 'var(--color-base-100)' }}>
                             {/* Scholarly Abstract Visual */}
                             <div className="absolute inset-0 bg-linear-to-br from-primary/8 via-transparent to-accent/5" />
                             {/* Concentric ring decorations */}
@@ -107,7 +107,7 @@ export const Hero: React.FC = () => {
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 rounded-full border border-primary/12" />
                             <div className="w-full h-full border border-primary/8 rounded-3xl flex items-center justify-center relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
                                 <span className="text-[240px] font-heading font-black italic text-primary/15 select-none">E</span>
-                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-[oklch(0.975_0.01_268)] to-transparent" />
+                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-base-100 to-transparent" />
                             </div>
                         </div>
                     </div>
@@ -117,7 +117,7 @@ export const Hero: React.FC = () => {
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         className="absolute z-10 -top-12 -right-12 w-48 h-48 glass rounded-[3rem] p-1 shadow-premium hidden lg:block"
                     >
-                        <div className="w-full h-full rounded-[2.8rem] bg-white/50 backdrop-blur-xl flex flex-col items-center justify-center gap-2">
+                        <div className="w-full h-full rounded-[2.8rem] bg-base-100/50 backdrop-blur-xl flex flex-col items-center justify-center gap-2">
                             <span className="text-3xl font-heading font-black text-primary">42k</span>
                             <span className="text-[8px] uppercase font-black tracking-[0.2em] text-base-content/40">Active Scholars</span>
                         </div>

@@ -47,7 +47,7 @@ const Profile: React.FC = () => {
     return (
         <div className="max-w-4xl mx-auto space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 bg-white dark:bg-surface-900 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
+            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 bg-base-100 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
                 <div className="relative">
                     <div className="w-24 h-24 md:w-32 md:h-32 rounded-[2rem] md:rounded-[2.5rem] bg-linear-to-br from-primary to-secondary flex items-center justify-center text-white text-3xl md:text-4xl font-black shadow-2xl">
                         {profile?.name?.[0]?.toUpperCase() || profile?.email?.[0]?.toUpperCase()}
@@ -61,13 +61,13 @@ const Profile: React.FC = () => {
                             <span className="text-[10px] uppercase font-black tracking-widest text-primary">{profile?.role} Scholar</span>
                         </div>
                     </div>
-                    <p className="text-muted-foreground font-medium max-w-md text-sm md:text-base">{profile?.bio || 'No archival record of this scholar exists yet.'}</p>
+                    <p className="text-base-content/60 font-medium max-w-md text-sm md:text-base">{profile?.bio || 'No archival record of this scholar exists yet.'}</p>
                 </div>
             </div>
 
             {/* Settings Form */}
             <form onSubmit={handleSubmit(onUpdateProfile)} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                <div className="space-y-6 md:space-y-8 bg-white dark:bg-surface-900 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
+                <div className="space-y-6 md:space-y-8 bg-base-100 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="p-3 bg-secondary/10 rounded-2xl text-secondary">
                             <HiOutlineUserCircle className="w-6 h-6" />
@@ -76,15 +76,15 @@ const Profile: React.FC = () => {
                     </div>
 
                     <div className="space-y-3">
-                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Scholarly Email</label>
-                        <div className="input input-bordered h-14 rounded-2xl bg-surface-50 border-none flex items-center px-6 font-semibold opacity-50 cursor-not-allowed text-sm">
+                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Scholarly Email</label>
+                        <div className="input input-bordered h-14 rounded-2xl bg-base-200 border-none flex items-center px-6 font-semibold opacity-50 cursor-not-allowed text-sm">
                             {profile?.email}
                         </div>
                     </div>
                 </div>
 
                 {isTeacher && (
-                    <div className="space-y-6 md:space-y-8 bg-white dark:bg-surface-900 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
+                    <div className="space-y-6 md:space-y-8 bg-base-100 p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] shadow-premium">
                         <div className="flex items-center gap-4 mb-2">
                             <div className="p-3 bg-primary/10 rounded-2xl text-primary">
                                 <HiOutlineBanknotes className="w-6 h-6" />

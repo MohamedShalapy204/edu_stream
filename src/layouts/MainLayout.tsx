@@ -219,7 +219,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
             </footer>
             {/* ── MOBILE BOTTOM NAVIGATION ───────────────────────────────────── */}
             <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50">
-                <div className="bg-base-100/80 backdrop-blur-2xl border border-white/20 rounded-[2rem] shadow-premium-lg px-2 h-18 flex items-center justify-around relative overflow-hidden">
+                <div className="bg-base-100/80 backdrop-blur-2xl border border-base-content/15 rounded-[2rem] shadow-premium-lg px-2 h-18 flex items-center justify-around relative overflow-hidden">
                     {/* Active Indicator Background */}
                     <div className="absolute inset-x-2 h-full pointer-events-none flex justify-around items-center">
                         {[

@@ -30,7 +30,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
         : 0;
 
     return (
-        <div className={`bg-base-100 p-6 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-base-content/5 flex flex-col h-full overflow-hidden ${isDenied ? 'opacity-75' : ''}`}>
+        <div className={`bg-base-100 p-6 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-base-content/15 flex flex-col h-full overflow-hidden ${isDenied ? 'opacity-75' : ''}`}>
 
             {/* Colored left accent bar — emerald for enrolled, amber for pending, rose for denied */}
             <div className={`absolute left-0 top-6 bottom-6 w-0.5 rounded-r-full transition-all duration-300 ${
@@ -106,7 +106,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                         </div>
                     )}
 
-                    <div className="flex items-center justify-between mb-5 px-1 py-2 border-t border-b border-primary/5">
+                    <div className="flex items-center justify-between mb-5 px-1 py-2 border-t border-b border-primary/10">
                         <div className="flex items-center gap-2 text-base-content/40">
                             <HiOutlineClock className="w-4 h-4" />
                             <span className="text-[9px] font-black uppercase tracking-widest">

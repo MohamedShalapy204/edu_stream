@@ -76,7 +76,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
     };
 
     return (
-        <div className="bg-white dark:bg-surface-900 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-primary/5 p-6 md:p-10 overflow-hidden relative transition-colors duration-500">
+        <div className="bg-base-100 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-primary/5 p-6 md:p-10 overflow-hidden relative transition-colors duration-500">
             {/* Step Indicator */}
             <div className="flex items-center gap-3 md:gap-4 mb-8 md:mb-10 overflow-x-auto no-scrollbar pb-2">
                 {[
@@ -88,7 +88,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         key={s.id}
                         className={`flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 rounded-xl md:rounded-2xl transition-all duration-300 shadow-sm whitespace-nowrap shrink-0 ${step === s.id
                             ? 'bg-primary text-primary-foreground shadow-xl shadow-primary/20 scale-[1.02]'
-                            : 'bg-surface-50 text-muted-foreground'
+                            : 'bg-base-200 text-base-content/60'
                             }`}
                     >
                         <s.icon className={`w-4 h-4 md:w-5 md:h-5 ${step === s.id ? 'animate-pulse' : ''}`} />
@@ -102,21 +102,21 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                     <div className="space-y-8 animate-in slide-in-from-right-4 duration-700">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label htmlFor="title" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Masterclass Title</label>
+                                <label htmlFor="title" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Masterclass Title</label>
                                 <input
                                     id="title"
                                     placeholder="e.g. Architectural Design Masterclass"
-                                    className={`input input-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.title ? 'ring-2 ring-destructive/20' : ''}`}
+                                    className={`input input-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.title ? 'ring-2 ring-destructive/20' : ''}`}
                                     {...register('title')}
                                 />
                                 {errors.title && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.title.message}</p>}
                             </div>
 
                             <div className="space-y-3">
-                                <label htmlFor="language" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Instructional Language</label>
+                                <label htmlFor="language" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Instructional Language</label>
                                 <select
                                     id="language"
-                                    className="select select-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full"
+                                    className="select select-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full"
                                     {...register('language')}
                                 >
                                     <option value="English">English</option>
@@ -130,23 +130,23 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             </div>
 
                             <div className="space-y-3">
-                                <label htmlFor="price" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Tuition (EGP)</label>
+                                <label htmlFor="price" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Tuition (EGP)</label>
                                 <input
                                     id="price"
                                     type="number"
                                     placeholder="0.00"
-                                    className={`input input-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-semibold w-full ${errors.price ? 'ring-2 ring-destructive/20' : ''}`}
+                                    className={`input input-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-semibold w-full ${errors.price ? 'ring-2 ring-destructive/20' : ''}`}
                                     {...register('price', { valueAsNumber: true })}
                                 />
                                 {errors.price && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.price.message}</p>}
                             </div>
 
                             <div className="space-y-3">
-                                <label htmlFor="categories" className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Categories (Comma separated)</label>
+                                <label htmlFor="categories" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Categories (Comma separated)</label>
                                 <input
                                     id="categories"
                                     placeholder="e.g. Design, Architecture, Art"
-                                    className={`input input-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.categories ? 'ring-2 ring-destructive/20' : ''}`}
+                                    className={`input input-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.categories ? 'ring-2 ring-destructive/20' : ''}`}
                                     {...register('categories', {
                                         setValueAs: (v) => typeof v === 'string' ? v.split(',').map(s => s.trim()).filter(Boolean) : v
                                     })}
@@ -155,10 +155,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             </div>
                         </div>
                         <div className="space-y-3 text-left">
-                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Curricular Brief</label>
+                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Curricular Brief</label>
                             <textarea
                                 id="description"
-                                className={`w-full h-32 md:h-40 bg-surface-50 rounded-[2rem] p-6 text-foreground font-semibold placeholder:text-muted-foreground italic focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none border-none text-sm md:text-base ${errors.description ? 'ring-2 ring-destructive/20' : ''}`}
+                                className={`w-full h-32 md:h-40 bg-base-200 rounded-[2rem] p-6 text-base-content font-semibold placeholder:text-base-content/60 italic focus:bg-base-100 focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none border-none text-sm md:text-base ${errors.description ? 'ring-2 ring-destructive/20' : ''}`}
                                 placeholder="Describe your course goal and what students will learn..."
                                 {...register('description')}
                             />
@@ -172,8 +172,8 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         <div className="bg-primary/5 p-8 rounded-full h-24 w-24 inline-flex items-center justify-center mb-8 shadow-inner shadow-primary/5">
                             <HiOutlineSquares2X2 className="w-12 h-12 text-primary" />
                         </div>
-                        <h3 className="text-2xl font-black text-foreground mb-3 italic tracking-tight underline decoration-primary/20 underline-offset-8">Curriculum Builder</h3>
-                        <p className="text-muted-foreground text-lg font-medium mb-10 max-w-sm mx-auto leading-relaxed">Sections and lessons are managed after the initial course creation to ensure pedagogical integrity.</p>
+                        <h3 className="text-2xl font-black text-base-content mb-3 italic tracking-tight underline decoration-primary/20 underline-offset-8">Curriculum Builder</h3>
+                        <p className="text-base-content/60 text-lg font-medium mb-10 max-w-sm mx-auto leading-relaxed">Sections and lessons are managed after the initial course creation to ensure pedagogical integrity.</p>
                         <div className="alert bg-indigo-50/50 border-none shadow-sm max-w-lg mx-auto rounded-4xl flex items-center gap-3">
                             <span className="font-bold text-sm tracking-tight text-primary">You will access the syllabus editor in the next phase of the workflow.</span>
                         </div>
@@ -183,19 +183,18 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                 {step === 3 && (
                     <div className="animate-in slide-in-from-right-4 duration-700 space-y-8">
                         <div
-                            className="bg-surface-50 p-6 md:p-12 rounded-[2.5rem] md:rounded-[3rem] border-2 border-dashed border-muted text-center group hover:border-primary/20 transition-all duration-500 relative cursor-pointer overflow-hidden min-h-[200px] md:min-h-[300px] flex flex-col justify-center"
+                            className="bg-base-100/40 backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium p-6 sm:p-10 lg:p-16 border border-base-content/10 ring-1 ring-base-content/5 relative overflow-hidden group mb-12 cursor-pointer min-h-[200px] md:min-h-[300px] flex flex-col justify-center"
                             onClick={() => document.getElementById('thumbnail-input')?.click()}
                         >
                             {preview ? (
                                 <img src={preview} alt="Thumbnail preview" className="absolute inset-0 w-full h-full object-cover" />
                             ) : (
-                                <div className="h-16 w-16 md:h-20 md:w-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                                    <HiOutlinePhoto className="w-8 h-8 md:w-10 md:h-10 text-muted-foreground" />
+                                    <HiOutlinePhoto className="w-8 h-8 md:w-10 md:h-10 text-base-content/60" />
                                 </div>
                             )}
                             <div className={`relative z-10 ${preview ? 'bg-black/40 backdrop-blur-sm p-5 md:p-6 rounded-2xl mx-auto inline-block text-white w-[90%] md:w-4/5' : ''}`}>
-                                <h4 className={`text-lg md:text-xl font-bold mb-1 tracking-tighter ${preview ? 'text-white' : 'text-foreground'}`}>Course Visuals</h4>
-                                <p className={`text-xs md:text-sm mb-4 font-medium ${preview ? 'text-white/80' : 'text-muted-foreground'}`}>{preview ? 'Replace visual' : 'Upload high-fidelity imagery for the course cover.'}</p>
+                                <h4 className={`text-lg md:text-xl font-bold mb-1 tracking-tighter ${preview ? 'text-white' : 'text-base-content'}`}>Course Visuals</h4>
+                                <p className={`text-xs md:text-sm mb-4 font-medium ${preview ? 'text-white/80' : 'text-base-content/60'}`}>{preview ? 'Replace visual' : 'Upload high-fidelity imagery for the course cover.'}</p>
                                 <input
                                     id="thumbnail-input"
                                     type="file"
@@ -213,14 +212,14 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         </div>
 
                         {price > 0 && (
-                            <div className="space-y-8 p-10 bg-surface-50 rounded-[3rem] border border-muted/20 animate-in fade-in zoom-in duration-500">
+                            <div className="space-y-8 p-10 bg-base-200 rounded-[3rem] border border-muted/20 animate-in fade-in zoom-in duration-500">
                                 <div className="flex items-center gap-4 mb-2">
                                     <div className="p-3 bg-primary/10 rounded-2xl">
                                         <HiOutlineBanknotes className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
                                         <h4 className="text-lg font-black tracking-tight">Payment Settings</h4>
-                                        <p className="text-xs text-muted-foreground font-medium">Configure manual Vodafone Cash enrollment</p>
+                                        <p className="text-xs text-base-content/60 font-medium">Configure manual Vodafone Cash enrollment</p>
                                     </div>
                                 </div>
 
@@ -253,8 +252,8 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     </div>
 
                                     <div className="space-y-3 pt-2">
-                                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">Re-submission Policy</label>
-                                        <div className="flex items-center gap-6 p-4 bg-white rounded-2xl border border-muted/10 group cursor-pointer hover:bg-surface-50 transition-all relative h-14">
+                                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Re-submission Policy</label>
+                                        <div className="flex items-center gap-6 p-4 bg-white rounded-2xl border border-muted/10 group cursor-pointer hover:bg-base-200 transition-all relative h-14">
                                             <div className="relative flex items-center">
                                                 <input
                                                     id="allow_resubmission"
@@ -266,7 +265,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                                     <HiOutlineChevronRight className="w-4 h-4 text-white transition-transform scale-0 peer-checked:scale-100" />
                                                 </div>
                                             </div>
-                                            <label htmlFor="allow_resubmission" className="text-[10px] font-black text-foreground uppercase tracking-widest cursor-pointer select-none">Allow denied students to retry</label>
+                                            <label htmlFor="allow_resubmission" className="text-[10px] font-black text-base-content uppercase tracking-widest cursor-pointer select-none">Allow denied students to retry</label>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +292,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                 <div className="flex flex-col sm:flex-row items-center justify-between pt-8 md:pt-12 border-t border-muted transition-colors gap-6 sm:gap-0">
                     <button
                         type="button"
-                        className={`btn btn-ghost h-12 px-10 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-all no-animation border-none sm:order-1 ${step === 1 ? 'invisible md:block' : ''}`}
+                        className={`btn btn-ghost h-12 px-10 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest text-base-content/60 hover:text-primary transition-all no-animation border-none sm:order-1 ${step === 1 ? 'invisible md:block' : ''}`}
                         onClick={() => setStep(s => s - 1)}
                     >
                         <HiOutlineChevronLeft className="w-4 h-4 md:w-5 md:h-5 mr-1" />

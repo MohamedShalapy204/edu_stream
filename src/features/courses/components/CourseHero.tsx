@@ -31,7 +31,7 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
         <section className="relative pt-8 md:pt-12 pb-16 md:pb-20 border-b border-primary/8 overflow-hidden">
             {/* Subtle indigo tint on the section background */}
             <div className="absolute inset-0 pointer-events-none"
-                style={{ background: 'linear-gradient(to bottom, oklch(0.975 0.008 268 / 0.6), transparent)' }} />
+                style={{ background: 'linear-gradient(to bottom, oklch(var(--color-base-100) / 0.6), transparent)' }} />
 
             <div className="container mx-auto px-4 md:px-6 lg:px-12 relative z-10">
 
@@ -65,7 +65,7 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
                             placeholder="Identify a domain of study..."
                             value={searchQuery}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full pl-12 md:pl-14 pr-6 py-3.5 md:py-4 bg-white shadow-premium rounded-xl md:rounded-2xl text-xs md:text-sm font-bold placeholder:text-base-content/20 border border-transparent focus:border-primary/20 focus:ring-2 focus:ring-primary/8 transition-all outline-none"
+                            className="w-full pl-12 md:pl-14 pr-6 py-3.5 md:py-4 bg-base-100 shadow-premium rounded-xl md:rounded-2xl text-xs md:text-sm font-bold placeholder:text-base-content/20 border border-transparent focus:border-primary/20 focus:ring-2 focus:ring-primary/8 transition-all outline-none"
                         />
                     </div>
 
@@ -84,7 +84,7 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
                                         whitespace-nowrap px-4 md:px-5 py-2 text-[8px] md:text-[10px] font-black uppercase tracking-widest rounded-lg md:rounded-xl transition-all duration-200 border
                                         ${selectedCategory === cat
                                             ? 'bg-primary text-primary-content border-primary shadow-lg shadow-primary/25 scale-[1.03]'
-                                            : 'bg-white text-base-content/40 border-base-content/5 hover:border-primary/20 hover:text-primary hover:bg-primary/4'}
+                                            : 'bg-base-100 text-base-content/40 border-base-content/5 hover:border-primary/20 hover:text-primary hover:bg-primary/4'}
                                     `}
                                 >
                                     {cat}

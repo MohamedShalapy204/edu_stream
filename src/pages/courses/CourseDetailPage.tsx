@@ -88,7 +88,7 @@ const CourseDetailPage: FC = () => {
                 </div>
                 <Link
                     to="/courses"
-                    className="px-8 py-3 bg-primary text-primary-content text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-white/20 transition-all active:scale-95"
+                    className="px-8 py-3 bg-primary text-primary-content text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-primary/10 transition-all active:scale-95"
                 >
                     Return to Catalog
                 </Link>
@@ -170,7 +170,7 @@ const CourseDetailPage: FC = () => {
                 {/* Right Column: Acquisition Card */}
                 <div className="lg:col-span-5 sticky top-28">
                     <div 
-                        className="bg-base-100/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 shadow-premium overflow-hidden ring-1 ring-base-content/5"
+                        className="bg-base-100/40 backdrop-blur-3xl rounded-[3rem] border border-base-content/15 shadow-premium overflow-hidden ring-1 ring-base-content/5"
                         style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}
                     >
                         <div className="aspect-video relative group">
@@ -196,9 +196,9 @@ const CourseDetailPage: FC = () => {
                             <button
                                 onClick={handleEnroll}
                                 disabled={enrolling}
-                                className={`w-full py-5 flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl ring-1 ring-white/20 active:scale-[0.98]
+                                className={`w-full py-5 flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl ring-1 ring-primary/10 active:scale-[0.98]
                                     ${isEnrolled
-                                        ? 'bg-base-content text-white hover:bg-base-content/90'
+                                        ? 'bg-base-content text-base-100 hover:bg-base-content/90'
                                         : 'bg-primary hover:bg-primary/90 text-primary-content shadow-primary/20'
                                     }
                                     ${enrolling ? 'opacity-70 cursor-not-allowed' : ''}
@@ -268,7 +268,7 @@ const CourseDetailPage: FC = () => {
 
                             <div className="divide-y divide-base-content/5">
                                 {idx === 0 && previewLessons?.documents.map((lesson) => (
-                                    <div key={lesson.$id} className="p-6 pl-24 flex items-center justify-between group/lesson hover:bg-primary/20 transition-colors cursor-pointer">
+                                    <div key={lesson.$id} className="p-6 pl-24 flex items-center justify-between group/lesson hover:bg-primary/5 transition-colors cursor-pointer">
                                         <div className="flex items-center gap-4">
                                             <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-primary/40 opacity-0 group-hover/lesson:opacity-100 transition-opacity">
                                                 <HiOutlinePlay className="w-4 h-4" />

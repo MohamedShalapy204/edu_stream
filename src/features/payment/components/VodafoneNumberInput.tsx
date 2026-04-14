@@ -19,17 +19,17 @@ const VodafoneNumberInput: React.FC<VodafoneNumberInputProps> = ({
 }) => {
     return (
         <div className="space-y-3">
-            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground ml-1">
+            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">
                 {label}
             </label>
             <div className="relative group">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                    <HiOutlineDevicePhoneMobile className="w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <HiOutlineDevicePhoneMobile className="w-5 h-5 text-base-content/60 group-focus-within:text-primary transition-colors" />
                 </div>
                 <input
                     type="text"
                     placeholder={placeholder}
-                    className={`input input-bordered h-14 rounded-2xl bg-surface-50 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full pl-12 ${error ? 'ring-2 ring-destructive/20' : ''
+                    className={`input input-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-white focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full pl-12 ${error ? 'ring-2 ring-destructive/20' : ''
                         }`}
                     {...register}
                 />
@@ -40,7 +40,7 @@ const VodafoneNumberInput: React.FC<VodafoneNumberInputProps> = ({
                 </p>
             ) : (
                 description && (
-                    <p className="text-[10px] font-medium text-muted-foreground ml-1 italic">
+                    <p className="text-[10px] font-medium text-base-content/60 ml-1 italic">
                         {description}
                     </p>
                 )

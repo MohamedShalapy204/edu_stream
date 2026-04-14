@@ -22,7 +22,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({ courses, isLoading }) =>
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                    <div key={i} className="aspect-16/22 bg-white shadow-premium rounded-[2.5rem] animate-pulse border border-base-content/5" />
+                    <div key={i} className="aspect-16/22 bg-base-200 shadow-premium rounded-[2.5rem] animate-pulse border border-base-content/10" />
                 ))}
             </div>
         );
@@ -34,7 +34,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({ courses, isLoading }) =>
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex flex-col items-center justify-center p-32 bg-white/50 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/10 text-center"
+                className="flex flex-col items-center justify-center p-32 bg-base-100/40 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/15 text-center"
             >
                 <div className="w-20 h-20 bg-primary/5 rounded-4xl flex items-center justify-center text-primary/30 mb-8">
                     <HiOutlineAcademicCap className="w-10 h-10" />
