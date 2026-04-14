@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import "@fontsource-variable/geist";
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import "@fontsource-variable/geist";
+@import 'tailwindcss';
 
 @plugin "daisyui";
 
