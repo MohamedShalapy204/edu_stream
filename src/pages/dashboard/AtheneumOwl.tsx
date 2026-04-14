@@ -18,8 +18,8 @@ export default function AtheneumOwl() {
     const [isSpeaking, setIsSpeaking] = useState(false);
 
     useEffect(() => {
-        let showTimeout: NodeJS.Timeout;
-        let hideTimeout: NodeJS.Timeout;
+        let showTimeout: ReturnType<typeof setTimeout>;
+        let hideTimeout: ReturnType<typeof setTimeout>;
 
         const scheduleNextSpeech = () => {
             // Random delay between 5s and 20s
