@@ -47,7 +47,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
     return (
         <div className="min-h-screen bg-base-100 flex flex-col selection:bg-primary/20 font-sans antialiased text-base-content overflow-x-hidden">
             {/* ── STICKY GLASS HEADER ─────────────────────────────────────── */}
-            <header className="sticky top-0 z-50 w-full bg-base-100/60 backdrop-blur-2xl transition-all duration-500 border-none shadow-premium/5">
+            <header className="sticky top-0 z-50 w-full bg-base-100/60 backdrop-blur-2xl transition-all duration-500 border-b border-base-content/5 shadow-premium shadow-base-content/2">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                     <div className="flex h-16 md:h-20 items-center justify-between">
 
@@ -58,7 +58,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                     E
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="font-heading text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500">EDU<span className="text-gradient-brand italic font-medium">stream</span></span>
+                                    <span className="font-heading text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500 uppercase">EDU<span className="text-gradient-brand italic font-bold normal-case ml-px">stream</span></span>
                                     <span className="text-[8px] md:text-[10px] uppercase font-black tracking-[0.2em] text-primary/40 mt-0.5 hidden xs:block">Atheneum Editorial</span>
                                 </div>
                             </Link>
@@ -140,7 +140,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
 
                                     <ul tabIndex={0} className="dropdown-content z-50 menu p-3 shadow-premium bg-base-100 rounded-3xl w-64 mt-4 border border-base-content/5 animate-in fade-in slide-in-from-top-4 duration-300">
                                         <div className="px-4 py-3 border-b border-base-content/5 mb-2">
-                                            <p className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/30 mb-1">Authenticated Account</p>
+                                            <p className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/30 mb-1">Authenticated Account</p>
                                             <p className="text-xs font-bold truncate">{account.email}</p>
                                         </div>
                                         {profile?.role === UserRole.STUDENT && (
@@ -212,7 +212,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-content text-[10px] font-black group-hover:scale-110 transition-transform">E</div>
                         <span className="text-[10px] uppercase font-black tracking-[0.3em] text-primary/80">EDUstream Intelligence</span>
                     </div>
-                    <div className="text-[10px] uppercase font-black tracking-[0.2em] text-primary/20 text-center md:text-left">
+                    <div className="text-[10px] uppercase font-black tracking-[0.3em] text-primary/20 text-center md:text-left">
                         &copy; 2026 Digital Atheneum. All Protocols Reserved.
                     </div>
                 </div>

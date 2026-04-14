@@ -67,10 +67,31 @@ const CourseDetailPage: FC = () => {
     // TODO: Add loading skeleton
     if (courseLoading || sectionsLoading) {
         return (
-            <div className="flex items-center justify-center min-h-[70vh]">
-                <div className="flex flex-col items-center gap-6">
-                    <div className="w-16 h-16 border-[6px] border-primary/10 border-t-primary rounded-full animate-spin" />
-                    <p className="text-base-content/40 font-black text-xs uppercase tracking-[0.2em]">Synchronizing Records...</p>
+            <div className="container mx-auto px-6 lg:px-12 py-12 animate-pulse">
+                <div className="flex items-center gap-3 mb-12 opacity-20">
+                    <div className="w-8 h-8 bg-base-content/20 rounded-xl" />
+                    <div className="w-24 h-4 bg-base-content/20 rounded-full" />
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div className="lg:col-span-7 space-y-8">
+                        <div className="flex gap-2">
+                            <div className="w-20 h-6 bg-primary/10 rounded-lg" />
+                            <div className="w-20 h-6 bg-primary/10 rounded-lg" />
+                        </div>
+                        <div className="space-y-4">
+                            <div className="w-full h-16 bg-base-content/5 rounded-3xl" />
+                            <div className="w-3/4 h-16 bg-base-content/5 rounded-3xl" />
+                        </div>
+                        <div className="w-full h-24 bg-base-content/5 rounded-3xl border-l-[3px] border-primary/10" />
+                        <div className="flex gap-10 pt-10 border-t border-primary/10">
+                            <div className="w-32 h-12 bg-base-content/5 rounded-2xl" />
+                            <div className="w-32 h-12 bg-base-content/5 rounded-2xl" />
+                        </div>
+                    </div>
+                    <div className="lg:col-span-5">
+                        <div className="aspect-video bg-base-content/5 rounded-[3rem] mb-10" />
+                        <div className="h-64 bg-base-content/5 rounded-[3rem]" />
+                    </div>
                 </div>
             </div>
         );

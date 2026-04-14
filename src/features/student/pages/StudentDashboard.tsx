@@ -125,8 +125,17 @@ const StudentDashboard: FC = () => {
             )}
 
             {isLoading ? (
-                <div className="flex items-center justify-center py-32">
-                    <span className="loading loading-spinner text-primary loading-lg" />
+                <div className="space-y-12 animate-pulse">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-4 mb-12 p-6 md:p-8 rounded-4xl md:rounded-[3rem] bg-base-100/30 border border-base-content/5">
+                        <div className="h-16 bg-base-content/5 rounded-2xl" />
+                        <div className="h-16 bg-base-content/5 rounded-2xl" />
+                        <div className="h-16 bg-base-content/5 rounded-2xl" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[1, 2, 3].map(i => (
+                            <div key={i} className="h-96 bg-base-100/50 rounded-4xl border border-base-content/10 shadow-premium" />
+                        ))}
+                    </div>
                 </div>
             ) : dashboardItems.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
