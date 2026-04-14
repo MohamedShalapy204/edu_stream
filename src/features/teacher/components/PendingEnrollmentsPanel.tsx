@@ -28,9 +28,9 @@ export const PendingEnrollmentsPanel: React.FC<PendingEnrollmentsPanelProps> = (
         <div className="bg-warning/10 border border-warning/20 rounded-4xl p-8 mb-16 animate-in slide-in-from-top-4 duration-700">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-6">
-                    <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center shadow-sm text-warning relative">
+                    <div className="w-16 h-16 bg-base-100 rounded-3xl flex items-center justify-center shadow-sm text-warning relative">
                         <HiOutlineClock className="w-8 h-8" />
-                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-warning text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white">
+                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-warning text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-base-100">
                             {totalPending}
                         </span>
                     </div>
@@ -50,7 +50,7 @@ export const PendingEnrollmentsPanel: React.FC<PendingEnrollmentsPanelProps> = (
                             <Link
                                 key={courseId}
                                 to={`/teacher/courses/${courseId}`}
-                                className="px-4 py-2 bg-white/50 hover:bg-white text-warning-content rounded-xl text-[10px] font-black uppercase tracking-widest border border-warning/10 flex items-center gap-2 transition-all active:scale-95"
+                                className="px-4 py-2 bg-base-100/50 hover:bg-base-100 text-warning-content rounded-xl text-[10px] font-black uppercase tracking-widest border border-warning/10 flex items-center gap-2 transition-all active:scale-95"
                             >
                                 {course.title}
                                 <span className="bg-warning text-white px-1.5 py-0.5 rounded-md text-[8px]">{count}</span>

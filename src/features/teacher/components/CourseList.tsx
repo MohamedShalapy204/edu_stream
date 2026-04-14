@@ -18,15 +18,15 @@ interface CourseListProps {
 export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollments = [] }) => {
     if (!courses || courses.length === 0) {
         return (
-            <div className="bg-white/40 backdrop-blur-3xl rounded-4xl p-32 text-center shadow-premium border border-dashed border-base-content/10 transition-all">
-                <div className="bg-primary/5 p-10 h-24 w-24 rounded-4xl inline-flex items-center justify-center mb-8 text-primary/30">
-                    <HiPlus className="w-10 h-10" />
+            <div className="bg-base-100 rounded-4xl p-32 text-center border border-base-content/10 transition-all group">
+                <div className="bg-primary/5 p-10 h-28 w-28 rounded-[2.5rem] inline-flex items-center justify-center mb-8 text-primary group-hover:scale-110 transition-transform duration-500">
+                    <HiPlus className="w-12 h-12" />
                 </div>
-                <h3 className="text-2xl font-heading font-black text-base-content mb-3 tracking-tight italic">The archives are silent.</h3>
-                <p className="text-base-content/40 text-base font-medium mb-12 max-w-xs mx-auto leading-relaxed">Your intellectual contributions are awaiting their first chapter.</p>
+                <h3 className="text-3xl font-heading font-black text-base-content mb-4 tracking-tight">The archives are silent.</h3>
+                <p className="text-base-content/40 text-lg font-medium mb-12 max-w-sm mx-auto leading-relaxed">Your intellectual contributions are awaiting their first chapter.</p>
                 <Link
                     to="/teacher/courses/new"
-                    className="inline-flex items-center px-10 py-4 bg-white text-base-content font-black text-[10px] uppercase tracking-widest hover:bg-base-100 shadow-premium rounded-2xl transition-all active:scale-95 border border-base-content/5"
+                    className="inline-flex items-center px-12 py-5 bg-primary text-primary-content font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/25 hover:shadow-2xl hover:-translate-y-0.5 rounded-2xl transition-all active:scale-95 border-none"
                 >
                     Initiate New Course
                 </Link>
@@ -39,14 +39,16 @@ export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollme
             {courses.map((course) => (
                 <div
                     key={course.$id}
-                    className="bg-white/40 backdrop-blur-3xl p-8 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-transparent hover:border-primary/10 ring-1 ring-base-content/5"
+                    className="bg-base-100 p-8 rounded-4xl shadow-premium hover:shadow-2xl transition-all duration-500 group relative border border-base-content/5"
                 >
                     <div className="flex flex-col sm:flex-row gap-8">
-                        <div className="w-full sm:w-44 h-36 bg-base-200/50 rounded-4xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 shadow-inner border border-white/40">
+                        <div className="w-full sm:w-44 h-36 bg-base-200 rounded-4xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 border border-base-content/5">
                             {course.thumbnail_id ? (
                                 <img
                                     src={storageService.getFilePreview(course.thumbnail_id)}
                                     alt={course.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out"
                                 />
                             ) : (
@@ -56,9 +58,9 @@ export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollme
                             )}
                             <div className="absolute top-4 left-4 flex flex-col gap-2">
                                 {course.is_published ? (
-                                    <span className="bg-success text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-success/20 ring-1 ring-white/20 w-fit">Active</span>
+                                    <span className="bg-success text-white text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg shadow-success/10 w-fit">Active</span>
                                 ) : (
-                                    <span className="bg-base-content/40 text-black text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg ring-1 ring-white/20 w-fit">Draft</span>
+                                    <span className="bg-base-content/10 text-base-content/60 text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest w-fit">Draft</span>
                                 )}
 
                                 {(() => {
@@ -107,9 +109,9 @@ export const CourseList: React.FC<CourseListProps> = ({ courses, pendingEnrollme
                                     <p className="text-[8px] font-black text-base-content/30 uppercase tracking-[0.2em] mb-1">Acquisition</p>
                                     <p className="text-sm font-black text-base-content/80">${course.price || 0}</p>
                                 </div>
-                                <div className="px-3 py-1 rounded-lg bg-amber-400/5 border border-amber-400/10">
-                                    <p className="text-[8px] font-black text-amber-600/40 uppercase tracking-[0.2em] mb-1 text-center">Mastery</p>
-                                    <p className="text-sm font-black text-amber-600/80 text-center">{course.rating || '4.8'}</p>
+                                <div className="px-3 py-1.5 rounded-lg bg-primary/5 border border-primary/10">
+                                    <p className="text-[8px] font-black text-primary/40 uppercase tracking-[0.2em] mb-1 text-center">Mastery</p>
+                                    <p className="text-sm font-black text-primary/80 text-center">{course.rating || '4.8'}</p>
                                 </div>
                             </div>
                         </div>

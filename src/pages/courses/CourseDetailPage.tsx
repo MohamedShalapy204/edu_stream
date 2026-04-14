@@ -42,12 +42,12 @@ const CourseDetailPage: FC = () => {
 
     const handleEnroll = () => {
         if (!account) {
-            navigate('/login');
+            navigate('/login', { viewTransition: true });
             return;
         }
 
         if (isEnrolled) {
-            navigate(`/student/learn/${id}`);
+            navigate(`/student/learn/${id}`, { viewTransition: true });
             return;
         }
 
@@ -55,22 +55,43 @@ const CourseDetailPage: FC = () => {
         if (course?.price === 0 || isOwner) {
             enroll(id!, {
                 onSuccess: () => {
-                    navigate(`/student/learn/${id}`);
+                    navigate(`/student/learn/${id}`, { viewTransition: true });
                 }
             });
         } else {
             // Redirect to the Vodafone Cash Payment Gateway
-            navigate(`/payment/${id}`);
+            navigate(`/payment/${id}`, { viewTransition: true });
         }
     };
 
     // TODO: Add loading skeleton
     if (courseLoading || sectionsLoading) {
         return (
-            <div className="flex items-center justify-center min-h-[70vh]">
-                <div className="flex flex-col items-center gap-6">
-                    <div className="w-16 h-16 border-[6px] border-primary/10 border-t-primary rounded-full animate-spin" />
-                    <p className="text-base-content/40 font-black text-xs uppercase tracking-[0.2em]">Synchronizing Records...</p>
+            <div className="container mx-auto px-6 lg:px-12 py-12 animate-pulse">
+                <div className="flex items-center gap-3 mb-12 opacity-20">
+                    <div className="w-8 h-8 bg-base-content/20 rounded-xl" />
+                    <div className="w-24 h-4 bg-base-content/20 rounded-full" />
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div className="lg:col-span-7 space-y-8">
+                        <div className="flex gap-2">
+                            <div className="w-20 h-6 bg-primary/10 rounded-lg" />
+                            <div className="w-20 h-6 bg-primary/10 rounded-lg" />
+                        </div>
+                        <div className="space-y-4">
+                            <div className="w-full h-16 bg-base-content/5 rounded-3xl" />
+                            <div className="w-3/4 h-16 bg-base-content/5 rounded-3xl" />
+                        </div>
+                        <div className="w-full h-24 bg-base-content/5 rounded-3xl border-l-[3px] border-primary/10" />
+                        <div className="flex gap-10 pt-10 border-t border-primary/10">
+                            <div className="w-32 h-12 bg-base-content/5 rounded-2xl" />
+                            <div className="w-32 h-12 bg-base-content/5 rounded-2xl" />
+                        </div>
+                    </div>
+                    <div className="lg:col-span-5">
+                        <div className="aspect-video bg-base-content/5 rounded-[3rem] mb-10" />
+                        <div className="h-64 bg-base-content/5 rounded-[3rem]" />
+                    </div>
                 </div>
             </div>
         );
@@ -88,7 +109,7 @@ const CourseDetailPage: FC = () => {
                 </div>
                 <Link
                     to="/courses"
-                    className="px-8 py-3 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-white/20 transition-all active:scale-95"
+                    className="px-8 py-3 bg-primary text-primary-content text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-primary/10 transition-all active:scale-95"
                 >
                     Return to Catalog
                 </Link>
@@ -104,7 +125,7 @@ const CourseDetailPage: FC = () => {
         <div className="container mx-auto px-6 lg:px-12 py-12 animate-in fade-in duration-1000">
 
             {/* Breadcrumb / Back Navigation */}
-            <Link to="/courses" className="group inline-flex items-center gap-3 text-base-content/30 hover:text-primary transition-all mb-12">
+            <Link to="/courses" viewTransition className="group inline-flex items-center gap-3 text-base-content/30 hover:text-primary transition-all mb-12">
                 <div className="p-2 rounded-xl group-hover:bg-primary/5 transition-colors">
                     <HiOutlineChevronLeft className="w-5 h-5" />
                 </div>
@@ -132,9 +153,9 @@ const CourseDetailPage: FC = () => {
                         {course.description || "Engage in a profound study of this domain through structured curriculum and expert oversight."}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-base-content/5">
+                    <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-primary/10">
                         <Link to={`/teachers/${course.teacher_id}`} className="flex items-center gap-4 group cursor-pointer text-left">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-primary shadow-premium border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 transition-all">
+                            <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary shadow-premium border border-primary/5 group-hover:border-primary/20 group-hover:bg-primary/10 transition-all duration-300">
                                 {teacher?.avatar_url ? (
                                     <img src={teacher.avatar_url} alt={teacher.name} className="w-full h-full rounded-2xl object-cover" />
                                 ) : (
@@ -142,25 +163,25 @@ const CourseDetailPage: FC = () => {
                                 )}
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest mb-1 group-hover:text-primary/50 transition-colors">Instructor</p>
+                                <p className="text-[9px] font-black text-primary/40 uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">Instructor</p>
                                 <p className="text-sm font-black text-base-content/80 group-hover:text-primary transition-colors">{teacher?.name || 'Academic Expert'}</p>
                             </div>
                         </Link>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-base-content/20 shadow-premium">
+                            <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary/60 shadow-premium border border-primary/5">
                                 <HiOutlineClock className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest">Temporal Study</p>
+                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">Temporal Study</p>
                                 <p className="text-sm font-black text-base-content/80">{course.duration ? Math.round(course.duration / 60) : 'Undefined'} Hours</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-base-200/50 rounded-2xl flex items-center justify-center text-base-content/20 shadow-premium">
+                            <div className="w-12 h-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary/60 shadow-premium border border-primary/5">
                                 <HiOutlineGlobeAlt className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-base-content/30 uppercase tracking-widest">Language</p>
+                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">Language</p>
                                 <p className="text-sm font-black text-base-content/80">{course.language ?? 'Undefined'}</p>
                             </div>
                         </div>
@@ -169,13 +190,16 @@ const CourseDetailPage: FC = () => {
 
                 {/* Right Column: Acquisition Card */}
                 <div className="lg:col-span-5 sticky top-28">
-                    <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/40 shadow-premium overflow-hidden ring-1 ring-base-content/5">
+                    <div 
+                        className="bg-base-100/40 backdrop-blur-3xl rounded-[3rem] border border-base-content/15 shadow-premium overflow-hidden ring-1 ring-base-content/5"
+                        style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}
+                    >
                         <div className="aspect-video relative group">
                             <img src={thumbnailUrl} alt={course.title} className="w-full h-full object-cover grayscale-10" />
                             <div className="absolute inset-0 bg-base-content/40 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 cursor-pointer">
                                 <motion.div
                                     whileHover={{ scale: 1.1 }}
-                                    className="bg-white w-16 h-16 rounded-full flex items-center justify-center text-primary shadow-2xl"
+                                    className="bg-base-100 w-16 h-16 rounded-full flex items-center justify-center text-primary shadow-2xl"
                                 >
                                     <HiOutlinePlay className="w-6 h-6 ml-1" />
                                 </motion.div>
@@ -184,19 +208,19 @@ const CourseDetailPage: FC = () => {
 
                         <div className="p-10 flex flex-col gap-8">
                             <div className="flex items-end gap-3">
-                                <span className="text-5xl font-black text-base-content tracking-tighter">
-                                    {course.price === 0 ? 'FREE' : `$${course.price.toFixed(2)}`}
+                                <span className="text-5xl font-black text-primary tracking-tighter">
+                                    {course.price === 0 ? 'FREE' : `EGP ${course.price.toFixed(0)}`}
                                 </span>
-                                {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">$199.99</span>}
+                                {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">EGP 1,999</span>}
                             </div>
 
                             <button
                                 onClick={handleEnroll}
                                 disabled={enrolling}
-                                className={`w-full py-5 flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl ring-1 ring-white/20 active:scale-[0.98]
+                                className={`w-full py-5 flex items-center justify-center gap-3 font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl ring-1 ring-primary/10 active:scale-[0.98]
                                     ${isEnrolled
-                                        ? 'bg-base-content text-white hover:bg-base-content/90'
-                                        : 'bg-primary hover:bg-primary/90 text-white shadow-primary/20'
+                                        ? 'bg-base-content text-base-100 hover:bg-base-content/90'
+                                        : 'bg-primary hover:bg-primary/90 text-primary-content shadow-primary/20'
                                     }
                                     ${enrolling ? 'opacity-70 cursor-not-allowed' : ''}
                                 `}
@@ -218,16 +242,16 @@ const CourseDetailPage: FC = () => {
                             </button>
 
                             <div className="space-y-5 pt-4">
-                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-base-content/40">
-                                    <HiOutlineCheckBadge className="w-5 h-5 text-success/60" />
+                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
+                                    <HiOutlineCheckBadge className="w-5 h-5 text-accent" />
                                     Full Lifetime Access
                                 </div>
-                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-base-content/40">
-                                    <HiOutlineTrophy className="w-5 h-5 text-amber-500/60" />
+                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
+                                    <HiOutlineTrophy className="w-5 h-5 text-amber-500" />
                                     Credential of Achievement
                                 </div>
-                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-base-content/40">
-                                    <HiOutlineCalendar className="w-5 h-5 text-primary/60" />
+                                <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
+                                    <HiOutlineCalendar className="w-5 h-5 text-primary" />
                                     Permanent Content Updates
                                 </div>
                             </div>
@@ -252,20 +276,20 @@ const CourseDetailPage: FC = () => {
 
                 <div className="space-y-6">
                     {sections?.documents.map((section, idx) => (
-                        <div key={section.$id} className="bg-white/40 backdrop-blur-xl border border-white shadow-premium rounded-[2.5rem] overflow-hidden group hover:border-primary/10 transition-colors">
-                            <div className="p-8 bg-base-200/20 border-b border-base-content/5 flex items-center justify-between">
+                        <div key={section.$id} className="bg-base-100/40 backdrop-blur-xl border border-primary/5 shadow-premium rounded-[2.5rem] overflow-hidden group hover:border-primary/20 transition-all duration-500">
+                            <div className="p-8 bg-primary/5 border-b border-primary/5 flex items-center justify-between">
                                 <div className="flex items-center gap-6">
-                                    <span className="w-10 h-10 flex items-center justify-center bg-white border border-base-content/5 rounded-xl text-xs font-black text-base-content/30 shadow-sm">
+                                    <span className="w-12 h-12 flex items-center justify-center bg-primary text-primary-content rounded-2xl text-xs font-black shadow-lg shadow-primary/20">
                                         {(idx + 1).toString().padStart(2, '0')}
                                     </span>
-                                    <h3 className="text-xl font-heading font-black text-base-content/80 group-hover:text-primary transition-colors">{section.title}</h3>
+                                    <h3 className="text-xl font-heading font-black text-base-content group-hover:text-primary transition-colors">{section.title}</h3>
                                 </div>
-                                <span className="text-[9px] font-black text-base-content/30 uppercase tracking-[0.2em]">Curriculum Module</span>
+                                <span className="text-[9px] font-black text-primary/30 uppercase tracking-[0.2em] px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">Curriculum Module</span>
                             </div>
 
                             <div className="divide-y divide-base-content/5">
                                 {idx === 0 && previewLessons?.documents.map((lesson) => (
-                                    <div key={lesson.$id} className="p-6 pl-24 flex items-center justify-between group/lesson hover:bg-primary/20 transition-colors cursor-pointer">
+                                    <div key={lesson.$id} className="p-6 pl-24 flex items-center justify-between group/lesson hover:bg-primary/5 transition-colors cursor-pointer">
                                         <div className="flex items-center gap-4">
                                             <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-primary/40 opacity-0 group-hover/lesson:opacity-100 transition-opacity">
                                                 <HiOutlinePlay className="w-4 h-4" />
@@ -280,7 +304,7 @@ const CourseDetailPage: FC = () => {
                     ))}
 
                     {sections?.total === 0 && (
-                        <div className="p-20 text-center bg-white/50 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/10">
+                        <div className="p-20 text-center bg-base-100/50 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/10">
                             <h3 className="font-black text-base-content/20 uppercase tracking-widest text-xs">Awaiting Curriculum Records</h3>
                         </div>
                     )}

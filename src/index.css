@@ -1,78 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import "@fontsource-variable/geist";
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+
 @plugin "daisyui";
+
+/* ── LIGHT THEME (Digital Atheneum) ── */
 @plugin "daisyui/theme" {
-  name: "digital-atheneum";
+  name: "light";
   default: true;
   prefersdark: false;
   color-scheme: "light";
 
-  /* ── Brand Surface Hierarchy ── */
-  --color-base-100: oklch(0.985 0.005 260); /* surface-50 */
-  --color-base-200: oklch(0.96 0.005 260);  /* surface-100 */
-  --color-base-300: oklch(0.92 0.005 260);  /* surface-200 */
+  /* Brand Surface Hierarchy */
+  --color-base-100: oklch(0.985 0.005 260);
+  --color-base-200: oklch(0.96 0.005 260);
+  --color-base-300: oklch(0.92 0.005 260);
   --color-base-content: oklch(0.20 0.01 260);
 
-  /* ── Core Brand colors (Indigo Editorial) ── */
+  /* Core Brand colors (Indigo Editorial) */
   --color-primary: oklch(0.35 0.18 268); 
   --color-primary-content: oklch(0.985 0 0);
   --color-secondary: oklch(0.40 0.20 260); 
   --color-secondary-content: oklch(0.985 0 0);
-  --color-accent: oklch(0.55 0.20 160); /* Emerald accent */
+  --color-accent: oklch(0.55 0.20 160);
   --color-accent-content: oklch(0.985 0 0);
 
-  /* ── Semantic Consistency ── */
+  /* Brand Gradient Tokens */
+  --brand-gradient-start: oklch(0.35 0.18 268);
+  --brand-gradient-end: oklch(0.50 0.22 250);
+
+  /* Semantic Consistency */
   --color-info: oklch(0.60 0.18 240);
   --color-success: oklch(0.60 0.18 145);
   --color-warning: oklch(0.75 0.18 75);
   --color-error: oklch(0.58 0.22 25);
 
-  /* ── Radius & Sizing ── */
+  /* Radius & Sizing */
   --radius-selector: 1rem;
   --radius-field: 2.25rem;
   --radius-box: 2.25rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
 
-  /* ── The No-Line Rule Implementation ── */
+  /* No-Line Rule */
   --border: 0rem;
-  --depth: 0.06; /* Corresponds to the 6% ambient shadow */
+  --depth: 0.06;
+  --noise: 0;
+}
+
+/* ── DARK THEME (Atheneum Nocturnal) ── */
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+  color-scheme: "dark";
+
+  /* Brand Surface Hierarchy (Deep Midnight Indigo) */
+  --color-base-100: oklch(0.12 0.025 268);
+  --color-base-200: oklch(0.08 0.025 268);
+  --color-base-300: oklch(0.05 0.025 268);
+  --color-base-content: oklch(0.98 0.005 260);
+
+  /* Core Brand colors (Vibrant indigo for high contrast) */
+  --color-primary: oklch(0.68 0.18 268); 
+  --color-primary-content: oklch(0.12 0.025 268);
+  --color-secondary: oklch(0.72 0.22 260); 
+  --color-secondary-content: oklch(0.12 0.025 268);
+  --color-accent: oklch(0.78 0.18 160);
+  --color-accent-content: oklch(0.12 0.025 268);
+
+  /* Brand Gradient Tokens */
+  --brand-gradient-start: oklch(0.68 0.18 268);
+  --brand-gradient-end: oklch(0.78 0.22 250);
+
+  /* Semantic Consistency */
+  --color-info: oklch(0.78 0.12 240);
+  --color-success: oklch(0.78 0.12 145);
+  --color-warning: oklch(0.88 0.12 75);
+  --color-error: oklch(0.72 0.18 25);
+
+  /* Radius & Sizing */
+  --radius-selector: 1rem;
+  --radius-field: 2.25rem;
+  --radius-box: 2.25rem;
+
+  /* No-Line Rule Refinement */
+  --border: 0rem;
+  --depth: 0.15; /* Increased depth for dark surfaces */
   --noise: 0;
 }
 
 @theme {
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Newsreader', serif;
+  --font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   
-  --shadow-premium: 0 25px 80px oklch(0.1 0.05 260 / 0.06);
-  --shadow-card: 0 10px 40px oklch(0.1 0.05 260 / 0.04);
+  --shadow-premium: 0 25px 80px oklch(0.1 0.05 260 / 0.12);
+  --shadow-card: 0 10px 40px oklch(0.1 0.05 260 / 0.08);
+
+  /* Modular Scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.25rem;     /* 20px */
+  --text-xl: 1.563rem;    /* 25px */
+  --text-2xl: 1.953rem;   /* 31px */
+  --text-3xl: 2.441rem;   /* 39px */
+  --text-4xl: 3.052rem;   /* 49px */
+
+  /* Sync Tailwind dark: variant with DaisyUI data-theme */
+  --variant-dark: &:where([data-theme="dark"], [data-theme="dark"] *);
 }
 
 @layer base {
+  body {
+    @apply bg-base-100 text-base-content antialiased font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+
   * {
-    @apply border-transparent outline-none selection:bg-primary/20;
-    transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    @apply border-transparent selection:bg-primary/30 selection:text-primary-content;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Defend against hardcoded white backgrounds in dark mode */
+  [data-theme="dark"] .bg-white,
+  [data-theme="dark"] .bg-white\/50,
+  [data-theme="dark"] .bg-white\/40,
+  [data-theme="dark"] .bg-white\/80 {
+    background-color: var(--color-base-100);
+    backdrop-filter: blur(24px);
+  }
+
+  /* Defend against hardcoded white focus states */
+  [data-theme="dark"] .focus\:bg-white:focus {
+    background-color: var(--color-base-100);
+    box-shadow: 0 0 0 2px var(--color-primary) !important;
+  }
+
+  /* Ensure text-base-content is visible */
+  [data-theme="dark"] .text-base-content\/40 {
+    color: oklch(var(--color-base-content) / 0.6); /* Increase visibility of secondary text in dark mode */
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
   }
 
   html {
     @apply scroll-smooth antialiased;
   }
-
-  body {
-    @apply bg-base-100 text-base-content font-sans leading-relaxed;
-  }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-white/70 backdrop-blur-3xl shadow-premium;
-  }
-  
-  .surface-elevated {
-    @apply bg-white shadow-card rounded-3xl;
+    @apply bg-base-100/80 backdrop-blur-xl shadow-premium border border-base-content/15;
   }
 
-  .heading-serif {
-    @apply font-heading text-4xl font-extrabold tracking-tight italic;
+  .surface-elevated {
+    @apply bg-base-100 shadow-card rounded-3xl border border-base-content/15;
+  }
+
+  .surface-tinted {
+    @apply bg-base-200/40 shadow-card rounded-3xl border border-base-content/15;
+  }
+
+  .text-gradient-brand {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--brand-gradient-start), var(--brand-gradient-end));
+  }
+
+  .accent-border-l {
+    border-left: 3px solid var(--color-primary);
+    border-image: linear-gradient(to bottom, var(--color-primary), var(--color-secondary)) 1;
+  }
+
+  .accent-border-l-success {
+    border-left: 3px solid var(--color-success);
+  }
+
+  /* Editorial Typography Utilities */
+  .display-title {
+    @apply font-heading text-4xl font-extrabold tracking-tighter leading-[1.1];
+  }
+
+  .section-title {
+    @apply font-heading text-2xl font-bold tracking-tight leading-tight;
+  }
+
+  .body-prose {
+    @apply font-sans text-base leading-relaxed max-w-[65ch];
+  }
+
+  .label-caps {
+    @apply text-xs font-bold uppercase tracking-[0.15em] text-base-content/60;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
+
+

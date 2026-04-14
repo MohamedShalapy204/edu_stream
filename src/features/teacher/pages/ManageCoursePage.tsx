@@ -70,10 +70,10 @@ const ManageCoursePage: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            className="max-w-5xl mx-auto px-6 py-12"
+            className="w-full py-8 md:py-12"
         >
             {/* Header: Digital Atheneum style */}
-            <div className="flex items-center justify-between mb-16">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12 md:mb-16">
                 <button
                     onClick={() => navigate(-1)}
                     className="group inline-flex items-center gap-3 text-base-content/30 hover:text-primary transition-all"
@@ -84,69 +84,69 @@ const ManageCoursePage: React.FC = () => {
                     <span className="text-[10px] font-black uppercase tracking-[0.2em]">Return to Dashboard</span>
                 </button>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto overflow-x-auto no-scrollbar pb-1">
                     {isEditMode && (
                         <a
                             href={`/courses/${id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-white text-[10px] uppercase font-black tracking-[0.2em] shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all whitespace-nowrap"
                         >
-                            <HiOutlineSparkles className="w-4 h-4" />
+                            <HiOutlineSparkles className="w-3.5 h-3.5 md:w-4 md:h-4" />
                             Live Preview
                         </a>
                     )}
-                    <div className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10 whitespace-nowrap">
+                        <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary animate-pulse" />
                         Archive Mode
                     </div>
                 </div>
             </div>
 
-            <div className="mb-16 text-center sm:text-left space-y-4">
-                <h1 className="text-5xl font-heading font-black text-base-content tracking-tighter leading-tight">
+            <div className="mb-12 md:mb-16 text-center sm:text-left space-y-4">
+                <h1 className="text-4xl md:text-5xl font-heading font-black text-base-content tracking-tighter leading-tight">
                     {isEditMode ? 'Refine' : 'Archive'} <span className="text-primary italic font-medium">Wisdom</span>
                 </h1>
-                <p className="text-base-content/50 text-lg font-medium leading-relaxed max-w-xl border-l-[3px] border-primary/10 pl-6 py-2">
+                <p className="text-base-content/50 text-base md:text-lg font-medium leading-relaxed max-w-xl border-l-[3px] border-primary/10 pl-5 md:pl-6 py-1 md:py-2">
                     {isEditMode
                         ? 'Update your course details and curriculum records.'
                         : 'Initiate a new domain of study for the Atheneum catalog.'}
                 </p>
             </div>
 
-            {/* Tabs */}
+            {/* Tabs - Horizontal Scroll on Mobile */}
             {isEditMode && (
-                <div className="flex items-center gap-4 mb-8 border-b border-base-content/5 pb-px">
+                <div className="flex items-center gap-6 md:gap-8 mb-10 border-b border-base-content/5 pb-px overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
                     <button
                         onClick={() => setActiveTab('details')}
-                        className={`pb-4 px-2 text-sm font-black uppercase tracking-widest transition-all ${activeTab === 'details' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
+                        className={`pb-4 px-2 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all whitespace-nowrap shrink-0 ${activeTab === 'details' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
                     >
-                        Course Metadata
+                        Metadata
                     </button>
                     <button
                         onClick={() => setActiveTab('curriculum')}
-                        className={`pb-4 px-2 text-sm font-black uppercase tracking-widest transition-all ${activeTab === 'curriculum' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
+                        className={`pb-4 px-2 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all whitespace-nowrap shrink-0 ${activeTab === 'curriculum' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
                     >
-                        Syllabus & Curriculum
+                        Curriculum
                     </button>
                     <button
                         onClick={() => setActiveTab('enrollments')}
-                        className={`pb-4 px-2 text-sm font-black uppercase tracking-widest transition-all ${activeTab === 'enrollments' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
+                        className={`pb-4 px-2 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all whitespace-nowrap shrink-0 ${activeTab === 'enrollments' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
                     >
-                        Manage Enrollments
+                        Enrollments
                     </button>
                 </div>
             )}
 
             {/* Error States */}
             {fetchError && (
-                <div className="p-6 bg-error/5 text-error rounded-3xl border border-error/10 text-xs font-black uppercase tracking-[0.2em] text-center mb-10 shadow-sm">
+                <div className="p-6 bg-error/5 text-error rounded-2xl md:rounded-3xl border border-error/10 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-center mb-10 shadow-sm">
                     Failed to synchronize course records.
                 </div>
             )}
 
             {/* Main Form Container: Premium depth */}
-            <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] shadow-premium p-8 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group mb-12">
+            <div className="bg-white/40 backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium p-6 sm:p-10 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group mb-12">
                 {/* Decorative depth accent */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full translate-x-24 -translate-y-24 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
 

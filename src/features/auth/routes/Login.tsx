@@ -124,10 +124,10 @@ const LoginPage: React.FC = () => {
                                     initial={{ x: -10, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ delay: 1 + (i * 0.1) }}
-                                    className="w-10 h-10 rounded-full border-2 border-white bg-base-200 shadow-sm"
+                                    className="w-10 h-10 rounded-full border-2 border-base-100 bg-base-200 shadow-sm"
                                 />
                             ))}
-                            <div className="w-10 h-10 rounded-full border-2 border-white bg-primary flex items-center justify-center text-[10px] text-primary-content font-black">+</div>
+                            <div className="w-10 h-10 rounded-full border-2 border-base-100 bg-primary flex items-center justify-center text-[10px] text-primary-content font-black">+</div>
                         </div>
                         <div>
                             <p className="text-sm font-black tracking-tight">42,000+ learners</p>
@@ -225,7 +225,7 @@ const LoginPage: React.FC = () => {
                                         id="email"
                                         type="email"
                                         placeholder="you@atheneum.com"
-                                        className={`input input-ghost h-16 w-full rounded-2xl pl-14 bg-base-200 border-none focus:bg-white focus:shadow-premium transition-all text-base font-semibold placeholder:text-base-content/20 ${errors.email ? 'ring-2 ring-error/30' : ''}`}
+                                        className={`input input-ghost h-16 w-full rounded-2xl pl-14 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-semibold placeholder:text-base-content/20 ${errors.email ? 'ring-2 ring-error/30' : ''}`}
                                         {...register('email')}
                                     />
                                 </div>
@@ -258,7 +258,7 @@ const LoginPage: React.FC = () => {
                                         id="password"
                                         type={showPassword ? 'text' : 'password'}
                                         placeholder="••••••••"
-                                        className={`input input-ghost h-16 w-full rounded-2xl pl-14 pr-14 bg-base-200 border-none focus:bg-white focus:shadow-premium transition-all text-base font-semibold placeholder:text-base-content/20 ${errors.password ? 'ring-2 ring-error/30' : ''}`}
+                                        className={`input input-ghost h-16 w-full rounded-2xl pl-14 pr-14 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-semibold placeholder:text-base-content/20 ${errors.password ? 'ring-2 ring-error/30' : ''}`}
                                         {...register('password')}
                                     />
                                     <button

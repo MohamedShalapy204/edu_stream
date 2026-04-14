@@ -112,7 +112,7 @@ const RegisterPage: React.FC = () => {
                                 <label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Name</label>
                                 <div className="relative group">
                                     <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
-                                    <input id="name" placeholder="John Doe" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-white focus:shadow-premium transition-all text-base font-medium" {...register('name')} />
+                                    <input id="name" placeholder="John Doe" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('name')} />
                                 </div>
                                 {errors.name && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.name.message}</p>}
                             </div>
@@ -122,7 +122,7 @@ const RegisterPage: React.FC = () => {
                                 <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Email</label>
                                 <div className="relative group">
                                     <HiOutlineEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
-                                    <input id="email" type="email" placeholder="you@domain.com" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-white focus:shadow-premium transition-all text-base font-medium" {...register('email')} />
+                                    <input id="email" type="email" placeholder="you@domain.com" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('email')} />
                                 </div>
                                 {errors.email && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.email.message}</p>}
                             </div>
@@ -134,7 +134,7 @@ const RegisterPage: React.FC = () => {
                                 <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Password</label>
                                 <div className="relative group">
                                     <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
-                                    <input id="password" type="password" placeholder="••••••••" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-white focus:shadow-premium transition-all text-base font-medium" {...register('password')} />
+                                    <input id="password" type="password" placeholder="••••••••" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('password')} />
                                 </div>
                                 {errors.password && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.password.message}</p>}
                             </div>
@@ -144,7 +144,7 @@ const RegisterPage: React.FC = () => {
                                 <label htmlFor="confirmPassword" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Confirm Password</label>
                                 <div className="relative group">
                                     <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
-                                    <input id="confirmPassword" type="password" placeholder="••••••••" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-white focus:shadow-premium transition-all text-base font-medium" {...register('confirmPassword')} />
+                                    <input id="confirmPassword" type="password" placeholder="••••••••" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('confirmPassword')} />
                                 </div>
                                 {errors.confirmPassword && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.confirmPassword.message}</p>}
                             </div>
@@ -264,7 +264,7 @@ const RegisterPage: React.FC = () => {
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 2 + (i * 0.1) }}
-                                        className="w-10 h-10 rounded-full bg-base-200 border-2 border-base-100 shadow-sm"
+                                        className="w-10 h-10 rounded-full bg-base-200 border-2 border-base-content/5 shadow-sm"
                                     />
                                 ))}
                             </div>

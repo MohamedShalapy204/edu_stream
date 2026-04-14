@@ -24,9 +24,9 @@ const DocumentController: React.FC = () => {
 
   if (openDocuments.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full bg-base-200 text-base-content/50 p-8 border-2 border-dashed border-base-300 rounded-xl">
+      <div className="flex flex-col items-center justify-center h-full bg-base-200 text-base-content/50 p-8 border-2 border-dashed border-base-300 rounded-xl text-center">
         <Layout size={48} className="mb-4 opacity-20" />
-        <p>No documents open. Select a document from the lesson contents to begin.</p>
+        <p className="body-prose text-sm">No documents staged. Select a resource from the archival hub to begin examination.</p>
       </div>
     );
   }
@@ -60,12 +60,12 @@ const DocumentController: React.FC = () => {
         {splitMode && (
           <div className="w-1/2 flex items-center justify-between px-3 h-12 bg-base-200/80">
             <div className="dropdown dropdown-bottom">
-              <div tabIndex={0} role="button" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:text-primary-focus transition-colors">
+              <div tabIndex={0} role="button" className="flex items-center gap-2 label-caps !text-primary hover:text-primary-focus transition-colors">
                 <span className="truncate max-w-[120px]">{secondaryDoc?.title || "Select Document"}</span>
                 <ChevronDown size={14} />
               </div>
               <ul tabIndex={0} className="dropdown-content z-50 menu p-2 shadow-2xl bg-base-100 rounded-box w-52 mt-2 border border-base-300">
-                <li className="menu-title text-[10px] opacity-40">Switch Secondary View</li>
+                <li className="menu-title label-caps !text-[9px] !opacity-40">Switch Secondary View</li>
                 {openDocuments.map(doc => (
                   <li key={doc.id}>
                     <button
@@ -132,8 +132,8 @@ const DocumentController: React.FC = () => {
             ) : (
               <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-base-200/30">
                 <Layout size={32} className="mb-4 opacity-20" />
-                <p className="text-xs font-bold uppercase tracking-widest opacity-40 mb-4">Secondary Workspace</p>
-                <p className="text-sm opacity-50 mb-6">Select a document from the header dropdown to view it side-by-side.</p>
+                <p className="label-caps !opacity-40 mb-4">Secondary Workspace</p>
+                <p className="body-prose text-sm opacity-50 mb-6">Select an exhibit from the catalogue to compare side-by-side.</p>
               </div>
             )}
           </div>

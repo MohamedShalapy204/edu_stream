@@ -21,10 +21,10 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
   const exhibits = lesson.document_ids || [];
 
   return (
-    <div className="h-full w-full bg-white/40 backdrop-blur-3xl border-l border-white/50 flex flex-col shadow-inner overflow-hidden">
+    <div className="h-full w-full bg-base-100 border-l border-base-content/5 flex flex-col overflow-hidden">
       {/* Hub Header */}
-      <div className="p-6 border-b border-base-content/5 flex-none bg-white/20 backdrop-blur-md z-20">
-        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-base-content/40">Resource Catalog</h3>
+      <div className="p-6 border-b border-base-content/5 flex-none bg-base-200/50 z-20">
+        <h3 className="label-caps !text-primary/60">Catalogue of Scholarly Resources</h3>
       </div>
 
       {/* Resource Area */}
@@ -33,15 +33,15 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
         <section>
           <div className="flex items-center gap-3 mb-6 text-primary/40">
             <HiOutlineInformationCircle className="w-5 h-5" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Curator's Notes</span>
+            <span className="label-caps">Curator's Notes</span>
           </div>
           <div className="prose prose-sm max-w-none">
             {lesson.description ? (
-              <p className="text-sm font-medium text-base-content/70 leading-relaxed italic border-l-2 border-primary/20 pl-6">
+              <p className="body-prose text-sm !italic border-l-2 border-primary/30 pl-6 py-1 opacity-70">
                 {lesson.description}
               </p>
             ) : (
-              <p className="text-base-content/30 italic text-xs">No specific instructions provided for this module.</p>
+              <p className="body-prose text-xs opacity-30 italic">No specific instructions provided for this module.</p>
             )}
           </div>
         </section>
@@ -50,7 +50,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
         <section className="space-y-4">
           <div className="flex items-center gap-3 text-primary/40">
             <HiOutlinePaperClip className="w-5 h-5" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Exhibits</span>
+            <span className="label-caps">Archival Exhibits</span>
           </div>
 
           <div className="space-y-3">
@@ -63,7 +63,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                   key={docId}
                   className={`group p-4 rounded-2xl border transition-all flex items-center justify-between shadow-sm ${isOpened
                     ? 'bg-primary/5 border-primary/20'
-                    : 'bg-white/40 border-white/40 hover:bg-primary/5 hover:border-primary/20'
+                    : 'bg-base-200 border-base-content/5 hover:bg-primary/5 hover:border-primary/20'
                     }`}
                 >
                   <div
@@ -75,9 +75,9 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                       type: 'doc'
                     }))}
                   >
-                    <p className="text-[10px] font-black uppercase tracking-widest text-primary/40 mb-0.5">Exhibit {index + 1}</p>
-                    <p className={`text-xs font-bold transition-colors ${isOpened ? 'text-primary' : 'text-base-content group-hover:text-primary'}`}>
-                      {isOpened ? 'Active in Workspace' : 'Mount to Workspace'}
+                    <p className="label-caps !text-[9px] !text-primary/40 mb-0.5">Exhibit {index + 1}</p>
+                    <p className={`text-xs font-semibold transition-colors ${isOpened ? 'text-primary' : 'text-base-content group-hover:text-primary'}`}>
+                      {isOpened ? 'Active in Workspace' : 'Examine in Workspace'}
                     </p>
                   </div>
                   <a
@@ -97,7 +97,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
           {exhibits.length === 0 && (
             <div className="py-20 flex flex-col items-center justify-center text-base-content/10">
               <HiOutlineDocumentDuplicate className="w-12 h-12 mb-4 opacity-50" />
-              <p className="text-[10px] font-black uppercase tracking-widest">No Exhibits Provided</p>
+              <p className="label-caps">Archive Empty</p>
             </div>
           )}
         </section>
