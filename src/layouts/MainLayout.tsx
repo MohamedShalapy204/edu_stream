@@ -43,16 +43,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
     };
 
     const userInitial = account?.name?.[0]?.toUpperCase() || account?.email?.[0]?.toUpperCase() || '?';
-
-    const isLearningTheatre = location.pathname.includes('/student/learn/');
+    const isTheatreMode = location.pathname.includes('/student/learn/');
 
     return (
         <div className="min-h-screen bg-base-100 flex flex-col selection:bg-primary/20 font-sans antialiased text-base-content overflow-x-hidden">
             {/* ── STICKY GLASS HEADER ─────────────────────────────────────── */}
-            {!isLearningTheatre && (
+            {!isTheatreMode && (
                 <header className="sticky top-0 z-50 w-full bg-base-100/60 backdrop-blur-2xl transition-all duration-500 border-b border-base-content/5 shadow-premium shadow-base-content/2">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                         <div className="flex h-16 md:h-20 items-center justify-between">
+
                             {/* Brand Section */}
                             <div className="flex items-center gap-6 md:gap-12">
                                 <Link to="/" className="flex items-center gap-2 md:gap-3 group">
@@ -198,18 +198,20 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
             {/* ── MAIN CONTENT ───────────────────────────────────────────── */}
             <main className="flex-1 w-full bg-base-100 relative">
                 {/* Global Background Decorations */}
-                <div className="absolute inset-0 -z-10 pointer-events-none opacity-20 overflow-hidden">
-                    <div className="absolute top-0 right-0 w-160 h-160 rounded-full blur-[120px] bg-primary/10 -translate-y-1/2 translate-x-1/3" />
-                    <div className="absolute bottom-0 left-0 w-120 h-120 rounded-full blur-[100px] bg-secondary/10 translate-y-1/3 -translate-x-1/4" />
-                </div>
+                {!isTheatreMode && (
+                    <div className="absolute inset-0 -z-10 pointer-events-none opacity-20 overflow-hidden">
+                        <div className="absolute top-0 right-0 w-160 h-160 rounded-full blur-[120px] bg-primary/10 -translate-y-1/2 translate-x-1/3" />
+                        <div className="absolute bottom-0 left-0 w-120 h-120 rounded-full blur-[100px] bg-secondary/10 translate-y-1/3 -translate-x-1/4" />
+                    </div>
+                )}
 
-                <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 ${isLearningTheatre ? 'p-0 max-w-none' : 'pt-8 md:pt-12 pb-32 md:pb-12'}`}>
+                <div className={`${isTheatreMode ? '' : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-8 md:pt-12 pb-32 md:pb-12'}`}>
                     <Outlet />
                 </div>
             </main>
 
             {/* ── FOOTER ─────────────────────────────────────────────────── */}
-            {!isLearningTheatre && (
+            {!isTheatreMode && (
                 <footer className="py-12 bg-base-200 border-t border-base-content/5">
                     <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
                         <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-all cursor-default group">
@@ -222,53 +224,54 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                     </div>
                 </footer>
             )}
+
             {/* ── MOBILE BOTTOM NAVIGATION ───────────────────────────────────── */}
-            {!isLearningTheatre && (
+            {!isTheatreMode && (
                 <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50">
-                <div className="bg-base-100/80 backdrop-blur-2xl border border-base-content/15 rounded-[2rem] shadow-premium-lg px-2 h-18 flex items-center justify-around relative overflow-hidden">
-                    {/* Active Indicator Background */}
-                    <div className="absolute inset-x-2 h-full pointer-events-none flex justify-around items-center">
+                    <div className="bg-base-100/80 backdrop-blur-2xl border border-base-content/15 rounded-[2rem] shadow-premium-lg px-2 h-18 flex items-center justify-around relative overflow-hidden">
+                        {/* Active Indicator Background */}
+                        <div className="absolute inset-x-2 h-full pointer-events-none flex justify-around items-center">
+                            {[
+                                { path: '/courses' },
+                                ...(profile?.role === UserRole.TEACHER ? [{ path: '/teacher/dashboard' }] : []),
+                                ...(profile?.role === UserRole.STUDENT ? [{ path: '/student/dashboard' }] : []),
+                                { path: '/profile' }
+                            ].map((item, idx) => {
+                                const isActive = location.pathname.startsWith(item.path);
+                                return (
+                                    <div key={idx} className="w-14 h-14 flex items-center justify-center relative">
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="mobile-nav-pill"
+                                                className="absolute inset-0 bg-primary/20 rounded-2xl ring-1 ring-primary/20 backdrop-blur-md shadow-lg shadow-primary/10"
+                                                transition={{ type: "spring", stiffness: 380, damping: 45 }}
+                                            />
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
                         {[
-                            { path: '/courses' },
-                            ...(profile?.role === UserRole.TEACHER ? [{ path: '/teacher/dashboard' }] : []),
-                            ...(profile?.role === UserRole.STUDENT ? [{ path: '/student/dashboard' }] : []),
-                            { path: '/profile' }
-                        ].map((item, idx) => {
+                            { name: 'Library', path: '/courses', icon: HiOutlineBookOpen },
+                            ...(profile?.role === UserRole.TEACHER ? [{ name: 'Faculty', path: '/teacher/dashboard', icon: HiOutlineSquares2X2 }] : []),
+                            ...(profile?.role === UserRole.STUDENT ? [{ name: 'Portal', path: '/student/dashboard', icon: HiOutlineAcademicCap }] : []),
+                            { name: 'Profile', path: '/profile', icon: HiOutlineUserCircle },
+                        ].map((item) => {
                             const isActive = location.pathname.startsWith(item.path);
                             return (
-                                <div key={idx} className="w-14 h-14 flex items-center justify-center relative">
-                                    {isActive && (
-                                        <motion.div
-                                            layoutId="mobile-nav-pill"
-                                            className="absolute inset-0 bg-primary/20 rounded-2xl ring-1 ring-primary/20 backdrop-blur-md shadow-lg shadow-primary/10"
-                                            transition={{ type: "spring", stiffness: 380, damping: 45 }}
-                                        />
-                                    )}
-                                </div>
+                                <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    className={`relative flex flex-col items-center justify-center gap-1 w-14 h-14 transition-all ${isActive ? 'text-primary' : 'text-base-content/30'}`}
+                                >
+                                    <item.icon className={`w-4.5 h-4.5 transition-transform ${isActive ? 'scale-110' : 'active:scale-90'}`} />
+                                    <span className="text-[7px] uppercase font-black tracking-widest">{item.name}</span>
+                                </Link>
                             );
                         })}
                     </div>
-
-                    {[
-                        { name: 'Library', path: '/courses', icon: HiOutlineBookOpen },
-                        ...(profile?.role === UserRole.TEACHER ? [{ name: 'Faculty', path: '/teacher/dashboard', icon: HiOutlineSquares2X2 }] : []),
-                        ...(profile?.role === UserRole.STUDENT ? [{ name: 'Portal', path: '/student/dashboard', icon: HiOutlineAcademicCap }] : []),
-                        { name: 'Profile', path: '/profile', icon: HiOutlineUserCircle },
-                    ].map((item) => {
-                        const isActive = location.pathname.startsWith(item.path);
-                        return (
-                            <Link
-                                key={item.name}
-                                to={item.path}
-                                className={`relative flex flex-col items-center justify-center gap-1 w-14 h-14 transition-all ${isActive ? 'text-primary' : 'text-base-content/30'}`}
-                            >
-                                <item.icon className={`w-4.5 h-4.5 transition-transform ${isActive ? 'scale-110' : 'active:scale-90'}`} />
-                                <span className="text-[7px] uppercase font-black tracking-widest">{item.name}</span>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </nav>
+                </nav>
             )}
         </div>
     );

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+@import "@fontsource-variable/geist";
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 
 @plugin "daisyui";
 
@@ -87,11 +88,21 @@
 }
 
 @theme {
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Newsreader', serif;
+  --font-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   
   --shadow-premium: 0 25px 80px oklch(0.1 0.05 260 / 0.12);
   --shadow-card: 0 10px 40px oklch(0.1 0.05 260 / 0.08);
+
+  /* Modular Scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.25rem;     /* 20px */
+  --text-xl: 1.563rem;    /* 25px */
+  --text-2xl: 1.953rem;   /* 31px */
+  --text-3xl: 2.441rem;   /* 39px */
+  --text-4xl: 3.052rem;   /* 49px */
 
   /* Sync Tailwind dark: variant with DaisyUI data-theme */
   --variant-dark: &:where([data-theme="dark"], [data-theme="dark"] *);
@@ -99,8 +110,14 @@
 
 @layer base {
   body {
-    @apply bg-base-100 text-base-content antialiased;
+    @apply bg-base-100 text-base-content antialiased font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+
   * {
     @apply border-transparent selection:bg-primary/30 selection:text-primary-content;
     transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -163,8 +180,26 @@
     border-left: 3px solid var(--color-success);
   }
 
-  .heading-serif {
-    @apply font-heading text-4xl font-extrabold tracking-tight italic;
+  /* Editorial Typography Utilities */
+  .display-title {
+    @apply font-heading text-4xl font-extrabold tracking-tighter leading-[1.1];
+  }
+
+  .section-title {
+    @apply font-heading text-2xl font-bold tracking-tight leading-tight;
+  }
+
+  .body-prose {
+    @apply font-sans text-base leading-relaxed max-w-[65ch];
+  }
+
+  .label-caps {
+    @apply text-xs font-bold uppercase tracking-[0.15em] text-base-content/60;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
+
 

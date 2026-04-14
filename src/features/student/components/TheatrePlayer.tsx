@@ -39,7 +39,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
         if (!hasVideo) return (
             <div className="w-full h-full flex flex-col items-center justify-center text-white/10 p-12 bg-black/40">
                 <HiOutlineVideoCameraSlash className="w-12 h-12 mb-4" />
-                <p className="text-[10px] font-black uppercase tracking-widest">No primary lecture available</p>
+                <p className="label-caps">Lecture Archive Missing</p>
             </div>
         );
 
@@ -73,7 +73,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
         <div className="w-full h-full flex flex-col bg-base-100/40 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden shadow-premium border border-base-content/15 relative">
             {/* Top Stage Label */}
             <div className="absolute top-4 left-6 z-10 pointer-events-none">
-                <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-[8px] font-black uppercase tracking-[0.2em] text-white/60 border border-white/10 italic">
+                <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full label-caps !text-[8px] !text-white/60 border border-white/10 italic">
                     Primary Lecture Stage
                 </span>
             </div>
@@ -86,9 +86,9 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
             {/* Action Footer */}
             <div className="flex-none min-h-20 md:h-24 bg-base-200/50 backdrop-blur-2xl border-t border-base-content/10 flex flex-col sm:flex-row items-center justify-between px-6 md:px-12 py-4 sm:py-0 z-10 gap-4 sm:gap-0">
                 <div className="hidden sm:block">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 mb-1">Status</p>
-                    <p className="text-sm font-bold text-base-content/60 italic">
-                        {isCompleted ? 'Module Sync: Mastered' : <span>Draft Phase: <span className="text-primary italic">In Progress</span></span>}
+                    <p className="label-caps !text-primary/60 mb-1">Synthesis Status</p>
+                    <p className="text-sm font-heading font-bold text-base-content/60 italic">
+                        {isCompleted ? 'Cognitive Mastery Attained' : <span>Intellectual Synthesis: <span className="text-primary">In Progress</span></span>}
                     </p>
                 </div>
 
@@ -96,7 +96,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                     <button
                         onClick={onMarkCompleted}
                         disabled={isCompleted}
-                        className={`flex-1 sm:flex-none px-5 md:px-6 py-3.5 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 md:gap-3 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] transition-all duration-300
+                        className={`flex-1 sm:flex-none px-6 py-3.5 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 md:gap-3 label-caps transition-all duration-300
                             ${isCompleted
                                 ? 'bg-success/10 text-success border border-success/20 shadow-sm'
                                 : 'bg-primary text-primary-content shadow-xl shadow-primary/20 hover:shadow-2xl hover:-translate-y-0.5 active:scale-95'
@@ -104,15 +104,15 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                         `}
                     >
                         {isCompleted && <HiOutlineCheckCircle className="w-4.5 h-4.5 md:w-5 md:h-5" />}
-                        {isCompleted ? 'Segment Mastered' : 'Complete Lesson'}
+                        {isCompleted ? 'Segment Mastered' : 'Declare Mastery'}
                     </button>
 
                     {onNextLesson && (
                         <button
                             onClick={onNextLesson}
-                            className="flex-1 sm:flex-none px-5 md:px-6 py-3.5 rounded-xl md:rounded-2xl bg-base-content text-base-100 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-content transition-all duration-300 shadow-xl active:scale-95"
+                            className="flex-1 sm:flex-none px-6 py-3.5 rounded-xl md:rounded-2xl bg-base-content text-base-100 label-caps hover:bg-primary hover:text-primary-content transition-all duration-300 shadow-xl active:scale-95"
                         >
-                            Continue
+                            Proceed to next segment
                         </button>
                     )}
                 </div>

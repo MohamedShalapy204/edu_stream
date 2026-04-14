@@ -38,7 +38,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
     return (
         <div className="h-full w-full bg-base-200 border-l border-base-content/5 flex flex-col">
             <div className="p-6 border-b border-base-content/5">
-                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40">Curriculum Index</h3>
+                <h3 className="label-caps !text-primary/60">Curriculum Index</h3>
                 <div className="mt-4 bg-primary/5 rounded-full h-1.5 overflow-hidden">
                     <motion.div
                         initial={{ width: 0 }}
@@ -47,10 +47,10 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                     />
                 </div>
                 <div className="flex justify-between items-center mt-3">
-                    <p className="text-[8px] font-black uppercase tracking-widest text-primary">
-                        {completedIds.length} / {lessons.length} Nodes Mastered
+                    <p className="label-caps !text-[10px] text-primary">
+                        {completedIds.length} / {lessons.length} Segments Mastered
                     </p>
-                    <span className="text-[10px] font-black text-primary/20">
+                    <span className="label-caps !text-[10px] tabular opacity-40">
                         {lessons.length > 0 ? Math.round((completedIds.length / lessons.length) * 100) : 0}%
                     </span>
                 </div>
@@ -67,7 +67,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                 onClick={() => toggleSection(section.$id)}
                                 className="w-full p-4 flex items-center justify-between hover:bg-base-200/50 transition-colors"
                             >
-                                <span className="font-heading font-black text-sm text-base-content/80 text-left">
+                                <span className="font-heading font-bold text-sm text-base-content/80 text-left">
                                     {section.title}
                                 </span>
                                 <HiOutlineChevronDown className={`w-4 h-4 text-base-content/40 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -109,13 +109,13 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                                             )}
                                                         </div>
                                                         <div className="flex-1 min-w-0">
-                                                            <p className={`text-xs font-black truncate tracking-wide ${isActive ? 'text-primary-content' : 'text-base-content/80'}`}>
-                                                                <span className="opacity-50 mr-2">{idx + 1}.</span>
+                                                            <p className={`text-xs font-semibold truncate tracking-tight ${isActive ? 'text-primary-content' : 'text-base-content/80'}`}>
+                                                                <span className="opacity-40 tabular mr-2">{String(idx + 1).padStart(2, '0')}.</span>
                                                                 {lesson.title}
                                                             </p>
                                                             <div className="flex items-center gap-2 mt-1">
                                                                 {lesson.duration && (
-                                                                    <span className={`text-[8px] font-black uppercase tracking-widest ${isActive ? 'text-primary-content/60' : 'text-base-content/30'}`}>
+                                                                    <span className={`label-caps !text-[9px] tabular ${isActive ? 'text-primary-content/60' : 'text-base-content/30'}`}>
                                                                         {Math.floor(lesson.duration / 60)}m {lesson.duration % 60}s
                                                                     </span>
                                                                 )}
@@ -125,8 +125,8 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                                 );
                                             })}
                                             {sectionLessons.length === 0 && (
-                                                <div className="p-4 text-center text-[10px] font-black uppercase tracking-widest text-base-content/20">
-                                                    Section Empty
+                                                <div className="p-4 text-center label-caps opacity-20">
+                                                    Curriculum Pending
                                                 </div>
                                             )}
                                         </div>

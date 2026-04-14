@@ -121,9 +121,10 @@ const LearningTheatre: FC = () => {
 
     if (!course) {
         return (
-            <div className="fixed inset-0 bg-base-100 flex items-center justify-center z-50 flex-col gap-6">
-                <h1 className="text-3xl font-heading font-black tracking-tight">Course Not Found</h1>
-                <button onClick={() => navigate('/student/dashboard', { viewTransition: true })} className="btn btn-primary rounded-full">Return Home</button>
+            <div className="fixed inset-0 bg-base-100 flex items-center justify-center z-50 flex-col gap-6 p-8 text-center">
+                <h1 className="display-title">Origin Unknown</h1>
+                <p className="body-prose opacity-60">The requested curriculum could not be located in our archives.</p>
+                <button onClick={() => navigate('/student/dashboard', { viewTransition: true })} className="btn btn-primary rounded-full px-8">Return Home</button>
             </div>
         );
     }
@@ -137,17 +138,17 @@ const LearningTheatre: FC = () => {
             <div className="absolute top-4 md:top-6 left-4 md:left-6 z-60 flex gap-2 md:gap-3">
                 <button
                     onClick={() => navigate('/student/dashboard', { viewTransition: true })}
-                    className="h-10 md:h-12 px-4 md:px-6 bg-primary text-primary-content rounded-full flex items-center gap-2 md:gap-3 font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:-translate-y-1 hover:shadow-primary/30 active:scale-95 transition-all group border-none"
+                    className="h-10 md:h-12 px-4 md:px-6 bg-primary text-primary-content rounded-full flex items-center gap-2 md:gap-3 label-caps shadow-xl shadow-primary/20 hover:-translate-y-1 hover:shadow-primary/30 active:scale-95 transition-all group border-none"
                 >
-                    <HiOutlineArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform" />
-                    <span className="hidden xs:inline">Exit Theatre</span>
+                    <HiOutlineArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform text-primary-content" />
+                    <span className="hidden xs:inline">Return to Atheneum</span>
                 </button>
 
                 <button
                     onClick={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
                     className={`h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
-                        ${isLeftSidebarOpen 
-                            ? 'bg-primary text-primary-content border-primary/20' 
+                        ${isLeftSidebarOpen
+                            ? 'bg-primary text-primary-content border-primary/20'
                             : 'bg-base-100/80 border-base-content/15 text-base-content hover:bg-base-100'}`}
                 >
                     {isLeftSidebarOpen ? <HiOutlineXMark className="w-5 h-5" /> : <HiOutlineBars3BottomLeft className="w-5 h-5" />}
@@ -158,8 +159,8 @@ const LearningTheatre: FC = () => {
                 <button
                     onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
                     className={`h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
-                        ${isRightSidebarOpen 
-                            ? 'bg-primary text-primary-content border-primary/20' 
+                        ${isRightSidebarOpen
+                            ? 'bg-primary text-primary-content border-primary/20'
                             : 'bg-base-100/80 border-base-content/15 text-base-content hover:bg-base-100'}`}
                 >
                     {isRightSidebarOpen ? <HiOutlineXMark className="w-5 h-5" /> : <HiOutlineBars3BottomRight className="w-5 h-5" />}
@@ -179,10 +180,10 @@ const LearningTheatre: FC = () => {
                     >
                         {/* Visual gradient backdrop */}
                         <div className="absolute inset-0 bg-linear-to-b from-primary/10 via-primary/5 to-transparent pointer-events-none" />
-                        
+
                         <div className="relative h-full z-10 flex flex-col w-full">
                             <div className="p-6 md:p-8 pb-4">
-                                <h1 className="text-xl md:text-2xl font-heading font-black text-base-content tracking-tighter line-clamp-2 italic">{course.title}</h1>
+                                <h1 className="section-title italic text-base-content line-clamp-2">{course.title}</h1>
                             </div>
                             <div className="flex-1 min-h-0">
                                 <CurriculumSidebar
@@ -204,7 +205,7 @@ const LearningTheatre: FC = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none overflow-hidden">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[160px] opacity-40" />
                 </div>
-                
+
                 <div
                     className={`w-full h-full max-w-full mx-auto rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-base-content/15 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden 
                         ${isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'}`}
@@ -230,9 +231,9 @@ const LearningTheatre: FC = () => {
                             )}
                         </>
                     ) : (
-                        <div className="flex-1 flex flex-col justify-center items-center text-base-content/30 p-8 md:p-12 text-center">
-                            <h2 className="text-2xl md:text-3xl font-heading font-black mb-4 tracking-tight">Select a Segment</h2>
-                            <p className="text-xs md:text-sm font-medium leading-relaxed max-w-sm">Choose a lesson from the curriculum index to begin your study session.</p>
+                        <div className="flex-1 flex flex-col justify-center items-center text-base-content/40 p-8 md:p-12 text-center">
+                            <h2 className="section-title mb-4">Select your Inquiry</h2>
+                            <p className="body-prose text-sm">Choose a lesson from the curriculum index to begin your scholarly journey.</p>
                         </div>
                     )}
                 </div>
@@ -250,7 +251,7 @@ const LearningTheatre: FC = () => {
                             ${isMobile ? 'fixed inset-0 w-full' : 'relative w-96'}`}
                     >
                         <div className="absolute inset-x-0 top-20 md:top-24 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent" />
-                        
+
                         <div className="relative h-full z-10 flex flex-col w-full">
                             {activeLesson && (
                                 <DocumentHub lesson={activeLesson} />
