@@ -148,7 +148,7 @@ const LearningTheatre: FC = () => {
                     className={`h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
                         ${isLeftSidebarOpen 
                             ? 'bg-primary text-primary-content border-primary/20' 
-                            : 'bg-white/80 border-white text-base-content hover:bg-white'}`}
+                            : 'bg-base-100/80 border-base-content/15 text-base-content hover:bg-base-100'}`}
                 >
                     {isLeftSidebarOpen ? <HiOutlineXMark className="w-5 h-5" /> : <HiOutlineBars3BottomLeft className="w-5 h-5" />}
                 </button>
@@ -160,7 +160,7 @@ const LearningTheatre: FC = () => {
                     className={`h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
                         ${isRightSidebarOpen 
                             ? 'bg-primary text-primary-content border-primary/20' 
-                            : 'bg-white/80 border-white text-base-content hover:bg-white'}`}
+                            : 'bg-base-100/80 border-base-content/15 text-base-content hover:bg-base-100'}`}
                 >
                     {isRightSidebarOpen ? <HiOutlineXMark className="w-5 h-5" /> : <HiOutlineBars3BottomRight className="w-5 h-5" />}
                 </button>
@@ -182,7 +182,7 @@ const LearningTheatre: FC = () => {
                         
                         <div className="relative h-full z-10 flex flex-col w-full">
                             <div className="p-6 md:p-8 pb-4">
-                                <h1 className="text-xl md:text-2xl font-heading font-black text-base-content tracking-tight line-clamp-2 italic">{course.title}</h1>
+                                <h1 className="text-xl md:text-2xl font-heading font-black text-base-content tracking-tighter line-clamp-2 italic">{course.title}</h1>
                             </div>
                             <div className="flex-1 min-h-0">
                                 <CurriculumSidebar
@@ -206,7 +206,7 @@ const LearningTheatre: FC = () => {
                 </div>
                 
                 <div
-                    className={`w-full h-full max-w-full mx-auto rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-white/20 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden 
+                    className={`w-full h-full max-w-full mx-auto rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-base-content/15 bg-base-100/50 backdrop-blur-xl flex relative z-10 overflow-hidden 
                         ${isWorkspaceActive ? 'flex-col lg:flex-row' : 'flex-col'}`}
                     style={courseId ? { viewTransitionName: `course-thumbnail-${courseId}` } as React.CSSProperties : undefined}
                 >

@@ -37,7 +37,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
           </div>
           <div className="prose prose-sm max-w-none">
             {lesson.description ? (
-              <p className="text-sm font-medium text-base-content/70 leading-relaxed italic border-l-2 border-primary/20 pl-6">
+              <p className="text-sm font-medium text-base-content/70 leading-relaxed italic border-l-2 border-primary/30 pl-6 py-1">
                 {lesson.description}
               </p>
             ) : (

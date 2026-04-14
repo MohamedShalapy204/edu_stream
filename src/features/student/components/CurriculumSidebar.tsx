@@ -79,7 +79,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                         initial={{ height: 0, opacity: 0 }}
                                         animate={{ height: 'auto', opacity: 1 }}
                                         exit={{ height: 0, opacity: 0 }}
-                                        className="border-t border-white/30"
+                                        className="border-t border-base-content/10"
                                     >
                                         <div className="p-2 space-y-1">
                                             {sectionLessons.map((lesson, idx) => {
@@ -92,13 +92,13 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                                         onClick={() => onSelectLesson(lesson.$id)}
                                                         className={`w-full p-3 rounded-xl flex items-start gap-3 transition-all text-left group
                                                             ${isActive
-                                                                ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
-                                                                : 'hover:bg-white/60 text-base-content/60'
+                                                                ? 'bg-primary text-primary-content shadow-lg shadow-primary/20 scale-[1.02]'
+                                                                : 'hover:bg-base-200/50 text-base-content/60'
                                                             }
                                                         `}
                                                     >
                                                         <div className={`mt-0.5 shrink-0 transition-all duration-500
-                                                            ${isActive ? 'text-white scale-110' : isCompleted ? 'text-success' : 'text-primary/20 group-hover:text-primary group-hover:scale-110'}
+                                                            ${isActive ? 'text-primary-content scale-110' : isCompleted ? 'text-success' : 'text-primary/20 group-hover:text-primary group-hover:scale-110'}
                                                         `}>
                                                             {isCompleted ? (
                                                                 <HiOutlineCheckCircle className="w-5 h-5 shadow-sm" />
@@ -109,13 +109,13 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                                             )}
                                                         </div>
                                                         <div className="flex-1 min-w-0">
-                                                            <p className={`text-xs font-black truncate tracking-wide ${isActive ? 'text-white' : 'text-base-content/80'}`}>
+                                                            <p className={`text-xs font-black truncate tracking-wide ${isActive ? 'text-primary-content' : 'text-base-content/80'}`}>
                                                                 <span className="opacity-50 mr-2">{idx + 1}.</span>
                                                                 {lesson.title}
                                                             </p>
                                                             <div className="flex items-center gap-2 mt-1">
                                                                 {lesson.duration && (
-                                                                    <span className={`text-[8px] font-black uppercase tracking-widest ${isActive ? 'text-white/60' : 'text-base-content/30'}`}>
+                                                                    <span className={`text-[8px] font-black uppercase tracking-widest ${isActive ? 'text-primary-content/60' : 'text-base-content/30'}`}>
                                                                         {Math.floor(lesson.duration / 60)}m {lesson.duration % 60}s
                                                                     </span>
                                                                 )}

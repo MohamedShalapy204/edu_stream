@@ -189,6 +189,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             {preview ? (
                                 <img src={preview} alt="Thumbnail preview" className="absolute inset-0 w-full h-full object-cover" />
                             ) : (
+                                <div className="flex flex-col items-center justify-center">
                                     <HiOutlinePhoto className="w-8 h-8 md:w-10 md:h-10 text-base-content/60" />
                                 </div>
                             )}
@@ -204,7 +205,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                 />
                                 <button
                                     type="button"
-                                    className="btn btn-outline h-10 md:h-12 px-6 md:px-10 rounded-xl md:rounded-2xl bg-white text-[9px] md:text-xs font-black uppercase tracking-widest border-muted shadow-sm hover:border-primary/40 hover:text-primary transition-all no-animation"
+                                    className="btn btn-outline h-10 md:h-12 px-6 md:px-10 rounded-xl md:rounded-2xl bg-base-100 text-[9px] md:text-xs font-black uppercase tracking-widest border-base-content/10 shadow-sm hover:border-primary/40 hover:text-primary transition-all no-animation"
                                 >
                                     {preview ? 'Replace Visual' : 'Selection Gallery'}
                                 </button>
@@ -253,7 +254,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
 
                                     <div className="space-y-3 pt-2">
                                         <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Re-submission Policy</label>
-                                        <div className="flex items-center gap-6 p-4 bg-white rounded-2xl border border-muted/10 group cursor-pointer hover:bg-base-200 transition-all relative h-14">
+                                        <div className="flex items-center gap-6 p-4 bg-base-100 rounded-2xl border border-base-content/5 group cursor-pointer hover:bg-base-200 transition-all relative h-14">
                                             <div className="relative flex items-center">
                                                 <input
                                                     id="allow_resubmission"
@@ -261,8 +262,8 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                                     className="peer w-6 h-6 rounded-lg opacity-0 absolute cursor-pointer z-10"
                                                     {...register('allow_resubmission')}
                                                 />
-                                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-white flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
-                                                    <HiOutlineChevronRight className="w-4 h-4 text-white transition-transform scale-0 peer-checked:scale-100" />
+                                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-base-100 flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
+                                                    <HiOutlineChevronRight className="w-4 h-4 text-primary-content transition-transform scale-0 peer-checked:scale-100" />
                                                 </div>
                                             </div>
                                             <label htmlFor="allow_resubmission" className="text-[10px] font-black text-base-content uppercase tracking-widest cursor-pointer select-none">Allow denied students to retry</label>
@@ -280,8 +281,8 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     className="peer w-6 h-6 rounded-lg opacity-0 absolute cursor-pointer z-10"
                                     {...register('is_published')}
                                 />
-                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-white flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
-                                    <HiOutlineChevronRight className="w-4 h-4 text-white transition-transform scale-0 peer-checked:scale-100" />
+                                <div className="w-6 h-6 rounded-lg border-2 border-primary/20 bg-base-100 flex items-center justify-center transition-all peer-checked:bg-primary peer-checked:border-primary">
+                                    <HiOutlineChevronRight className="w-4 h-4 text-primary-content transition-transform scale-0 peer-checked:scale-100" />
                                 </div>
                             </div>
                             <label htmlFor="is_published" className="text-sm font-black text-primary uppercase tracking-widest cursor-pointer select-none">Deploy Course Immediately</label>
@@ -289,10 +290,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                     </div>
                 )}
 
-                <div className="flex flex-col sm:flex-row items-center justify-between pt-8 md:pt-12 border-t border-muted transition-colors gap-6 sm:gap-0">
+                <div className="flex flex-col sm:flex-row items-center justify-between pt-8 md:pt-12 border-t border-base-content/10 transition-colors gap-6 sm:gap-0">
                     <button
                         type="button"
-                        className={`btn btn-ghost h-12 px-10 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest text-base-content/60 hover:text-primary transition-all no-animation border-none sm:order-1 ${step === 1 ? 'invisible md:block' : ''}`}
+                        className={`btn btn-ghost h-12 px-10 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest text-base-content/40 hover:text-primary transition-all no-animation border-none sm:order-1 ${step === 1 ? 'invisible pointer-events-none' : ''}`}
                         onClick={() => setStep(s => s - 1)}
                     >
                         <HiOutlineChevronLeft className="w-4 h-4 md:w-5 md:h-5 mr-1" />
