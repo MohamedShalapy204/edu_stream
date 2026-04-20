@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { HiOutlineRocketLaunch, HiOutlineAcademicCap, HiOutlineBookmark } from 'react-icons/hi2';
 import { useTranslation } from 'react-i18next';
 import type { IAccount } from '@/features/auth';
+import { SpiritualAnchor } from './SpiritualAnchor';
 
 interface UserLandingProps {
     account: IAccount;
@@ -87,6 +88,8 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
                     </div>
 
                 </div>
+
+                <SpiritualAnchor />
 
                 {/* Motivational Quote */}
                  <footer className="mt-32 pt-12 border-t border-primary/8 text-center sm:text-left">

@@ -4,3 +4,4 @@ export * from './components/Features';
 export * from './components/LandingCTA';
 export * from './components/GuestLanding';
 export * from './components/UserLanding';
+export * from './components/SpiritualAnchor';

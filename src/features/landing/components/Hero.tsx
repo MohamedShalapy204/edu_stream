@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
     };
 
     return (
-        <section ref={containerRef} className="relative pt-24 pb-40 overflow-visible perspective-[2000px]">
+        <section ref={containerRef} className="relative pt-24 pb-20 overflow-visible perspective-[2000px]">
             {/* Ambient background glows */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none overflow-hidden z-0">
                 <motion.div 

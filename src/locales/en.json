@@ -430,6 +430,17 @@
       "titlePart2": "pure value?",
       "description": "Secure your place in the future of education. Join 42,000+ scholars mastering the world's most curated knowledge.",
       "createAccount": "Create Free Account"
+    },
+    "sanctuary": {
+      "badge": "Daily Reflection",
+      "title": "A Sanctuary for",
+      "titleAccent": "the Mind.",
+      "description": "In the pursuit of knowledge, clarity of spirit is essential. We curate moments of peace and reflection to accompany your intellectual journey.",
+      "momentumTitle": "Spiritual Momentum",
+      "momentumDesc": "Align your learning with a sense of purpose and tranquility.",
+      "stillnessTitle": "Digital Stillness",
+      "stillnessDesc": "Experience a platform designed to respect your focus and peace.",
+      "source": "Source"
     }
   },
   "theatre": {
