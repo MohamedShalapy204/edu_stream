@@ -91,6 +91,25 @@ const LearningTheatre: FC = () => {
         }
     }, [activeLessonId, dispatch]);
 
+    // Derived values for active lesson
+    const activeLesson = lessons.find(l => l.$id === activeLessonId);
+    const isCompleted = activeLessonId ? courseProgress.completed_lessons.includes(activeLessonId) : false;
+    const lessonHasVideo = Boolean(activeLesson?.video_url || activeLesson?.video_id);
+
+    // Auto-open the first document when lesson has no video
+    useEffect(() => {
+        if (activeLesson && !lessonHasVideo && activeLesson.document_ids?.length) {
+            const firstDocId = activeLesson.document_ids[0];
+            const url = storageService.getFileView(firstDocId).toString();
+            dispatch(openDocument({
+                id: firstDocId,
+                title: `${t('theatre.exhibit')} 1`,
+                url,
+                type: 'doc'
+            }));
+        }
+    }, [activeLesson, lessonHasVideo, dispatch, t]);
+
     const handleLessonSelect = (lessonId: string) => {
         setSelectedLessonId(lessonId);
         if (isMobile) setIsLeftSidebarOpen(false);
@@ -133,25 +152,6 @@ const LearningTheatre: FC = () => {
         );
     }
 
-    const activeLesson = lessons.find(l => l.$id === activeLessonId);
-    const isCompleted = activeLessonId ? courseProgress.completed_lessons.includes(activeLessonId) : false;
-
-    // Determine if the active lesson has a video
-    const lessonHasVideo = Boolean(activeLesson?.video_url || activeLesson?.video_id);
-
-    // Auto-open the first document when lesson has no video
-    useEffect(() => {
-        if (activeLesson && !lessonHasVideo && activeLesson.document_ids?.length) {
-            const firstDocId = activeLesson.document_ids[0];
-            const url = storageService.getFileView(firstDocId).toString();
-            dispatch(openDocument({
-                id: firstDocId,
-                title: `${t('theatre.exhibit')} 1`,
-                url,
-                type: 'doc'
-            }));
-        }
-    }, [activeLesson, lessonHasVideo, dispatch, t]);
 
     return (
         <div className="fixed inset-0 z-50 bg-base-200 flex overflow-hidden">
