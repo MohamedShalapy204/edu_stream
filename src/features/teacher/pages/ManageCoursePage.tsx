@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HiOutlineArrowLeft, HiOutlineSparkles, HiOutlineTrash } from 'react-icons/hi2';
 import { motion } from 'motion/react';
@@ -16,6 +17,7 @@ import CourseEnrollmentDashboard from '@/features/payment/components/CourseEnrol
  * Features a dual-tab layout for metadata and curriculum management.
  */
 const ManageCoursePage: React.FC = () => {
+    const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const isEditMode = Boolean(id);
@@ -52,7 +54,7 @@ const ManageCoursePage: React.FC = () => {
     };
 
     const handleDeleteCourse = () => {
-        if (window.confirm('WARNING: Are you sure you want to permanently delete this course? This action cannot be undone.')) {
+        if (window.confirm(t('teacher.manageCourse.deleteConfirm'))) {
             deleteCourse(id!, { onSuccess: () => navigate('/teacher/dashboard') });
         }
     };
@@ -81,7 +83,7 @@ const ManageCoursePage: React.FC = () => {
                     <div className="p-2 rounded-xl group-hover:bg-primary/5 transition-colors border border-transparent group-hover:border-primary/10">
                         <HiOutlineArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Return to Dashboard</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('teacher.manageCourse.returnToDashboard')}</span>
                 </button>
 
                 <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto overflow-x-auto no-scrollbar pb-1">
@@ -93,24 +95,24 @@ const ManageCoursePage: React.FC = () => {
                             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all whitespace-nowrap"
                         >
                             <HiOutlineSparkles className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                            Live Preview
+                            {t('teacher.manageCourse.livePreview')}
                         </a>
                     )}
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10 whitespace-nowrap">
                         <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary animate-pulse" />
-                        Archive Mode
+                        {t('teacher.manageCourse.archiveMode')}
                     </div>
                 </div>
             </div>
 
             <div className="mb-12 md:mb-16 text-center sm:text-left space-y-4">
                 <h1 className="text-4xl md:text-5xl font-heading font-black text-base-content tracking-tighter leading-tight">
-                    {isEditMode ? 'Refine' : 'Archive'} <span className="text-primary italic font-medium">Wisdom</span>
+                    {isEditMode ? t('teacher.manageCourse.refine') : t('teacher.manageCourse.archive')} <span className="text-primary italic font-medium">{t('teacher.manageCourse.wisdom')}</span>
                 </h1>
                 <p className="text-base-content/50 text-base md:text-lg font-medium leading-relaxed max-w-xl border-l-[3px] border-primary/10 pl-5 md:pl-6 py-1 md:py-2">
                     {isEditMode
-                        ? 'Update your course details and curriculum records.'
-                        : 'Initiate a new domain of study for the Atheneum catalog.'}
+                        ? t('teacher.manageCourse.subtitleEdit')
+                        : t('teacher.manageCourse.subtitleCreate')}
                 </p>
             </div>
 
@@ -121,19 +123,19 @@ const ManageCoursePage: React.FC = () => {
                         onClick={() => setActiveTab('details')}
                         className={`pb-4 px-2 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all whitespace-nowrap shrink-0 ${activeTab === 'details' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
                     >
-                        Metadata
+                        {t('teacher.manageCourse.metadata')}
                     </button>
                     <button
                         onClick={() => setActiveTab('curriculum')}
                         className={`pb-4 px-2 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all whitespace-nowrap shrink-0 ${activeTab === 'curriculum' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
                     >
-                        Curriculum
+                        {t('teacher.manageCourse.curriculum')}
                     </button>
                     <button
                         onClick={() => setActiveTab('enrollments')}
                         className={`pb-4 px-2 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all whitespace-nowrap shrink-0 ${activeTab === 'enrollments' ? 'text-primary border-b-2 border-primary' : 'text-base-content/30 hover:text-base-content/60'}`}
                     >
-                        Enrollments
+                        {t('teacher.manageCourse.enrollments')}
                     </button>
                 </div>
             )}
@@ -141,12 +143,12 @@ const ManageCoursePage: React.FC = () => {
             {/* Error States */}
             {fetchError && (
                 <div className="p-6 bg-error/5 text-error rounded-2xl md:rounded-3xl border border-error/10 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-center mb-10 shadow-sm">
-                    Failed to synchronize course records.
+                    {t('teacher.manageCourse.syncFailed')}
                 </div>
             )}
 
             {/* Main Form Container: Premium depth */}
-            <div className="bg-white/40 backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium p-6 sm:p-10 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group mb-12">
+            <div className="bg-base-100 backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3rem] shadow-premium p-6 sm:p-10 lg:p-16 border border-white/40 ring-1 ring-base-content/5 relative overflow-hidden group mb-12">
                 {/* Decorative depth accent */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full translate-x-24 -translate-y-24 blur-3xl opacity-50 group-hover:bg-primary/10 transition-all duration-1000" />
 
@@ -163,20 +165,20 @@ const ManageCoursePage: React.FC = () => {
                             {/* Danger Zone */}
                             {isEditMode && (
                                 <div className="mt-16 pt-8 border-t border-error/10 flex flex-col items-center sm:items-start">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-error mb-4 opacity-50">Danger Zone</h4>
+                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-error mb-4 opacity-50">{t('teacher.manageCourse.dangerZone')}</h4>
                                     <button
                                         onClick={handleDeleteCourse}
                                         disabled={isDeleting}
                                         className="btn btn-outline border-error/30 text-error hover:bg-error hover:text-white hover:border-error h-14 px-8 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all w-full sm:w-auto flex items-center gap-2"
                                     >
                                         {isDeleting ? <span className="loading loading-spinner loading-xs" /> : <HiOutlineTrash className="w-5 h-5" />}
-                                        Delete Course Archive
+                                        {t('teacher.manageCourse.deleteCourse')}
                                     </button>
                                 </div>
                             )}
                         </>
                     )}
-                    
+
                     {isEditMode && activeTab === 'curriculum' && (
                         <CurriculumEditor courseId={id!} />
                     )}

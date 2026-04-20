@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Cairo:wght@400..800&display=swap');
 @import "@fontsource-variable/geist";
 @import 'tailwindcss';
 
@@ -113,9 +113,20 @@
     @apply bg-base-100 text-base-content antialiased font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "ss01";
   }
+
+  :lang(ar) body,
+  [dir="rtl"] body {
+    font-family: 'Cairo', var(--font-sans);
+  }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading tracking-tight;
+  }
+
+  :lang(ar) h1, :lang(ar) h2, :lang(ar) h3, :lang(ar) h4, :lang(ar) h5, :lang(ar) h6,
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+    font-family: 'Cairo', var(--font-heading);
+    letter-spacing: normal !important;
   }
 
   * {
@@ -199,6 +210,36 @@
 
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Arabic Typography Overrides */
+  :lang(ar) .display-title,
+  [dir="rtl"] .display-title,
+  :lang(ar) .section-title,
+  [dir="rtl"] .section-title {
+    font-family: 'Cairo', var(--font-heading);
+    letter-spacing: normal !important;
+  }
+
+  :lang(ar) .body-prose,
+  [dir="rtl"] .body-prose {
+    font-family: 'Cairo', var(--font-sans);
+  }
+
+  :lang(ar) .label-caps,
+  [dir="rtl"] .label-caps {
+    font-family: 'Cairo', var(--font-sans);
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+
+  /* Globally override inline casing and spacing utilities that break Arabic strings */
+  :lang(ar) .uppercase, [dir="rtl"] .uppercase,
+  :lang(ar) .lowercase, [dir="rtl"] .lowercase,
+  :lang(ar) .capitalize, [dir="rtl"] .capitalize,
+  :lang(ar) [class*="tracking-"], [dir="rtl"] [class*="tracking-"] {
+    letter-spacing: normal !important;
+    text-transform: none !important;
   }
 }
 

@@ -9,8 +9,10 @@ import {
 import DocumentTabs from './DocumentTabs';
 import DocumentViewer from './DocumentViewer';
 import { Columns, Layout, ChevronDown, Repeat } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const DocumentController: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const {
     openDocuments,
@@ -26,7 +28,7 @@ const DocumentController: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center h-full bg-base-200 text-base-content/50 p-8 border-2 border-dashed border-base-300 rounded-xl text-center">
         <Layout size={48} className="mb-4 opacity-20" />
-        <p className="body-prose text-sm">No documents staged. Select a resource from the archival hub to begin examination.</p>
+        <p className="body-prose text-sm">{t('theatre.noDocumentsStaged')}</p>
       </div>
     );
   }
@@ -48,7 +50,7 @@ const DocumentController: React.FC = () => {
               <button
                 className="btn btn-ghost btn-sm btn-square"
                 onClick={() => dispatch(toggleSplitMode())}
-                title="Enable Split View"
+                title={t('theatre.enableSplitView')}
               >
                 <Columns size={16} />
               </button>
@@ -61,11 +63,11 @@ const DocumentController: React.FC = () => {
           <div className="w-1/2 flex items-center justify-between px-3 h-12 bg-base-200/80">
             <div className="dropdown dropdown-bottom">
               <div tabIndex={0} role="button" className="flex items-center gap-2 label-caps !text-primary hover:text-primary-focus transition-colors">
-                <span className="truncate max-w-[120px]">{secondaryDoc?.title || "Select Document"}</span>
+                <span className="truncate max-w-[120px]">{secondaryDoc?.title || t('theatre.selectDocument')}</span>
                 <ChevronDown size={14} />
               </div>
               <ul tabIndex={0} className="dropdown-content z-50 menu p-2 shadow-2xl bg-base-100 rounded-box w-52 mt-2 border border-base-300">
-                <li className="menu-title label-caps !text-[9px] !opacity-40">Switch Secondary View</li>
+                <li className="menu-title label-caps !text-[9px] !opacity-40">{t('theatre.switchSecondaryView')}</li>
                 {openDocuments.map(doc => (
                   <li key={doc.id}>
                     <button
@@ -91,14 +93,14 @@ const DocumentController: React.FC = () => {
                   if (currentPrimary) dispatch(setSecondaryDocument(currentPrimary));
                   if (currentSecondary) dispatch(setActiveDocument(currentSecondary));
                 }}
-                title="Swap Panes"
+                title={t('theatre.swapPanes')}
               >
                 <Repeat size={14} />
               </button>
               <button
                 className="btn btn-ghost btn-xs btn-square text-error/60 hover:text-error hover:bg-error/10"
                 onClick={() => dispatch(toggleSplitMode())}
-                title="Close Split View"
+                title={t('theatre.closeSplitView')}
               >
                 <Layout size={14} />
               </button>
@@ -117,7 +119,7 @@ const DocumentController: React.FC = () => {
           {activeDoc ? (
             <DocumentViewer url={activeDoc.url} />
           ) : (
-            <div className="flex items-center justify-center h-full text-base-content/30 italic">Select a document from the tabs</div>
+            <div className="flex items-center justify-center h-full text-base-content/30 italic">{t('theatre.selectDocumentFromTabs')}</div>
           )}
         </div>
 
@@ -132,8 +134,8 @@ const DocumentController: React.FC = () => {
             ) : (
               <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-base-200/30">
                 <Layout size={32} className="mb-4 opacity-20" />
-                <p className="label-caps !opacity-40 mb-4">Secondary Workspace</p>
-                <p className="body-prose text-sm opacity-50 mb-6">Select an exhibit from the catalogue to compare side-by-side.</p>
+                <p className="label-caps !opacity-40 mb-4">{t('theatre.secondaryWorkspace')}</p>
+                <p className="body-prose text-sm opacity-50 mb-6">{t('theatre.compareSideBySide')}</p>
               </div>
             )}
           </div>

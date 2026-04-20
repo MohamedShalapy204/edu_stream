@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Unauthorized() {
+    const { t } = useTranslation();
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-            <h1 className="text-6xl font-black text-rose-500 mb-2">403</h1>
-            <p className="text-slate-600 text-xl mb-6">You don't have permission to access this resource.</p>
-            <div className="flex space-x-4">
-                <Link to="/dashboard" className="text-blue-600 hover:underline font-medium">Go to Dashboard</Link>
+        <div className="min-h-screen bg-base-200 flex flex-col items-center justify-center p-4">
+            <h1 className="text-6xl font-black text-error mb-2">403</h1>
+            <p className="text-base-content/60 text-xl mb-6">{t('errors.unauthorized.p')}</p>
+            <div className="flex gap-4">
+                <Link to="/dashboard" className="btn btn-primary">{t('dashboard.student.actions')}</Link>
             </div>
         </div>
     );

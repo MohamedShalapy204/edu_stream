@@ -2,8 +2,10 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { HiOutlineArrowRight, HiOutlineSparkles, HiOutlineBookOpen, HiOutlineGlobeAlt, HiOutlineAcademicCap } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 
 export const Hero: React.FC = () => {
+    const { t } = useTranslation();
     const containerRef = useRef<HTMLElement>(null);
     const { scrollY } = useScroll();
     
@@ -63,7 +65,7 @@ export const Hero: React.FC = () => {
                         className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 text-primary text-[10px] md:text-xs uppercase font-black tracking-[0.25em] shadow-[0_0_20px_rgba(var(--color-primary),0.2)] ring-1 ring-primary/30 backdrop-blur-md"
                     >
                         <HiOutlineSparkles className="w-4 h-4 text-accent" />
-                        The Digital Atheneum is Open
+                        {t('hero.badge')}
                     </motion.div>
 
                     <div className="space-y-8 relative">
@@ -80,9 +82,9 @@ export const Hero: React.FC = () => {
                             transition={{ type: "spring", stiffness: 100, damping: 25, delay: 0.1 }}
                             className="text-5xl md:text-7xl lg:text-[5.5rem] xl:text-[6rem] font-heading font-black leading-[0.95] md:leading-[0.9] tracking-tighter text-base-content"
                         >
-                            Knowledge,<br />
+                            {t('hero.headlineMain')}<br />
                             <span className="text-primary italic font-medium relative inline-block">
-                                curated
+                                {t('hero.headlineCurated')}
                                 <motion.span 
                                     className="absolute -bottom-2 left-0 right-0 h-[6px] bg-accent/40 rounded-full"
                                     initial={{ scaleX: 0 }}
@@ -91,7 +93,7 @@ export const Hero: React.FC = () => {
                                     style={{ originX: 0 }}
                                 />
                             </span><br />
-                            for the modern scholar.
+                            {t('hero.headlineSub')}
                         </motion.h1>
 
                         <motion.p
@@ -100,7 +102,7 @@ export const Hero: React.FC = () => {
                             transition={{ type: "spring", stiffness: 100, damping: 25, delay: 0.2 }}
                             className="max-w-2xl text-xl md:text-2xl font-medium leading-relaxed text-base-content/80 mx-auto lg:mx-0"
                         >
-                            Access a library of world-class intelligence. Built for institutions that demand excellence and students who seek mastery.
+                            {t('hero.description')}
                         </motion.p>
                     </div>
 
@@ -117,7 +119,7 @@ export const Hero: React.FC = () => {
                                 className="group relative overflow-hidden btn btn-primary w-full h-16 px-10 rounded-[1.25rem] font-black text-[10px] md:text-xs uppercase tracking-[0.3em] shadow-[0_0_40px_-10px_rgba(var(--color-primary),0.5)] border-none"
                             >
                                 <span className="relative z-10 flex items-center justify-center gap-3">
-                                    Begin Enrollment
+                                    {t('hero.beginEnrollment')}
                                     <HiOutlineArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </span>
                                 {/* Glossy sheen effect on hover */}
@@ -126,7 +128,7 @@ export const Hero: React.FC = () => {
                         </Link>
                         
                         <Link to="/courses" className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-base-content/50 hover:text-primary transition-colors py-4 relative group">
-                            Explore Curriculum
+                            {t('hero.exploreCurriculum')}
                             <span className="absolute bottom-2 left-0 right-0 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                         </Link>
                     </motion.div>
@@ -158,7 +160,7 @@ export const Hero: React.FC = () => {
                                 </div>
                                 <div className="text-center group">
                                     <span className="text-[180px] font-heading font-black italic text-primary/10 select-none group-hover:text-primary/20 transition-colors duration-500 block leading-none">Æ</span>
-                                    <div className="text-xs uppercase tracking-[0.4em] font-black text-base-content/30 mt-4">The Repository</div>
+                                    <div className="text-xs uppercase tracking-[0.4em] font-black text-base-content/30 mt-4">{t('hero.repository')}</div>
                                 </div>
                                 <div className="w-full h-1 bg-primary/10 rounded-full overflow-hidden">
                                     <motion.div 
@@ -183,7 +185,7 @@ export const Hero: React.FC = () => {
                         >
                             <HiOutlineGlobeAlt className="w-8 h-8 text-accent mb-1" />
                             <span className="text-3xl font-heading font-black text-base-content">42k</span>
-                            <span className="text-[8px] uppercase font-black tracking-[0.2em] text-base-content/40 text-center">Active<br/>Scholars</span>
+                            <span className="text-[8px] uppercase font-black tracking-[0.2em] text-base-content/40 text-center">{t('hero.activeScholars')}</span>
                         </motion.div>
 
                         <motion.div
@@ -199,8 +201,8 @@ export const Hero: React.FC = () => {
                                 <HiOutlineBookOpen className="w-5 h-5 text-accent" />
                             </div>
                             <div>
-                                <div className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">Curriculum</div>
-                                <div className="text-[11px] font-medium text-base-content/60">300+ Verified Courses</div>
+                                <div className="text-[10px] font-black uppercase tracking-widest text-primary mb-0.5">{t('hero.curriculum')}</div>
+                                <div className="text-[11px] font-medium text-base-content/60">{t('hero.verifiedCourses')}</div>
                             </div>
                         </motion.div>
                         

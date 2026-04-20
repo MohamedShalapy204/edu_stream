@@ -1,7 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 
 const AuthLoading: React.FC = () => {
+    const { t } = useTranslation();
     return (
         <div className="flex h-screen w-full flex-col items-center justify-center bg-base-100 text-base-content overflow-hidden relative">
 
@@ -44,9 +46,9 @@ const AuthLoading: React.FC = () => {
                         transition={{ delay: 0.4, duration: 1 }}
                         className="flex items-center gap-3 justify-center"
                     >
-                        <span className="text-[10px] uppercase font-black tracking-[0.3em]">Curating Intelligence</span>
+                        <span className="text-[10px] uppercase font-black tracking-[0.3em]">{t('common.curatingIntelligence')}</span>
                         <div className="w-1 h-1 rounded-full bg-base-content/40" />
-                        <span className="text-[10px] uppercase font-black tracking-[0.3em]">Atheneum v1.0</span>
+                        <span className="text-[10px] uppercase font-black tracking-[0.3em]">{t('common.atheneumVersion')}</span>
                     </motion.div>
                 </div>
 

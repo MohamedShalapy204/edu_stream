@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import { HiOutlineArrowLeft, HiOutlineAcademicCap } from 'react-icons/hi2';
 import { useUser } from '@/hooks/useUser';
@@ -7,6 +8,7 @@ import { useGetPublicTeacherCourses } from '@/features/courses/hooks/useCourseAc
 import { CourseGrid } from '@/features/courses/components/CourseGrid';
 
 const PublicTeacherPage: React.FC = () => {
+    const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
@@ -25,9 +27,9 @@ const PublicTeacherPage: React.FC = () => {
     if (!teacher) {
         return (
             <div className="max-w-5xl mx-auto px-6 py-20 text-center">
-                <h1 className="text-4xl font-black mb-4">Instructor Not Found</h1>
-                <p className="text-base-content/50">The scholarly profile you are looking for does not exist.</p>
-                <button onClick={() => navigate('/courses')} className="btn btn-primary mt-8">Browse Catalog</button>
+                <h1 className="text-4xl font-black mb-4">{t('publicTeacher.notFound')}</h1>
+                <p className="text-base-content/50">{t('publicTeacher.notFoundDesc')}</p>
+                <button onClick={() => navigate('/courses')} className="btn btn-primary mt-8">{t('publicTeacher.browseCatalog')}</button>
             </div>
         );
     }
@@ -46,7 +48,7 @@ const PublicTeacherPage: React.FC = () => {
                 <div className="p-2 rounded-xl group-hover:bg-primary/5 transition-colors border border-transparent group-hover:border-primary/10">
                     <HiOutlineArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Go Back</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('publicTeacher.goBack')}</span>
             </button>
 
             <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 lg:p-16 border border-white/40 shadow-sm ring-1 ring-base-content/5 flex flex-col md:flex-row items-center md:items-start gap-10 mb-20 relative overflow-hidden">
@@ -63,11 +65,11 @@ const PublicTeacherPage: React.FC = () => {
                 <div className="text-center md:text-left z-10 flex-1">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10 mb-4">
                         <HiOutlineAcademicCap className="w-4 h-4" />
-                        Distinguished Faculty
+                        {t('publicTeacher.distinguishedFaculty')}
                     </div>
                     <h1 className="text-5xl font-heading font-black text-base-content tracking-tighter mb-4">{teacher.name}</h1>
                     <p className="text-base-content/60 text-lg font-medium leading-relaxed max-w-2xl">
-                        {teacher.bio || 'This instructor is a dedicated academic scholar within the Atheneum.'}
+                        {teacher.bio || t('publicTeacher.defaultBio')}
                     </p>
                 </div>
             </div>
@@ -75,7 +77,7 @@ const PublicTeacherPage: React.FC = () => {
             <div className="space-y-10">
                 <div className="flex items-center gap-4">
                     <div className="w-1.5 h-10 bg-primary/20 rounded-full" />
-                    <h2 className="text-3xl font-heading font-black text-base-content uppercase tracking-tight">Curated Archives</h2>
+                    <h2 className="text-3xl font-heading font-black text-base-content uppercase tracking-tight">{t('publicTeacher.curatedArchives')}</h2>
                 </div>
 
                 {isCoursesLoading ? (
@@ -86,8 +88,8 @@ const PublicTeacherPage: React.FC = () => {
                     <CourseGrid courses={courses as unknown as import('@/features/courses/types/courseTypes').ICourse[]} isLoading={false} />
                 ) : (
                     <div className="bg-surface-50 p-12 rounded-3xl text-center border border-white/40 shadow-sm">
-                        <h3 className="text-xl font-bold mb-2 text-base-content">No Published Archives</h3>
-                        <p className="text-base-content/50 font-medium">This instructor has not published any courses yet.</p>
+                        <h3 className="text-xl font-bold mb-2 text-base-content">{t('publicTeacher.noArchives')}</h3>
+                        <p className="text-base-content/50 font-medium">{t('publicTeacher.noArchivesDesc')}</p>
                     </div>
                 )}
             </div>

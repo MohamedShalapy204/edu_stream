@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'motion/react';
 
 export const LandingCTA: React.FC = () => {
+    const { t } = useTranslation();
     const sectionRef = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -53,9 +55,9 @@ export const LandingCTA: React.FC = () => {
                     transition={{ type: "spring", stiffness: 100, damping: 20 }}
                 >
                     <h2 className="text-5xl lg:text-7xl font-heading font-black tracking-tight leading-tight">
-                        Ready to extract <br className="hidden md:block"/>
+                        {t('landing.cta.titlePart1')} <br className="hidden md:block"/>
                         <span className="italic font-medium text-secondary-content relative inline-block">
-                            pure value?
+                            {t('landing.cta.titlePart2')}
                             <motion.span 
                                 className="absolute -bottom-2 left-0 right-0 h-1 md:h-2 bg-secondary/40 rounded-full"
                                 initial={{ scaleX: 0 }}
@@ -75,7 +77,7 @@ export const LandingCTA: React.FC = () => {
                     transition={{ delay: 0.2, duration: 0.8 }}
                     className="max-w-2xl mx-auto text-xl lg:text-2xl font-medium leading-relaxed"
                 >
-                    Secure your place in the future of education. Join 42,000+ scholars mastering the world's most curated knowledge.
+                    {t('landing.cta.description')}
                 </motion.p>
 
                 <motion.div
@@ -95,7 +97,7 @@ export const LandingCTA: React.FC = () => {
                             className="group relative overflow-hidden btn btn-secondary h-20 px-16 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.3em] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.4)] border-none"
                         >
                             <span className="relative z-10 block group-hover:scale-110 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                                Create Free Account
+                                {t('landing.cta.createAccount')}
                             </span>
                             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                         </motion.button>

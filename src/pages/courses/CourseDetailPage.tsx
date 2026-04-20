@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import {
     HiOutlineChevronLeft,
@@ -22,6 +23,8 @@ import { storageService } from '@/services/appwrite/storage/storageService';
 import { useGetEnrolledCourses, useEnrollCourse } from '@/features/student/hooks/useStudent';
 
 const CourseDetailPage: FC = () => {
+    window.scrollTo(0, 0);
+    const { t } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { data: account } = useCurrentAccount();
@@ -104,14 +107,14 @@ const CourseDetailPage: FC = () => {
                     <span className="text-4xl font-black">?</span>
                 </div>
                 <div>
-                    <h2 className="text-3xl font-heading font-black text-base-content tracking-tight">Wisdom Not Found</h2>
-                    <p className="text-sm font-medium text-base-content/40 mt-2">The record you are seeking does not exist in the Atheneum.</p>
+                    <h2 className="text-3xl font-heading font-black text-base-content tracking-tight">{t('courseDetail.wisdomNotFound')}</h2>
+                    <p className="text-sm font-medium text-base-content/40 mt-2">{t('courseDetail.recordNotFoundDesc')}</p>
                 </div>
                 <Link
                     to="/courses"
                     className="px-8 py-3 bg-primary text-primary-content text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl ring-1 ring-primary/10 transition-all active:scale-95"
                 >
-                    Return to Catalog
+                    {t('courseDetail.returnToCatalog')}
                 </Link>
             </div>
         );
@@ -129,7 +132,7 @@ const CourseDetailPage: FC = () => {
                 <div className="p-2 rounded-xl group-hover:bg-primary/5 transition-colors">
                     <HiOutlineChevronLeft className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back to Records</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t('courseDetail.backToRecords')}</span>
             </Link>
 
             {/* Heritage Hero Section */}
@@ -150,7 +153,7 @@ const CourseDetailPage: FC = () => {
                     </h1>
 
                     <p className="text-base-content/50 text-lg font-medium leading-relaxed max-w-2xl border-l-[3px] border-primary/10 pl-6 py-2">
-                        {course.description || "Engage in a profound study of this domain through structured curriculum and expert oversight."}
+                        {course.description || t('courseDetail.defaultDescription')}
                     </p>
 
                     <div className="flex flex-wrap items-center gap-10 pt-10 border-t border-primary/10">
@@ -163,8 +166,8 @@ const CourseDetailPage: FC = () => {
                                 )}
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-primary/40 uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">Instructor</p>
-                                <p className="text-sm font-black text-base-content/80 group-hover:text-primary transition-colors">{teacher?.name || 'Academic Expert'}</p>
+                                <p className="text-[9px] font-black text-primary/40 uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">{t('courseDetail.instructor')}</p>
+                                <p className="text-sm font-black text-base-content/80 group-hover:text-primary transition-colors">{teacher?.name || t('courseDetail.academicExpert')}</p>
                             </div>
                         </Link>
                         <div className="flex items-center gap-4">
@@ -172,8 +175,8 @@ const CourseDetailPage: FC = () => {
                                 <HiOutlineClock className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">Temporal Study</p>
-                                <p className="text-sm font-black text-base-content/80">{course.duration ? Math.round(course.duration / 60) : 'Undefined'} Hours</p>
+                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">{t('courseDetail.temporalStudy')}</p>
+                                <p className="text-sm font-black text-base-content/80">{course.duration ? Math.round(course.duration / 60) : t('courseDetail.undefined')} {t('courseDetail.hours')}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
@@ -181,8 +184,8 @@ const CourseDetailPage: FC = () => {
                                 <HiOutlineGlobeAlt className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">Language</p>
-                                <p className="text-sm font-black text-base-content/80">{course.language ?? 'Undefined'}</p>
+                                <p className="text-[9px] font-black text-primary/30 uppercase tracking-widest">{t('courseDetail.language')}</p>
+                                <p className="text-sm font-black text-base-content/80">{course.language ?? t('courseDetail.undefined')}</p>
                             </div>
                         </div>
                     </div>
@@ -190,7 +193,7 @@ const CourseDetailPage: FC = () => {
 
                 {/* Right Column: Acquisition Card */}
                 <div className="lg:col-span-5 sticky top-28">
-                    <div 
+                    <div
                         className="bg-base-100/40 backdrop-blur-3xl rounded-[3rem] border border-base-content/15 shadow-premium overflow-hidden ring-1 ring-base-content/5"
                         style={{ viewTransitionName: `course-thumbnail-${course.$id}` } as React.CSSProperties}
                     >
@@ -209,9 +212,9 @@ const CourseDetailPage: FC = () => {
                         <div className="p-10 flex flex-col gap-8">
                             <div className="flex items-end gap-3">
                                 <span className="text-5xl font-black text-primary tracking-tighter">
-                                    {course.price === 0 ? 'FREE' : `EGP ${course.price.toFixed(0)}`}
+                                    {course.price === 0 ? t('courseDetail.free') : `${t('courseDetail.egp')} ${course.price.toFixed(0)}`}
                                 </span>
-                                {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">EGP 1,999</span>}
+                                {course.price > 0 && <span className="text-sm font-bold text-base-content/20 line-through mb-2">{t('courseDetail.egp')} 1,999</span>}
                             </div>
 
                             <button
@@ -230,29 +233,29 @@ const CourseDetailPage: FC = () => {
                                 ) : isEnrolled ? (
                                     <>
                                         <HiOutlineAcademicCap className="w-5 h-5" />
-                                        Enter Theatre
+                                        {t('courseDetail.enterTheatre')}
                                     </>
                                 ) : isOwner ? (
-                                    'Self-Enroll (Internal Access)'
+                                    t('courseDetail.selfEnroll')
                                 ) : course?.price === 0 ? (
-                                    'Enroll for Free'
+                                    t('courseDetail.enrollFree')
                                 ) : (
-                                    'Enroll and Begin Mastery'
+                                    t('courseDetail.enrollBeginMastery')
                                 )}
                             </button>
 
                             <div className="space-y-5 pt-4">
                                 <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
                                     <HiOutlineCheckBadge className="w-5 h-5 text-accent" />
-                                    Full Lifetime Access
+                                    {t('courseDetail.fullAccess')}
                                 </div>
                                 <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
                                     <HiOutlineTrophy className="w-5 h-5 text-amber-500" />
-                                    Credential of Achievement
+                                    {t('courseDetail.credentialAchievement')}
                                 </div>
                                 <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary/60">
                                     <HiOutlineCalendar className="w-5 h-5 text-primary" />
-                                    Permanent Content Updates
+                                    {t('courseDetail.contentUpdates')}
                                 </div>
                             </div>
                         </div>
@@ -268,10 +271,10 @@ const CourseDetailPage: FC = () => {
                         whileInView={{ opacity: 1, scale: 1 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/5 text-primary text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/10"
                     >
-                        Academic Architecture
+                        {t('courseDetail.academicArchitecture')}
                     </motion.div>
-                    <h2 className="text-4xl font-heading font-black text-base-content tracking-tighter">Course Curriculum</h2>
-                    <p className="text-base-content/40 text-sm font-medium leading-relaxed max-w-xl">Explore the specialized modules and scholarly nodes contained within this study.</p>
+                    <h2 className="text-4xl font-heading font-black text-base-content tracking-tighter">{t('courseDetail.courseCurriculum')}</h2>
+                    <p className="text-base-content/40 text-sm font-medium leading-relaxed max-w-xl">{t('courseDetail.curriculumDesc')}</p>
                 </div>
 
                 <div className="space-y-6">
@@ -284,7 +287,7 @@ const CourseDetailPage: FC = () => {
                                     </span>
                                     <h3 className="text-xl font-heading font-black text-base-content group-hover:text-primary transition-colors">{section.title}</h3>
                                 </div>
-                                <span className="text-[9px] font-black text-primary/30 uppercase tracking-[0.2em] px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">Curriculum Module</span>
+                                <span className="text-[9px] font-black text-primary/30 uppercase tracking-[0.2em] px-3 py-1 bg-primary/5 rounded-lg border border-primary/10">{t('courseDetail.curriculumModule')}</span>
                             </div>
 
                             <div className="divide-y divide-base-content/5">
@@ -305,7 +308,7 @@ const CourseDetailPage: FC = () => {
 
                     {sections?.total === 0 && (
                         <div className="p-20 text-center bg-base-100/50 backdrop-blur-xl rounded-[3rem] border border-dashed border-base-content/10">
-                            <h3 className="font-black text-base-content/20 uppercase tracking-widest text-xs">Awaiting Curriculum Records</h3>
+                            <h3 className="font-black text-base-content/20 uppercase tracking-widest text-xs">{t('courseDetail.awaitingRecords')}</h3>
                         </div>
                     )}
                 </div>

@@ -13,7 +13,7 @@ describe('CourseCard', () => {
         $id: 'course-1',
         title: 'Mastering AI',
         description: 'Learn everything about AI',
-        price: 99.99,
+        price: 100,
         total_students: 120,
         is_published: true,
         thumbnail_id: 'thumb-1',
@@ -24,7 +24,7 @@ describe('CourseCard', () => {
         render(<CourseCard course={mockCourse} />);
 
         expect(screen.getByText('Mastering AI')).toBeInTheDocument();
-        expect(screen.getByText('$99.99')).toBeInTheDocument();
+        expect(screen.getByText(/100/)).toBeInTheDocument();
         expect(screen.getByText('120 Learners')).toBeInTheDocument();
         expect(screen.getByRole('link')).toHaveAttribute('href', '/courses/course-1');
     });

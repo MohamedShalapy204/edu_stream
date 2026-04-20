@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { HiOutlineRocketLaunch, HiOutlineAcademicCap, HiOutlineBookmark } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 import type { IAccount } from '@/features/auth';
 
 interface UserLandingProps {
@@ -13,9 +14,7 @@ const shortcuts = [
     {
         to: '/dashboard',
         icon: HiOutlineRocketLaunch,
-        title: 'Enter Dashboard',
-        desc: 'Access your active courses, assignments, and academic progress in the central hub.',
-        // Indigo — primary action
+        key: 'enterDashboard',
         iconBg: 'bg-primary/8',
         iconColor: 'text-primary',
         iconHoverBg: 'group-hover:bg-primary/15',
@@ -26,9 +25,7 @@ const shortcuts = [
     {
         to: '/courses',
         icon: HiOutlineAcademicCap,
-        title: 'Browse Catalog',
-        desc: 'Discover new domains of knowledge curated by the world\'s leading intelligence.',
-        // Emerald — exploration / discovery
+        key: 'browseCatalog',
         iconBg: 'bg-accent/8',
         iconColor: 'text-accent',
         iconHoverBg: 'group-hover:bg-accent/15',
@@ -39,10 +36,12 @@ const shortcuts = [
 ];
 
 export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="min-h-[80vh] flex flex-col pt-12 md:pt-20 pb-20 md:pb-32 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <div className="w-full">
-
+ 
                 {/* Personalized Header */}
                 <header className="mb-12 md:mb-20 space-y-4">
                     <motion.div
@@ -50,10 +49,10 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
                     >
-                        Welcome Back, Scholar
+                        {t('userLanding.welcome')}
                     </motion.div>
                     <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black tracking-tight text-base-content leading-tight italic">
-                        Continue your journey, <br />
+                        {t('userLanding.continueJourney')} <br />
                         <span className="text-primary not-italic font-medium">{account.name.split(' ')[0]}</span>.
                     </h1>
                 </header>
@@ -70,9 +69,9 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
                                 <div className={`w-14 h-14 rounded-2xl ${s.iconBg} ${s.iconHoverBg} flex items-center justify-center ${s.iconColor} mb-8 group-hover:scale-110 transition-all duration-300`}>
                                     <s.icon className="w-7 h-7" />
                                 </div>
-                                <h3 className="text-2xl font-heading font-black text-base-content mb-4 tracking-tight group-hover:text-primary transition-colors duration-300">{s.title}</h3>
+                                <h3 className="text-2xl font-heading font-black text-base-content mb-4 tracking-tight group-hover:text-primary transition-colors duration-300">{t(`userLanding.${s.key}`)}</h3>
                                 <p className="text-sm font-medium leading-relaxed text-base-content/50">
-                                    {s.desc}
+                                    {t(`userLanding.${s.key}Desc`)}
                                 </p>
                             </div>
                         </Link>
@@ -83,18 +82,18 @@ export const UserLanding: React.FC<UserLandingProps> = ({ account }) => {
                         <div className="w-14 h-14 rounded-2xl bg-base-content/5 flex items-center justify-center mb-6">
                             <HiOutlineBookmark className="w-7 h-7 text-base-content/20" />
                         </div>
-                        <span className="text-xs font-black uppercase tracking-widest text-base-content/40">Your Library</span>
-                        <p className="text-[10px] font-medium mt-2 text-base-content/30 max-w-48">Saved resources will appear here.</p>
+                        <span className="text-xs font-black uppercase tracking-widest text-base-content/40">{t('userLanding.yourLibrary')}</span>
+                        <p className="text-[10px] font-medium mt-2 text-base-content/30 max-w-48">{t('userLanding.yourLibraryDesc')}</p>
                     </div>
 
                 </div>
 
                 {/* Motivational Quote */}
-                <footer className="mt-32 pt-12 border-t border-primary/8 text-center sm:text-left">
+                 <footer className="mt-32 pt-12 border-t border-primary/8 text-center sm:text-left">
                     {/* Thin indigo rule above quote */}
                     <div className="w-12 h-0.5 bg-primary/30 mb-6 hidden sm:block rounded-full" />
                     <p className="text-sm font-heading italic text-base-content/40 max-w-lg leading-relaxed">
-                        "The Digital Atheneum is not merely a platform, but a sanctuary for the mind. We are honored to be part of your academic mastery."
+                        {t('userLanding.footerQuote')}
                     </p>
                 </footer>
 

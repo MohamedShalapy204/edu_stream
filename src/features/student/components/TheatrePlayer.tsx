@@ -2,6 +2,7 @@ import { type FC, useMemo } from 'react';
 import type { ILesson } from '@/features/courses';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import { HiOutlineCheckCircle, HiOutlineVideoCameraSlash } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 
 interface TheatrePlayerProps {
     lesson: ILesson;
@@ -16,6 +17,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
     onMarkCompleted,
     onNextLesson
 }) => {
+    const { t } = useTranslation();
     const embedInfo = useMemo(() => {
         const url = lesson.video_url || '';
         if (url.includes('youtube.com/watch?v=')) {
@@ -39,7 +41,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
         if (!hasVideo) return (
             <div className="w-full h-full flex flex-col items-center justify-center text-white/10 p-12 bg-black/40">
                 <HiOutlineVideoCameraSlash className="w-12 h-12 mb-4" />
-                <p className="label-caps">Lecture Archive Missing</p>
+                <p className="label-caps">{t('theatre.lectureArchiveMissing')}</p>
             </div>
         );
 
@@ -51,7 +53,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                         className="w-full h-full border-0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
-                        title="Scholarly Study"
+                        title={t('theatre.scholarlyStudy')}
                     />
                 ) : (
                     <video
@@ -61,7 +63,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                         className="w-full h-full object-contain"
                         controlsList="nodownload"
                     >
-                        Our cinematic theatre does not support this video format natively.
+                        {t('theatre.videoFormatNotSupported')}
                     </video>
                 )}
                 <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 group-hover:ring-white/20 transition-all" />
@@ -74,7 +76,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
             {/* Top Stage Label */}
             <div className="absolute top-4 left-6 z-10 pointer-events-none">
                 <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full label-caps !text-[8px] !text-white/60 border border-white/10 italic">
-                    Primary Lecture Stage
+                    {t('theatre.primaryLectureStage')}
                 </span>
             </div>
 
@@ -86,9 +88,9 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
             {/* Action Footer */}
             <div className="flex-none min-h-20 md:h-24 bg-base-200/50 backdrop-blur-2xl border-t border-base-content/10 flex flex-col sm:flex-row items-center justify-between px-6 md:px-12 py-4 sm:py-0 z-10 gap-4 sm:gap-0">
                 <div className="hidden sm:block">
-                    <p className="label-caps !text-primary/60 mb-1">Synthesis Status</p>
+                    <p className="label-caps !text-primary/60 mb-1">{t('theatre.synthesisStatus')}</p>
                     <p className="text-sm font-heading font-bold text-base-content/60 italic">
-                        {isCompleted ? 'Cognitive Mastery Attained' : <span>Intellectual Synthesis: <span className="text-primary">In Progress</span></span>}
+                        {isCompleted ? t('theatre.cognitiveMasteryAttained') : <span>{t('theatre.intellectualSynthesis')}: <span className="text-primary">{t('theatre.inProgress')}</span></span>}
                     </p>
                 </div>
 
@@ -99,20 +101,20 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                         className={`flex-1 sm:flex-none px-6 py-3.5 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 md:gap-3 label-caps transition-all duration-300
                             ${isCompleted
                                 ? 'bg-success/10 text-success border border-success/20 shadow-sm'
-                                : 'bg-primary text-primary-content shadow-xl shadow-primary/20 hover:shadow-2xl hover:-translate-y-0.5 active:scale-95'
+                                : 'bg-primary/80 text-primary-content shadow-xl shadow-primary/20 hover:shadow-2xl hover:-translate-y-0.5 active:scale-95'
                             }
                         `}
                     >
                         {isCompleted && <HiOutlineCheckCircle className="w-4.5 h-4.5 md:w-5 md:h-5" />}
-                        {isCompleted ? 'Segment Mastered' : 'Declare Mastery'}
+                        {isCompleted ? t('theatre.segmentMastered') : t('theatre.declareMastery')}
                     </button>
 
                     {onNextLesson && (
                         <button
                             onClick={onNextLesson}
-                            className="flex-1 sm:flex-none px-6 py-3.5 rounded-xl md:rounded-2xl bg-base-content text-base-100 label-caps hover:bg-primary hover:text-primary-content transition-all duration-300 shadow-xl active:scale-95"
+                            className="flex-1 sm:flex-none px-6 py-3.5 rounded-xl md:rounded-2xl bg-base-100 label-caps hover:bg-primary hover:text-primary-content transition-all duration-300 shadow-xl active:scale-95"
                         >
-                            Proceed to next segment
+                            {t('theatre.proceedToNextSegment')}
                         </button>
                     )}
                 </div>

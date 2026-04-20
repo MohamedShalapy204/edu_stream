@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
@@ -14,6 +15,7 @@ import {
 import { useLogin, loginSchema, type LoginInput } from '@/features/auth';
 
 const LoginPage: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
     const { mutate: login, isPending, reset } = useLogin();
@@ -38,7 +40,7 @@ const LoginPage: React.FC = () => {
         login(data, {
             onSuccess: () => navigate(from, { replace: true }),
             onError: (err: Error) =>
-                setAuthError(err.message || 'An unexpected error occurred. Please try again.'),
+                setAuthError(err.message || t('auth.login.unexpectedError')),
         });
     };
 
@@ -86,7 +88,7 @@ const LoginPage: React.FC = () => {
                         transition={{ delay: 0.2, duration: 0.6 }}
                         className="text-primary text-[10px] tracking-[0.25em] uppercase font-black decoration-primary/30 underline underline-offset-8"
                     >
-                        The Digital Curator
+                        {t('auth.login.digitalCurator')}
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
@@ -94,9 +96,9 @@ const LoginPage: React.FC = () => {
                         transition={{ delay: 0.4, duration: 0.8, ease: "circOut" }}
                         className="text-7xl font-heading font-black leading-none tracking-tight text-base-content"
                     >
-                        Knowledge,<br />
-                        <span className="text-primary italic font-medium">curated</span><br />
-                        for you.
+                        {t('auth.login.knowledge')}<br />
+                        <span className="text-primary italic font-medium">{t('auth.login.curated')}</span><br />
+                        {t('auth.login.forYou')}
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -104,7 +106,7 @@ const LoginPage: React.FC = () => {
                         transition={{ delay: 0.6, duration: 0.8 }}
                         className="text-base-content text-xl leading-relaxed max-w-sm font-medium"
                     >
-                        Access world-class courses designed for the modern scholar. A library of intelligence at your fingertips.
+                        {t('auth.login.heroDesc')}
                     </motion.p>
                 </div>
 
@@ -130,8 +132,8 @@ const LoginPage: React.FC = () => {
                             <div className="w-10 h-10 rounded-full border-2 border-base-100 bg-primary flex items-center justify-center text-[10px] text-primary-content font-black">+</div>
                         </div>
                         <div>
-                            <p className="text-sm font-black tracking-tight">42,000+ learners</p>
-                            <p className="text-[10px] uppercase font-black tracking-[0.15em] text-base-content/40">knowledge seekers</p>
+                            <p className="text-sm font-black tracking-tight">{t('auth.login.learners')}</p>
+                            <p className="text-[10px] uppercase font-black tracking-[0.15em] text-base-content/40">{t('auth.login.seekers')}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-1.5 pt-1 opacity-80">
@@ -170,7 +172,7 @@ const LoginPage: React.FC = () => {
                             transition={{ delay: 0.2, duration: 0.6 }}
                             className="text-5xl font-heading font-black tracking-tight text-base-content leading-tight"
                         >
-                            Welcome back
+                            {t('auth.login.welcome')}
                         </motion.h2>
                         <motion.p
                             initial={{ opacity: 0, x: -20 }}
@@ -178,7 +180,7 @@ const LoginPage: React.FC = () => {
                             transition={{ delay: 0.3, duration: 0.6 }}
                             className="text-lg text-base-content font-medium"
                         >
-                            Continue your journey into curated knowledge.
+                            {t('auth.login.journey')}
                         </motion.p>
                     </div>
 
@@ -217,14 +219,14 @@ const LoginPage: React.FC = () => {
                                 className="space-y-2"
                             >
                                 <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/40 ml-1">
-                                    Email
+                                    {t('auth.login.emailLabel')}
                                 </label>
                                 <div className="relative group/field">
                                     <HiOutlineEnvelope className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within/field:text-primary transition-colors" />
                                     <input
                                         id="email"
                                         type="email"
-                                        placeholder="you@atheneum.com"
+                                        placeholder={t('auth.login.emailPlaceholder')}
                                         className={`input input-ghost h-16 w-full rounded-2xl pl-14 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-semibold placeholder:text-base-content/20 ${errors.email ? 'ring-2 ring-error/30' : ''}`}
                                         {...register('email')}
                                     />
@@ -243,13 +245,13 @@ const LoginPage: React.FC = () => {
                             >
                                 <div className="flex justify-between items-center ml-1">
                                     <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/40">
-                                        Password
+                                        {t('auth.login.passwordLabel')}
                                     </label>
                                     <Link
                                         to="/forgot-password"
                                         className="text-[10px] uppercase font-black tracking-widest text-primary hover:opacity-70 transition-opacity"
                                     >
-                                        Forgot Password?
+                                        {t('auth.login.forgotPassword')}
                                     </Link>
                                 </div>
                                 <div className="relative group/field">
@@ -257,7 +259,7 @@ const LoginPage: React.FC = () => {
                                     <input
                                         id="password"
                                         type={showPassword ? 'text' : 'password'}
-                                        placeholder="••••••••"
+                                        placeholder={t('auth.login.passwordPlaceholder')}
                                         className={`input input-ghost h-16 w-full rounded-2xl pl-14 pr-14 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-semibold placeholder:text-base-content/20 ${errors.password ? 'ring-2 ring-error/30' : ''}`}
                                         {...register('password')}
                                     />
@@ -290,7 +292,7 @@ const LoginPage: React.FC = () => {
                                     <span className="loading loading-spinner" />
                                 ) : (
                                     <>
-                                        Sign In to Access
+                                        {t('auth.login.signIn')}
                                         <HiArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                                     </>
                                 )}
@@ -305,12 +307,12 @@ const LoginPage: React.FC = () => {
                         className="pt-4 text-center"
                     >
                         <p className="text-sm font-bold text-base-content/30">
-                            New to the Stream?{' '}
+                            {t('auth.login.newToStream')}{' '}
                             <Link
                                 to="/register"
                                 className="text-primary hover:underline underline-offset-8 transition-all font-black decoration-2"
                             >
-                                Create an account free
+                                {t('auth.login.createAccount')}
                             </Link>
                         </p>
                     </motion.div>

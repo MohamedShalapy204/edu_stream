@@ -10,7 +10,10 @@ export const courseSchema = z.object({
     thumbnail_id: z.string().optional(),
     thumbnail: z.any().optional(), // For File/FileList
     language: z.string().optional(),
-    vodafone_cash_number: z.string().regex(/^010\d{8}$/, 'Must be a valid Vodafone Egypt number').nullable().optional(),
+    vodafone_cash_number: z.union([
+        z.string().regex(/^010\d{8}$/, 'Must be a valid Vodafone Egypt number'),
+        z.literal('')
+    ]).nullable().optional(),
     allow_resubmission: z.boolean().default(false).optional(),
 });
 

@@ -2,6 +2,7 @@ import { useState, useMemo, type FC } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { HiOutlineArrowLeft, HiOutlineBars3BottomLeft, HiOutlineBars3BottomRight, HiOutlineXMark } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 
 import { useGetCourseById } from '@/features/courses/hooks/useCourseActions';
 import { useGetSections } from '@/hooks/useSections';
@@ -24,6 +25,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 const LearningTheatre: FC = () => {
     const { id: courseId } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const { data: user } = useCurrentAccount();
     const isMobile = useMediaQuery('(max-width: 1024px)');
 
@@ -122,9 +124,9 @@ const LearningTheatre: FC = () => {
     if (!course) {
         return (
             <div className="fixed inset-0 bg-base-100 flex items-center justify-center z-50 flex-col gap-6 p-8 text-center">
-                <h1 className="display-title">Origin Unknown</h1>
-                <p className="body-prose opacity-60">The requested curriculum could not be located in our archives.</p>
-                <button onClick={() => navigate('/student/dashboard', { viewTransition: true })} className="btn btn-primary rounded-full px-8">Return Home</button>
+                <h1 className="display-title">{t('theatre.originUnknown')}</h1>
+                <p className="body-prose opacity-60">{t('theatre.curriculumNotFound')}</p>
+                <button onClick={() => navigate('/student/dashboard', { viewTransition: true })} className="btn btn-primary rounded-full px-8">{t('theatre.returnHome')}</button>
             </div>
         );
     }
@@ -141,7 +143,7 @@ const LearningTheatre: FC = () => {
                     className="h-10 md:h-12 px-4 md:px-6 bg-primary text-primary-content rounded-full flex items-center gap-2 md:gap-3 label-caps shadow-xl shadow-primary/20 hover:-translate-y-1 hover:shadow-primary/30 active:scale-95 transition-all group border-none"
                 >
                     <HiOutlineArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform text-primary-content" />
-                    <span className="hidden xs:inline">Return to Atheneum</span>
+                    <span className="hidden xs:inline">{t('theatre.returnToAtheneum')}</span>
                 </button>
 
                 <button
@@ -232,8 +234,8 @@ const LearningTheatre: FC = () => {
                         </>
                     ) : (
                         <div className="flex-1 flex flex-col justify-center items-center text-base-content/40 p-8 md:p-12 text-center">
-                            <h2 className="section-title mb-4">Select your Inquiry</h2>
-                            <p className="body-prose text-sm">Choose a lesson from the curriculum index to begin your scholarly journey.</p>
+                            <h2 className="section-title mb-4">{t('theatre.selectInquiry')}</h2>
+                            <p className="body-prose text-sm">{t('theatre.chooseLesson')}</p>
                         </div>
                     )}
                 </div>

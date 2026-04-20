@@ -1,6 +1,7 @@
 import { useState, type FC } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { HiOutlineChevronDown, HiOutlineCheckCircle, HiOutlinePlayCircle, HiOutlineDocumentText } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 import type { ISection, ILesson } from '@/features/courses';
 import type { ICourseProgress } from '../types';
 
@@ -19,6 +20,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
     onSelectLesson,
     progress
 }) => {
+    const { t } = useTranslation();
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(() => {
         const initial: Record<string, boolean> = {};
         sections.forEach(s => { initial[s.$id] = true; });
@@ -38,7 +40,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
     return (
         <div className="h-full w-full bg-base-200 border-l border-base-content/5 flex flex-col">
             <div className="p-6 border-b border-base-content/5">
-                <h3 className="label-caps !text-primary/60">Curriculum Index</h3>
+                <h3 className="label-caps !text-primary/60">{t('theatre.curriculumIndex')}</h3>
                 <div className="mt-4 bg-primary/5 rounded-full h-1.5 overflow-hidden">
                     <motion.div
                         initial={{ width: 0 }}
@@ -48,7 +50,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                 </div>
                 <div className="flex justify-between items-center mt-3">
                     <p className="label-caps !text-[10px] text-primary">
-                        {completedIds.length} / {lessons.length} Segments Mastered
+                        {completedIds.length} / {lessons.length} {t('theatre.segmentsMastered')}
                     </p>
                     <span className="label-caps !text-[10px] tabular opacity-40">
                         {lessons.length > 0 ? Math.round((completedIds.length / lessons.length) * 100) : 0}%
@@ -126,7 +128,7 @@ export const CurriculumSidebar: FC<CurriculumSidebarProps> = ({
                                             })}
                                             {sectionLessons.length === 0 && (
                                                 <div className="p-4 text-center label-caps opacity-20">
-                                                    Curriculum Pending
+                                                    {t('theatre.curriculumPending')}
                                                 </div>
                                             )}
                                         </div>

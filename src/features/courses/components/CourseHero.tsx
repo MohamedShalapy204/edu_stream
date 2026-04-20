@@ -1,13 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { HiOutlineMagnifyingGlass, HiOutlineFunnel } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 
 interface CourseHeroProps {
     title: string;
     subtitle: string;
     searchQuery: string;
     onSearchChange: (query: string) => void;
-    categories: string[];
+    categories: { id: string; label: string }[];
     selectedCategory: string;
     onCategoryChange: (category: string) => void;
 }
@@ -27,6 +28,7 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
     selectedCategory,
     onCategoryChange
 }) => {
+    const { t } = useTranslation();
     return (
         <section className="relative pt-8 md:pt-12 pb-16 md:pb-20 border-b border-primary/8 overflow-hidden">
             {/* Subtle indigo tint on the section background */}
@@ -42,7 +44,7 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
                         animate={{ opacity: 1, x: 0 }}
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 text-primary text-[9px] md:text-[10px] uppercase font-black tracking-[0.2em] shadow-sm ring-1 ring-primary/20"
                     >
-                        Academic Catalog
+                        {t('courseHero.academicCatalog')}
                     </motion.div>
                     <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black tracking-tighter text-base-content leading-[1.1]">
                         {title}
@@ -62,7 +64,7 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
                         </div>
                         <input
                             type="text"
-                            placeholder="Identify a domain of study..."
+                            placeholder={t('courseHero.searchPlaceholder')}
                             value={searchQuery}
                             onChange={(e) => onSearchChange(e.target.value)}
                             className="w-full pl-12 md:pl-14 pr-6 py-3.5 md:py-4 bg-base-100 shadow-premium rounded-xl md:rounded-2xl text-xs md:text-sm font-bold placeholder:text-base-content/20 border border-transparent focus:border-primary/20 focus:ring-2 focus:ring-primary/8 transition-all outline-none"
@@ -73,21 +75,21 @@ export const CourseHero: React.FC<CourseHeroProps> = ({
                     <div className="flex items-center gap-2 md:gap-3 overflow-x-auto w-full lg:w-auto no-scrollbar py-2 -mx-4 px-4 lg:mx-0 lg:px-0">
                         <div className="flex items-center gap-2 pr-3 md:pr-4 border-r border-primary/10 text-primary/50 shrink-0">
                             <HiOutlineFunnel className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                            <span className="text-[9px] md:text-[10px] uppercase font-black tracking-widest">Filter</span>
+                            <span className="text-[9px] md:text-[10px] uppercase font-black tracking-widest">{t('courseHero.filter')}</span>
                         </div>
-                        <div className="flex gap-2">
+                         <div className="flex gap-2">
                             {categories.map((cat) => (
                                 <button
-                                    key={cat}
-                                    onClick={() => onCategoryChange(cat)}
+                                    key={cat.id}
+                                    onClick={() => onCategoryChange(cat.id)}
                                     className={`
                                         whitespace-nowrap px-4 md:px-5 py-2 text-[8px] md:text-[10px] font-black uppercase tracking-widest rounded-lg md:rounded-xl transition-all duration-200 border
-                                        ${selectedCategory === cat
+                                        ${selectedCategory === cat.id
                                             ? 'bg-primary text-primary-content border-primary shadow-lg shadow-primary/25 scale-[1.03]'
                                             : 'bg-base-100 text-base-content/40 border-base-content/5 hover:border-primary/20 hover:text-primary hover:bg-primary/4'}
                                     `}
                                 >
-                                    {cat}
+                                    {cat.label}
                                 </button>
                             ))}
                         </div>

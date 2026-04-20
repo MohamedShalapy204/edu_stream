@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { HiOutlineBookOpen, HiStar, HiOutlineUsers } from 'react-icons/hi2';
 import type { ICourse } from '../types/courseTypes';
@@ -16,6 +17,7 @@ interface CourseCardProps {
  * Features a "Scholarly Tile" aesthetic with buttery-smooth hover states.
  */
 export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
+    const { t } = useTranslation();
     const thumbnailUrl = course.thumbnail_url || (course.thumbnail_id
         ? storageService.getFilePreview(course.thumbnail_id)
         : 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=60');
@@ -44,7 +46,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
                         {/* Price Badge — Solid, not glass */}
                         <div className="absolute bottom-4 right-4 px-4 py-1.5 bg-primary text-primary-content text-xs font-black rounded-xl shadow-lg">
-                            {course.price === 0 ? 'COMPLIMENTARY' : `EGP ${course.price.toFixed(0)}`}
+                            {course.price === 0 ? t('courses.card.complimentary') : `EGP ${course.price.toFixed(0)}`}
                         </div>
 
                         {/* Category Tag — Solid background */}
@@ -67,7 +69,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                         </h3>
 
                         <p className="text-xs font-medium leading-relaxed text-base-content/50 line-clamp-2 mb-8">
-                            {course.description || 'Access a curated domain of knowledge through this specialized scholarly study.'}
+                            {course.description || t('courses.card.defaultDescription')}
                         </p>
 
                         {/* Scholarly Metadata */}
@@ -75,11 +77,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                             <div className="flex items-center gap-5 text-[10px] font-black uppercase tracking-widest text-base-content/30">
                                 <div className="flex items-center gap-1.5 group-hover:text-primary/70 transition-colors duration-300">
                                     <HiOutlineUsers className="w-4 h-4" />
-                                    <span>{course.total_students || 0} Learners</span>
+                                    <span>{course.total_students || 0} {t('courses.card.learners')}</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 group-hover:text-primary/50 transition-colors duration-300">
                                     <HiOutlineBookOpen className="w-4 h-4" />
-                                    <span>Core Lessons</span>
+                                    <span>{t('courses.card.coreLessons')}</span>
                                 </div>
                             </div>
 

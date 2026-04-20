@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm, type SubmitHandler, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HiOutlineInformationCircle, HiOutlineSquares2X2, HiOutlineChevronRight, HiOutlineChevronLeft, HiOutlinePhoto, HiOutlineBanknotes } from 'react-icons/hi2';
@@ -19,6 +20,7 @@ interface CourseFormProps {
 }
 
 const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoading, uploadProgress = 0 }) => {
+    const { t } = useTranslation();
     const { data: currentUser } = useCurrentUser();
     const [step, setStep] = useState(1);
     const [preview, setPreview] = useState<string | null>(
@@ -80,9 +82,9 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
             {/* Step Indicator */}
             <div className="flex items-center gap-3 md:gap-4 mb-8 md:mb-10 overflow-x-auto no-scrollbar pb-2">
                 {[
-                    { id: 1, label: 'Info', icon: HiOutlineInformationCircle },
-                    { id: 2, label: 'Syllabus', icon: HiOutlineSquares2X2 },
-                    { id: 3, label: 'Finalize', icon: HiOutlinePhoto },
+                    { id: 1, label: t('teacher.courseForm.steps.info'), icon: HiOutlineInformationCircle },
+                    { id: 2, label: t('teacher.courseForm.steps.syllabus'), icon: HiOutlineSquares2X2 },
+                    { id: 3, label: t('teacher.courseForm.steps.finalize'), icon: HiOutlinePhoto },
                 ].map((s) => (
                     <div
                         key={s.id}
@@ -102,35 +104,35 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                     <div className="space-y-8 animate-in slide-in-from-right-4 duration-700">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label htmlFor="title" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Masterclass Title</label>
+                                <label htmlFor="title" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('teacher.courseForm.masterclassTitle')}</label>
                                 <input
                                     id="title"
-                                    placeholder="e.g. Architectural Design Masterclass"
+                                    placeholder={t('teacher.courseForm.titlePlaceholder')}
                                     className={`input input-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.title ? 'ring-2 ring-destructive/20' : ''}`}
                                     {...register('title')}
                                 />
                                 {errors.title && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.title.message}</p>}
                             </div>
 
-                            <div className="space-y-3">
-                                <label htmlFor="language" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Instructional Language</label>
+                             <div className="space-y-3">
+                                <label htmlFor="language" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('teacher.courseForm.instructionalLanguage')}</label>
                                 <select
                                     id="language"
                                     className="select select-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full"
                                     {...register('language')}
                                 >
-                                    <option value="English">English</option>
-                                    <option value="Arabic">Arabic</option>
-                                    <option value="Spanish">Spanish</option>
-                                    <option value="French">French</option>
-                                    <option value="German">German</option>
-                                    <option value="Japanese">Japanese</option>
+                                    <option value="English">{t('teacher.courseForm.languages.english')}</option>
+                                    <option value="Arabic">{t('teacher.courseForm.languages.arabic')}</option>
+                                    <option value="Spanish">{t('teacher.courseForm.languages.spanish')}</option>
+                                    <option value="French">{t('teacher.courseForm.languages.french')}</option>
+                                    <option value="German">{t('teacher.courseForm.languages.german')}</option>
+                                    <option value="Japanese">{t('teacher.courseForm.languages.japanese')}</option>
                                 </select>
                                 {errors.language && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.language.message}</p>}
                             </div>
 
                             <div className="space-y-3">
-                                <label htmlFor="price" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Tuition (EGP)</label>
+                                <label htmlFor="price" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('teacher.courseForm.tuition')}</label>
                                 <input
                                     id="price"
                                     type="number"
@@ -142,10 +144,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             </div>
 
                             <div className="space-y-3">
-                                <label htmlFor="categories" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Categories (Comma separated)</label>
+                                <label htmlFor="categories" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('teacher.courseForm.categories')}</label>
                                 <input
                                     id="categories"
-                                    placeholder="e.g. Design, Architecture, Art"
+                                    placeholder={t('teacher.courseForm.categoriesPlaceholder')}
                                     className={`input input-bordered h-14 rounded-2xl bg-base-200 border-none focus:bg-base-100 focus:ring-4 focus:ring-primary/5 transition-all text-base font-semibold w-full ${errors.categories ? 'ring-2 ring-destructive/20' : ''}`}
                                     {...register('categories', {
                                         setValueAs: (v) => typeof v === 'string' ? v.split(',').map(s => s.trim()).filter(Boolean) : v
@@ -155,11 +157,11 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                             </div>
                         </div>
                         <div className="space-y-3 text-left">
-                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Curricular Brief</label>
+                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('teacher.courseForm.curricularBrief')}</label>
                             <textarea
                                 id="description"
                                 className={`w-full h-32 md:h-40 bg-base-200 rounded-[2rem] p-6 text-base-content font-semibold placeholder:text-base-content/60 italic focus:bg-base-100 focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none border-none text-sm md:text-base ${errors.description ? 'ring-2 ring-destructive/20' : ''}`}
-                                placeholder="Describe your course goal and what students will learn..."
+                                placeholder={t('teacher.courseForm.briefPlaceholder')}
                                 {...register('description')}
                             />
                             {errors.description && <p className="text-[10px] font-black uppercase text-destructive tracking-widest ml-1">{errors.description.message}</p>}
@@ -169,13 +171,13 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
 
                 {step === 2 && (
                     <div className="animate-in slide-in-from-right-4 duration-700 text-center py-10 scale-up">
-                        <div className="bg-primary/5 p-8 rounded-full h-24 w-24 inline-flex items-center justify-center mb-8 shadow-inner shadow-primary/5">
+                         <div className="bg-primary/5 p-8 rounded-full h-24 w-24 inline-flex items-center justify-center mb-8 shadow-inner shadow-primary/5">
                             <HiOutlineSquares2X2 className="w-12 h-12 text-primary" />
                         </div>
-                        <h3 className="text-2xl font-black text-base-content mb-3 italic tracking-tight underline decoration-primary/20 underline-offset-8">Curriculum Builder</h3>
-                        <p className="text-base-content/60 text-lg font-medium mb-10 max-w-sm mx-auto leading-relaxed">Sections and lessons are managed after the initial course creation to ensure pedagogical integrity.</p>
+                        <h3 className="text-2xl font-black text-base-content mb-3 italic tracking-tight underline decoration-primary/20 underline-offset-8">{t('teacher.courseForm.syllabusBuilder')}</h3>
+                        <p className="text-base-content/60 text-lg font-medium mb-10 max-w-sm mx-auto leading-relaxed">{t('teacher.courseForm.syllabusDesc')}</p>
                         <div className="alert bg-indigo-50/50 border-none shadow-sm max-w-lg mx-auto rounded-4xl flex items-center gap-3">
-                            <span className="font-bold text-sm tracking-tight text-primary">You will access the syllabus editor in the next phase of the workflow.</span>
+                            <span className="font-bold text-sm tracking-tight text-primary">{t('teacher.courseForm.syllabusAlert')}</span>
                         </div>
                     </div>
                 )}
@@ -193,9 +195,9 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     <HiOutlinePhoto className="w-8 h-8 md:w-10 md:h-10 text-base-content/60" />
                                 </div>
                             )}
-                            <div className={`relative z-10 ${preview ? 'bg-black/40 backdrop-blur-sm p-5 md:p-6 rounded-2xl mx-auto inline-block text-white w-[90%] md:w-4/5' : ''}`}>
-                                <h4 className={`text-lg md:text-xl font-bold mb-1 tracking-tighter ${preview ? 'text-white' : 'text-base-content'}`}>Course Visuals</h4>
-                                <p className={`text-xs md:text-sm mb-4 font-medium ${preview ? 'text-white/80' : 'text-base-content/60'}`}>{preview ? 'Replace visual' : 'Upload high-fidelity imagery for the course cover.'}</p>
+                             <div className={`relative z-10 ${preview ? 'bg-black/40 backdrop-blur-sm p-5 md:p-6 rounded-2xl mx-auto inline-block text-white w-[90%] md:w-4/5' : ''}`}>
+                                <h4 className={`text-lg md:text-xl font-bold mb-1 tracking-tighter ${preview ? 'text-white' : 'text-base-content'}`}>{t('teacher.courseForm.visuals')}</h4>
+                                <p className={`text-xs md:text-sm mb-4 font-medium ${preview ? 'text-white/80' : 'text-base-content/60'}`}>{preview ? t('teacher.courseForm.replaceVisual') : t('teacher.courseForm.visualsDesc')}</p>
                                 <input
                                     id="thumbnail-input"
                                     type="file"
@@ -207,7 +209,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     type="button"
                                     className="btn btn-outline h-10 md:h-12 px-6 md:px-10 rounded-xl md:rounded-2xl bg-base-100 text-[9px] md:text-xs font-black uppercase tracking-widest border-base-content/10 shadow-sm hover:border-primary/40 hover:text-primary transition-all no-animation"
                                 >
-                                    {preview ? 'Replace Visual' : 'Selection Gallery'}
+                                    {preview ? t('teacher.courseForm.replaceVisual') : t('teacher.courseForm.selectionGallery')}
                                 </button>
                             </div>
                         </div>
@@ -219,18 +221,18 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                         <HiOutlineBanknotes className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-black tracking-tight">Payment Settings</h4>
-                                        <p className="text-xs text-base-content/60 font-medium">Configure manual Vodafone Cash enrollment</p>
+                                        <h4 className="text-lg font-black tracking-tight">{t('teacher.courseForm.paymentSettings')}</h4>
+                                        <p className="text-xs text-base-content/60 font-medium">{t('teacher.courseForm.paymentSettingsDesc')}</p>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                                     <div className="space-y-4">
                                         <VodafoneNumberInput
-                                            label="Course Payment Number"
+                                            label={t('teacher.courseForm.paymentNumber')}
                                             register={register('vodafone_cash_number')}
                                             error={errors.vodafone_cash_number}
-                                            description="Students will transfer the tuition to this number."
+                                            description={t('teacher.courseForm.paymentNumberDesc')}
                                         />
 
                                         {currentUser?.vodafone_cash_number && (
@@ -246,14 +248,14 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                                     }}
                                                 />
                                                 <label htmlFor="use_default" className="text-[10px] font-black text-primary/80 uppercase tracking-widest cursor-pointer select-none">
-                                                    Use my global default number
+                                                    {t('teacher.courseForm.useDefaultNumber')}
                                                 </label>
                                             </div>
                                         )}
                                     </div>
 
                                     <div className="space-y-3 pt-2">
-                                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Re-submission Policy</label>
+                                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('teacher.courseForm.resubmissionPolicy')}</label>
                                         <div className="flex items-center gap-6 p-4 bg-base-100 rounded-2xl border border-base-content/5 group cursor-pointer hover:bg-base-200 transition-all relative h-14">
                                             <div className="relative flex items-center">
                                                 <input
@@ -266,7 +268,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                                     <HiOutlineChevronRight className="w-4 h-4 text-primary-content transition-transform scale-0 peer-checked:scale-100" />
                                                 </div>
                                             </div>
-                                            <label htmlFor="allow_resubmission" className="text-[10px] font-black text-base-content uppercase tracking-widest cursor-pointer select-none">Allow denied students to retry</label>
+                                            <label htmlFor="allow_resubmission" className="text-[10px] font-black text-base-content uppercase tracking-widest cursor-pointer select-none">{t('teacher.courseForm.resubmissionLabel')}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -285,7 +287,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     <HiOutlineChevronRight className="w-4 h-4 text-primary-content transition-transform scale-0 peer-checked:scale-100" />
                                 </div>
                             </div>
-                            <label htmlFor="is_published" className="text-sm font-black text-primary uppercase tracking-widest cursor-pointer select-none">Deploy Course Immediately</label>
+                            <label htmlFor="is_published" className="text-sm font-black text-primary uppercase tracking-widest cursor-pointer select-none">{t('teacher.courseForm.deployCourse')}</label>
                         </div>
                     </div>
                 )}
@@ -297,7 +299,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                         onClick={() => setStep(s => s - 1)}
                     >
                         <HiOutlineChevronLeft className="w-4 h-4 md:w-5 md:h-5 mr-1" />
-                        Retreat
+                        {t('teacher.courseForm.retreat')}
                     </button>
 
                     <div className="flex gap-4 w-full sm:w-auto sm:order-2">
@@ -307,14 +309,14 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                 onClick={handleStepAdvance}
                                 className="btn btn-primary h-14 px-10 rounded-3xl md:rounded-4xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all group no-animation border-none w-full sm:w-auto"
                             >
-                                Advance
+                                {t('teacher.courseForm.advance')}
                                 <HiOutlineChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </button>
                         ) : (
                             <div className="flex flex-col items-end gap-3 w-full sm:w-72">
                                 {isLoading && uploadProgress > 0 && (
                                     <div className="w-full px-2 mb-2">
-                                        <ProgressBar progress={uploadProgress} label="Uploading Assets" />
+                                        <ProgressBar progress={uploadProgress} label={t('teacher.courseForm.uploadingAssets')} />
                                     </div>
                                 )}
                                 <button
@@ -322,7 +324,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ initialData, onSubmit, isLoadin
                                     className="btn btn-primary w-full h-14 px-8 md:px-12 rounded-3xl md:rounded-4xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? <span className="loading loading-spinner" /> : (initialData?.$id ? 'Commit Updates' : 'Launch Masterclass')}
+                                    {isLoading ? <span className="loading loading-spinner" /> : (initialData?.$id ? t('teacher.courseForm.commitUpdates') : t('teacher.courseForm.launchMasterclass'))}
                                 </button>
                             </div>
                         )}

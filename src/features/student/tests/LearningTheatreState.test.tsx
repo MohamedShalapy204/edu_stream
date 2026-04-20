@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@/test-utils';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import learningTheatreReducer from '../store/learningTheatreSlice';
@@ -89,6 +89,6 @@ describe('LearningTheatre System States', () => {
       </Provider>
     );
 
-    expect(screen.getByText(/Course Not Found/i)).toBeInTheDocument();
+    expect(screen.getByText(/Origin Unknown|Course Not Found/i)).toBeInTheDocument();
   });
 });

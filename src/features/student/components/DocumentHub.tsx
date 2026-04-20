@@ -8,6 +8,7 @@ import {
   HiOutlineArrowTopRightOnSquare,
   HiOutlineDocumentDuplicate
 } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 import { openDocument } from '../store/learningTheatreSlice';
 
 interface DocumentHubProps {
@@ -15,6 +16,7 @@ interface DocumentHubProps {
 }
 
 export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { openDocuments } = useAppSelector((state) => state.learningTheatre.documents);
 
@@ -24,7 +26,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
     <div className="h-full w-full bg-base-100 border-l border-base-content/5 flex flex-col overflow-hidden">
       {/* Hub Header */}
       <div className="p-6 border-b border-base-content/5 flex-none bg-base-200/50 z-20">
-        <h3 className="label-caps !text-primary/60">Catalogue of Scholarly Resources</h3>
+        <h3 className="label-caps !text-primary/60">{t('theatre.resourceCatalogue')}</h3>
       </div>
 
       {/* Resource Area */}
@@ -33,7 +35,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
         <section>
           <div className="flex items-center gap-3 mb-6 text-primary/40">
             <HiOutlineInformationCircle className="w-5 h-5" />
-            <span className="label-caps">Curator's Notes</span>
+            <span className="label-caps">{t('theatre.curatorNotes')}</span>
           </div>
           <div className="prose prose-sm max-w-none">
             {lesson.description ? (
@@ -41,7 +43,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                 {lesson.description}
               </p>
             ) : (
-              <p className="body-prose text-xs opacity-30 italic">No specific instructions provided for this module.</p>
+              <p className="body-prose text-xs opacity-30 italic">{t('theatre.noInstructions')}</p>
             )}
           </div>
         </section>
@@ -50,7 +52,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
         <section className="space-y-4">
           <div className="flex items-center gap-3 text-primary/40">
             <HiOutlinePaperClip className="w-5 h-5" />
-            <span className="label-caps">Archival Exhibits</span>
+            <span className="label-caps">{t('theatre.archivalExhibits')}</span>
           </div>
 
           <div className="space-y-3">
@@ -70,14 +72,14 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                     className="flex-1 cursor-pointer"
                     onClick={() => dispatch(openDocument({
                       id: docId,
-                      title: `Exhibit ${index + 1}`,
+                      title: `${t('theatre.exhibit')} ${index + 1}`,
                       url: url,
                       type: 'doc'
                     }))}
                   >
-                    <p className="label-caps !text-[9px] !text-primary/40 mb-0.5">Exhibit {index + 1}</p>
+                    <p className="label-caps !text-[9px] !text-primary/40 mb-0.5">{t('theatre.exhibit')} {index + 1}</p>
                     <p className={`text-xs font-semibold transition-colors ${isOpened ? 'text-primary' : 'text-base-content group-hover:text-primary'}`}>
-                      {isOpened ? 'Active in Workspace' : 'Examine in Workspace'}
+                      {isOpened ? t('theatre.activeInWorkspace') : t('theatre.examineInWorkspace')}
                     </p>
                   </div>
                   <a
@@ -85,7 +87,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
                     target="_blank"
                     rel="noreferrer"
                     className="p-2 text-base-content/20 hover:text-primary transition-colors"
-                    title="Open in new window"
+                    title={t('theatre.openInNewWindow')}
                   >
                     <HiOutlineArrowTopRightOnSquare className="w-4 h-4" />
                   </a>
@@ -97,7 +99,7 @@ export const DocumentHub: FC<DocumentHubProps> = ({ lesson }) => {
           {exhibits.length === 0 && (
             <div className="py-20 flex flex-col items-center justify-center text-base-content/10">
               <HiOutlineDocumentDuplicate className="w-12 h-12 mb-4 opacity-50" />
-              <p className="label-caps">Archive Empty</p>
+              <p className="label-caps">{t('theatre.archiveEmpty')}</p>
             </div>
           )}
         </section>

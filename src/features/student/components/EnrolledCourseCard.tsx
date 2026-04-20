@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { HiOutlinePlay, HiCube, HiOutlineClock, HiOutlineCheckCircle } from 'react-icons/hi2';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import { type ICourse } from '@/features/courses';
@@ -17,6 +18,7 @@ interface EnrolledCourseCardProps {
 }
 
 export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse, progress, vodafoneEnrollment }) => {
+    const { t } = useTranslation();
     const { course, subscription } = enrolledCourse;
     const completedCount = progress?.completed_lessons?.length || 0;
     const isPending = vodafoneEnrollment?.status === 'pending';
@@ -67,7 +69,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                     ) : (
                         <span className="bg-primary text-primary-content text-[8px] font-black px-3 py-1 rounded-lg uppercase tracking-widest shadow-lg flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                            Direct Enrollment
+                            {t('dashboard.student.courseCard.directEnrollment')}
                         </span>
                     )}
                 </div>
@@ -80,8 +82,8 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                     </h3>
                     <p className="text-sm font-medium text-base-content/50 line-clamp-2 leading-relaxed mb-6">
                         {isDenied
-                            ? "Your enrollment request for this curriculum was denied. Please contact support or verify your transaction details."
-                            : course.description || 'Continue your scholarly pursuit in this curated curriculum segment.'
+                            ? t('dashboard.student.courseCard.deniedMessage')
+                            : course.description || t('dashboard.student.courseCard.defaultDescription')
                         }
                     </p>
                 </div>
@@ -93,7 +95,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                             <div className="flex items-center justify-between mb-2">
                                 <div className="flex items-center gap-1.5 text-accent">
                                     <HiOutlineCheckCircle className="w-3.5 h-3.5" />
-                                    <span className="text-[9px] font-black uppercase tracking-widest">{completedCount} Modules Complete</span>
+                                    <span className="text-[9px] font-black uppercase tracking-widest">{completedCount} {t('dashboard.student.courseCard.modulesComplete')}</span>
                                 </div>
                                 <span className="text-[9px] font-black text-accent">{progressPercent}%</span>
                             </div>
@@ -111,8 +113,8 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                             <HiOutlineClock className="w-4 h-4" />
                             <span className="text-[9px] font-black uppercase tracking-widest">
                                 {subscription
-                                    ? `Joined ${new Date(subscription.$createdAt).toLocaleDateString()}`
-                                    : `Updated ${new Date(vodafoneEnrollment?.$updatedAt || '').toLocaleDateString()}`
+                                    ? t('dashboard.student.courseCard.joined', { date: new Date(subscription.$createdAt).toLocaleDateString() })
+                                    : t('dashboard.student.courseCard.updated', { date: new Date(vodafoneEnrollment?.$updatedAt || '').toLocaleDateString() })
                                 }
                             </span>
                         </div>
@@ -125,7 +127,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                             className="w-full h-12 bg-primary text-primary-content rounded-2xl flex items-center justify-center gap-3 font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all shadow-lg active:scale-95 duration-200"
                         >
                             <HiOutlinePlay className="w-4 h-4" />
-                            Enter Theatre
+                            {t('dashboard.student.courseCard.enterTheatre')}
                         </Link>
                     ) : (
                         <Link
@@ -138,7 +140,7 @@ export const EnrolledCourseCard: FC<EnrolledCourseCardProps> = ({ enrolledCourse
                             }`}
                         >
                             <HiOutlinePlay className="w-4 h-4" />
-                            {isPending ? 'Check Payment Status' : 'View Rejection Details'}
+                            {isPending ? t('dashboard.student.courseCard.checkStatus') : t('dashboard.student.courseCard.viewRejection')}
                         </Link>
                     )}
                 </div>

@@ -9,12 +9,14 @@ import {
     HiOutlineChevronDown,
     HiOutlineAcademicCap,
     HiOutlineSun,
-    HiOutlineMoon
+    HiOutlineMoon,
+    HiOutlineLanguage
 } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 import { useLogout, useCurrentAccount, UserRole } from '@/features/auth';
 import { useCurrentUser } from '@/hooks/useUser';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleTheme } from '@/store/slices/uiSlice';
+import { toggleTheme, toggleLanguage } from '@/store/slices/uiSlice';
 import { useEffect } from 'react';
 
 interface MainLayoutProps {
@@ -26,13 +28,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const theme = useAppSelector((state) => state.ui.theme);
+    const language = useAppSelector((state) => state.ui.language);
     const { data: account } = useCurrentAccount();
     const { data: profile } = useCurrentUser();
     const { mutate: logout, isPending } = useLogout();
+    const { t } = useTranslation();
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
-    }, [theme]);
+        document.documentElement.setAttribute('lang', language);
+        document.documentElement.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
+    }, [theme, language]);
 
     const handleLogout = () => {
         logout(undefined, {
@@ -60,15 +66,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                         E
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="font-heading text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500 uppercase">EDU<span className="text-gradient-brand italic font-bold normal-case ml-px">stream</span></span>
+                                        <span className="font-heading text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-primary transition-colors duration-500 uppercase">EDU<span className="text-gradient-brand italic font-bold normal-case ms-px">stream</span></span>
                                         <span className="text-[8px] md:text-[10px] uppercase font-black tracking-[0.2em] text-primary/40 mt-0.5 hidden xs:block">Atheneum Editorial</span>
                                     </div>
                                 </Link>
 
-                                {/* Desktop Navigation */}
+                                { /* Desktop Navigation */ }
                                 <nav className="hidden md:flex items-center gap-8">
                                     {[
-                                        { name: 'Library', path: '/courses', icon: HiOutlineBookOpen },
+                                        { name: t('header.library'), path: '/courses', icon: HiOutlineBookOpen },
                                     ].map((item) => {
                                         const isActive = location.pathname.startsWith(item.path);
                                         return (
@@ -96,7 +102,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                             className={`flex items-center gap-2.5 text-[10px] uppercase font-black tracking-[0.25em] py-2 px-4 rounded-xl transition-all ${location.pathname.startsWith('/teacher') ? 'bg-primary/10 text-primary shadow-premium' : 'text-base-content/40 hover:bg-base-200'}`}
                                         >
                                             <HiOutlineSquares2X2 className="w-4 h-4" />
-                                            Faculty Dashboard
+                                            {t('header.facultyDashboard')}
                                         </Link>
                                     )}
 
@@ -106,7 +112,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                             className={`flex items-center gap-2.5 text-[10px] uppercase font-black tracking-[0.25em] py-2 px-4 rounded-xl transition-all ${location.pathname.startsWith('/student') ? 'bg-primary/10 text-primary shadow-premium' : 'text-base-content/40 hover:bg-base-200'}`}
                                         >
                                             <HiOutlineAcademicCap className="w-4 h-4" />
-                                            Learning Portal
+                                            {t('header.learningPortal')}
                                         </Link>
                                     )}
                                 </nav>
@@ -126,30 +132,40 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                         <HiOutlineSun className="w-5 h-5 group-hover:scale-110 transition-transform" />
                                     )}
                                 </button>
+
+                                {/* Language Toggle Button */}
+                                <button
+                                    onClick={() => dispatch(toggleLanguage())}
+                                    className="px-3 h-10 rounded-xl bg-base-200 flex items-center gap-2 text-base-content/60 hover:text-primary hover:bg-primary/10 transition-all shadow-premium/5 group"
+                                    aria-label="Toggle Language"
+                                >
+                                    <HiOutlineLanguage className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                                    <span className="text-[10px] font-black uppercase tracking-widest">{language === 'ar' ? 'EN' : 'AR'}</span>
+                                </button>
                                 {account ? (
                                     <div className="dropdown dropdown-end">
                                         <label tabIndex={0} className="group flex items-center gap-3 md:gap-4 cursor-pointer p-0.5 md:p-1 rounded-2xl hover:bg-base-200 transition-all">
-                                            <div className="flex-col items-end text-right hidden lg:flex">
-                                                <span className="text-[10px] uppercase font-black tracking-widest text-base-content/30">Scholar</span>
+                                            <div className="flex-col items-end text-end hidden lg:flex">
+                                                <span className="text-[10px] uppercase font-black tracking-widest text-base-content/30">{t('header.scholar')}</span>
                                                 <span className="text-xs font-black tracking-tight">{account.name || 'Anonymous'}</span>
                                             </div>
                                             {/* Scholarly Tile (Avatar) */}
                                             <div className="w-9 h-9 md:w-10 md:h-10 rounded-[0.7rem] md:rounded-[0.8rem] bg-linear-to-br from-primary to-secondary flex items-center justify-center text-primary-content text-sm font-black shadow-premium group-hover:scale-105 transition-all">
                                                 {userInitial}
                                             </div>
-                                            <HiOutlineChevronDown className="w-3 h-3 md:w-3.5 md:h-3.5 text-base-content/20 group-hover:text-primary transition-all mr-1" />
+                                            <HiOutlineChevronDown className="w-3 h-3 md:w-3.5 md:h-3.5 text-base-content/20 group-hover:text-primary transition-all me-1" />
                                         </label>
 
                                         <ul tabIndex={0} className="dropdown-content z-50 menu p-3 shadow-premium bg-base-100 rounded-3xl w-64 mt-4 border border-base-content/5 animate-in fade-in slide-in-from-top-4 duration-300">
                                             <div className="px-4 py-3 border-b border-base-content/5 mb-2">
-                                                <p className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/30 mb-1">Authenticated Account</p>
+                                                <p className="text-[10px] uppercase font-black tracking-[0.25em] text-base-content/30 mb-1">{t('header.authenticatedAccount')}</p>
                                                 <p className="text-xs font-bold truncate">{account.email}</p>
                                             </div>
                                             {profile?.role === UserRole.STUDENT && (
                                                 <li>
                                                     <Link to="/student/dashboard" className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
                                                         <HiOutlineAcademicCap className="w-5 h-5" />
-                                                        Learning Portal
+                                                        {t('header.learningPortal')}
                                                     </Link>
                                                 </li>
                                             )}
@@ -157,14 +173,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                                 <li>
                                                     <Link to="/teacher/dashboard" className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
                                                         <HiOutlineSquares2X2 className="w-5 h-5" />
-                                                        Faculty Dashboard
+                                                        {t('header.facultyDashboard')}
                                                     </Link>
                                                 </li>
                                             )}
                                             <li>
                                                 <Link to="/profile" className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary">
                                                     <HiOutlineUserCircle className="w-5 h-5" />
-                                                    Personal Dossier
+                                                    {t('header.personalDossier')}
                                                 </Link>
                                             </li>
                                             <li className="mt-2">
@@ -174,7 +190,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                                     className="flex items-center gap-3 h-12 rounded-xl text-xs font-black uppercase tracking-widest text-error hover:bg-error/5"
                                                 >
                                                     {isPending ? <span className="loading loading-spinner loading-xs" /> : <HiOutlineArrowRightOnRectangle className="w-5 h-5" />}
-                                                    Revoke Session
+                                                    {t('header.revokeSession')}
                                                 </button>
                                             </li>
                                         </ul>
@@ -183,8 +199,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ isPublic = false }) => {
                                     isPublic && (
                                         <Link to="/login">
                                             <button className="btn btn-primary h-11 md:h-12 rounded-xl md:rounded-2xl px-4 md:px-6 font-black text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] shadow-premium hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all border-none">
-                                                Identify
-                                                <HiOutlineArrowRightOnRectangle className="ml-2 w-3.5 h-3.5 md:w-4 md:h-4" />
+                                                {t('header.identify')}
+                                                <HiOutlineArrowRightOnRectangle className="ms-2 w-3.5 h-3.5 md:w-4 md:h-4" />
                                             </button>
                                         </Link>
                                     )

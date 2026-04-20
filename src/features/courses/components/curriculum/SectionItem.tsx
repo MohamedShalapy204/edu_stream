@@ -1,4 +1,5 @@
 import { HiChevronDown, HiOutlineDocumentText, HiOutlineVideoCamera, HiPlus, HiOutlineTrash, HiArrowUp, HiArrowDown, HiOutlinePencilSquare } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 import type { ISection, ILesson } from '@/features/courses/types/courseTypes';
 import { useGetSectionLessons, useUpdateLesson, useDeleteLesson } from '@/features/courses/hooks/useLessonActions';
 import { LessonForm } from './LessonForm';
@@ -14,6 +15,7 @@ interface SectionItemProps {
 }
 
 export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalSections, onMoveUp, onMoveDown, onDelete }) => {
+    const { t } = useTranslation();
     const [isExpanded, setIsExpanded] = useState(true);
     const [isAddingLesson, setIsAddingLesson] = useState(false);
     const [editingLessonId, setEditingLessonId] = useState<string | null>(null);
@@ -39,7 +41,7 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
 
     const handleDeleteLesson = (e: React.MouseEvent, lessonId: string) => {
         e.stopPropagation();
-        if (window.confirm('Are you sure you want to delete this lesson?')) {
+        if (window.confirm(t('teacher.sectionItem.deleteLessonConfirm'))) {
             deleteLesson(lessonId);
         }
     };
@@ -50,7 +52,7 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
     };
 
     return (
-        <div className="bg-white rounded-3xl shadow-premium border border-base-content/5 overflow-hidden transition-all duration-300">
+        <div className="bg-base-100/80 rounded-3xl shadow-premium border border-base-content/5 overflow-hidden transition-all duration-300">
             {/* Section Header */}
             <div
                 className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 md:p-6 cursor-pointer hover:bg-base-200/20 transition-colors gap-4"
@@ -63,7 +65,7 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
                     <h4 className="text-base md:text-lg font-bold text-base-content tracking-tight truncate">{section.title}</h4>
                 </div>
                 <div className="flex items-center justify-between w-full sm:w-auto gap-2">
-                    <span className="text-[10px] font-black text-base-content/30 uppercase tracking-widest mr-2">{lessons?.documents.length || 0} Lessons</span>
+                    <span className="text-[10px] font-black text-base-content/30 uppercase tracking-widest mr-2">{lessons?.documents.length || 0} {t('teacher.sectionItem.lessonsCount')}</span>
 
                     {/* Section Controls */}
                     <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
@@ -107,7 +109,7 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
                                                 {lesson.video_url || lesson.video_id ? <HiOutlineVideoCamera className="w-4 h-4 md:w-5 md:h-5" /> : <HiOutlineDocumentText className="w-4 h-4 md:w-5 md:h-5" />}
                                             </div>
                                             <span className="text-sm font-bold text-base-content truncate">{lesson.title}</span>
-                                            {lesson.is_free && <span className="px-2 py-0.5 rounded-md bg-success/10 text-success text-[8px] font-black uppercase tracking-widest ml-1">Free</span>}
+                                            {lesson.is_free && <span className="px-2 py-0.5 rounded-md bg-success/10 text-success text-[8px] font-black uppercase tracking-widest ml-1">{t('teacher.sectionItem.free')}</span>}
                                         </div>
                                         <div className="flex items-center justify-end gap-1">
                                             {/* Lesson Controls - Visible on desktop hover, always on mobile touch */}
@@ -142,7 +144,7 @@ export const SectionItem: React.FC<SectionItemProps> = ({ section, index, totalS
                                 onClick={() => setIsAddingLesson(true)}
                                 className="w-full flex items-center justify-center gap-2 py-4 border-2 border-dashed border-base-content/10 rounded-2xl text-xs font-black text-base-content/40 uppercase tracking-widest hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all outline-none"
                             >
-                                <HiPlus className="w-4 h-4" /> Add Lesson
+                                <HiPlus className="w-4 h-4" /> {t('teacher.sectionItem.addLesson')}
                             </button>
                         )}
                     </div>

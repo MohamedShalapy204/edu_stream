@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { HiPlus } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
@@ -18,6 +19,7 @@ import { useGetPendingVodafoneEnrollments } from '../hooks/useEnrollments';
  * Assembles high-fidelity features from the teacher slice.
  */
 const TeacherDashboard: React.FC = () => {
+    const { t } = useTranslation();
     const { data: account } = useCurrentAccount();
     const { data: courses, isLoading, error } = useGetTeacherCourses(account?.$id || '');
 
@@ -33,7 +35,7 @@ const TeacherDashboard: React.FC = () => {
             <div className="flex items-center justify-center min-h-[70vh]">
                 <div className="flex flex-col items-center gap-6">
                     <div className="w-16 h-16 border-[6px] border-primary/10 border-t-primary rounded-full animate-spin"></div>
-                    <p className="text-base-content/40 font-black text-xs uppercase tracking-[0.2em]">Synchronizing Records...</p>
+                    <p className="text-base-content/40 font-black text-xs uppercase tracking-[0.2em]">{t('teacher.dashboard.syncRecords')}</p>
                 </div>
             </div>
         );
@@ -55,13 +57,13 @@ const TeacherDashboard: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 md:mb-16">
                 <div className="space-y-3 md:space-y-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/5 text-primary text-[9px] uppercase font-black tracking-[0.2em] ring-1 ring-primary/10">
-                        Faculty Portal
+                        {t('teacher.dashboard.facultyPortal')}
                     </div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-base-content tracking-tighter leading-tight text-balance">
-                        Teacher <span className="text-primary italic font-medium italic-serif">Dashboard</span>
+                        {t('teacher.dashboard.title').split(' ')[0]} <span className="text-primary italic font-medium italic-serif">{t('teacher.dashboard.title').split(' ').slice(1).join(' ')}</span>
                     </h1>
                     <p className="text-base-content/50 text-sm md:text-base font-medium leading-relaxed max-w-md border-l-2 border-primary/10 pl-5">
-                        Manage your curriculum and track scholarly achievement within the Atheneum.
+                        {t('teacher.dashboard.subtitle')}
                     </p>
                 </div>
                 <Link
@@ -69,7 +71,7 @@ const TeacherDashboard: React.FC = () => {
                     className="group relative inline-flex items-center justify-center h-14 md:h-16 px-8 md:px-10 bg-primary text-white font-black text-[9px] md:text-[10px] uppercase tracking-[0.25em] rounded-3xl md:rounded-4xl shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98] ring-1 ring-white/20"
                 >
                     <HiPlus className="w-5 h-5 mr-3 group-hover:rotate-90 transition-transform duration-500" />
-                    Archive New Wisdom
+                    {t('teacher.dashboard.archiveNewWisdom')}
                 </Link>
             </div>
 
@@ -85,12 +87,12 @@ const TeacherDashboard: React.FC = () => {
             <div className="space-y-10">
                 <div className="flex items-center gap-4">
                     <div className="w-1.5 h-10 bg-primary/20 rounded-full" />
-                    <h2 className="text-2xl font-heading font-black text-base-content uppercase tracking-tight">Active Curriculum</h2>
+                    <h2 className="text-2xl font-heading font-black text-base-content uppercase tracking-tight">{t('teacher.dashboard.activeCurriculum')}</h2>
                 </div>
 
                 {error && (
                     <div className="p-10 bg-error/5 text-error rounded-3xl border border-error/10 text-xs font-black uppercase tracking-widest text-center">
-                        Failed to synchronize curriculum records.
+                        {t('teacher.dashboard.syncFailed')}
                     </div>
                 )}
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { HiOutlineShieldExclamation, HiOutlineEnvelope, HiOutlineArrowLeftOnRectangle } from 'react-icons/hi2';
 import { useLogout, useSendEmailVerification, useCurrentAccount } from '@/features/auth';
 
 const UnverifiedPage: React.FC = () => {
+    const { t } = useTranslation();
     const { mutate: logout } = useLogout();
     const { mutate: sendVerification, isPending: isSending } = useSendEmailVerification();
     const { data: account } = useCurrentAccount();
@@ -23,10 +25,9 @@ const UnverifiedPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-4">
-                    <h1 className="text-5xl font-heading font-black tracking-tighter leading-tight">Access Suspended.</h1>
+                    <h1 className="text-5xl font-heading font-black tracking-tighter leading-tight">{t('auth.unverified.title')}</h1>
                     <p className="text-lg text-base-content/60 font-medium max-w-md mx-auto leading-relaxed">
-                        Your account for <span className="text-primary font-bold">{account?.email}</span> requires a cryptographic signature.
-                        Please verify your email to unlock the full Atheneum experience.
+                        {t('auth.unverified.subtitle', { email: account?.email })}
                     </p>
                 </div>
 
@@ -40,7 +41,7 @@ const UnverifiedPage: React.FC = () => {
                             <span className="loading loading-spinner" />
                         ) : (
                             <>
-                                Resend Verification Link
+                                {t('auth.unverified.resendLink')}
                                 <HiOutlineEnvelope className="ml-3 w-5 h-5" />
                             </>
                         )}
@@ -50,13 +51,13 @@ const UnverifiedPage: React.FC = () => {
                         onClick={() => logout()}
                         className="btn btn-ghost h-14 rounded-3xl font-black text-xs uppercase tracking-[0.2em] text-base-content/40 hover:text-error hover:bg-error/5 transition-all"
                     >
-                        Sign Out & Try Another
+                        {t('auth.unverified.signOut')}
                         <HiOutlineArrowLeftOnRectangle className="ml-3 w-4 h-4" />
                     </button>
                 </div>
 
                 <div className="pt-12 text-[10px] uppercase font-black tracking-[0.25em] text-base-content/20">
-                    Security Protocol: EDU-ST-VER-42
+                    {t('auth.unverified.securityProtocol')}
                 </div>
             </motion.div>
         </div>

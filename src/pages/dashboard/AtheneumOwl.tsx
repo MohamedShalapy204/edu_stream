@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SCHOLARLY_MESSAGES } from './owlMessages';
 
 export default function AtheneumOwl() {
+    const { i18n } = useTranslation();
     const owlRef = useRef<HTMLDivElement>(null);
     const leftWingRef = useRef<SVGGElement>(null);
     const rightWingRef = useRef<SVGGElement>(null);
@@ -25,7 +27,10 @@ export default function AtheneumOwl() {
             // Random delay between 5s and 20s
             const delay = Math.random() * 15000 + 5000;
             showTimeout = setTimeout(() => {
-                setSpeechText(SCHOLARLY_MESSAGES[Math.floor(Math.random() * SCHOLARLY_MESSAGES.length)]);
+                const message = SCHOLARLY_MESSAGES[Math.floor(Math.random() * SCHOLARLY_MESSAGES.length)];
+                const parts = message.split('|').map(s => s.trim());
+                // owlMessages.ts format: "AR | EN"
+                setSpeechText(i18n.language === 'ar' ? parts[0] : parts[1] || parts[0]);
                 setIsSpeaking(true);
                 
                 // Hide after 6 seconds so user has time to read
@@ -234,7 +239,7 @@ export default function AtheneumOwl() {
             >
                 <div 
                     className={`transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] origin-bottom-left max-w-[220px] bg-base-100/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-primary/20 break-words ${isSpeaking && isVisible ? 'scale-100 opacity-100 rotate-0' : 'scale-50 opacity-0 -rotate-12'}`}
-                    dir="rtl"
+                    dir={i18n.dir()}
                 >
                     <p className="text-sm font-medium text-base-content leading-relaxed" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                         {speechText}

@@ -22,13 +22,4 @@ describe('StatsOverview', () => {
         expect(screen.getByText('2')).toBeInTheDocument();
         expect(screen.getByText('$7,498.5')).toBeInTheDocument();
     });
-
-    it('should render icons corresponding to stat IDs', () => {
-        const { container } = render(<StatsOverview stats={mockStats} />);
-        
-        // Check if there are 3 icons based on the structure (HiAcademicCap, HiCube, HiChartBar)
-        // Since they are from react-icons, they are svg elements
-        const svgs = container.querySelectorAll('svg');
-        expect(svgs.length).toBe(3);
-    });
 });

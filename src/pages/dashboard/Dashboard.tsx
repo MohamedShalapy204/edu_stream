@@ -5,6 +5,7 @@ import ScholarlyConstellation from './ScholarlyConstellation';
 import AtheneumOwl from './AtheneumOwl';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // ── Icons ────────────────────────────────────────────────────────────────────
 function IconBook() {
@@ -66,6 +67,7 @@ function IconUser() {
 
 // ── Role chip ────────────────────────────────────────────────────────────────
 function RoleBadge({ role }: { role: UserRole }) {
+    const { t } = useTranslation();
     const isTeacher = role === UserRole.TEACHER;
     return (
         <span
@@ -76,7 +78,7 @@ function RoleBadge({ role }: { role: UserRole }) {
                 }`}
         >
             {isTeacher ? <IconUsers /> : <IconGraduationCap />}
-            {isTeacher ? 'Instructor' : 'Scholar'}
+            {isTeacher ? t('dashboard.instructor') : t('dashboard.scholar')}
         </span>
     );
 }
@@ -127,6 +129,7 @@ function ActionCard({ icon, title, description, onClick, variant = 'ghost', dela
 
 // ── Main Dashboard ───────────────────────────────────────────────────────────
 export default function Dashboard() {
+    const { t } = useTranslation();
     const { data: account } = useCurrentAccount();
     const { data: user } = useCurrentUser();
     const navigate = useNavigate();
@@ -146,37 +149,37 @@ export default function Dashboard() {
     // ── Greeting ──
     const hour = new Date().getHours();
     const greeting =
-        hour < 12 ? 'Good morning' :
-            hour < 17 ? 'Good afternoon' :
-                'Good evening';
+        hour < 12 ? t('dashboard.goodMorning') :
+            hour < 17 ? t('dashboard.goodAfternoon') :
+                t('dashboard.goodEvening');
 
     // ── Teacher actions ──
     const teacherActions = [
         {
             icon: <IconBarChart />,
-            title: 'My Dashboard',
-            description: 'View analytics, student progress, and course stats',
+            title: t('dashboard.teacher.myDashboard'),
+            description: t('dashboard.teacher.myDashboardDesc'),
             onClick: () => navigate('/teacher/dashboard'),
             variant: 'primary' as const,
         },
         {
             icon: <IconPlus />,
-            title: 'Create New Course',
-            description: 'Build and publish a new curriculum from scratch',
+            title: t('dashboard.teacher.createNewCourse'),
+            description: t('dashboard.teacher.createNewCourseDesc'),
             onClick: () => navigate('/teacher/courses/new'),
             variant: 'ghost' as const,
         },
         {
             icon: <IconCompass />,
-            title: 'Explore Catalog',
-            description: 'Browse all published courses on the platform',
+            title: t('dashboard.teacher.exploreCatalog'),
+            description: t('dashboard.teacher.exploreCatalogDesc'),
             onClick: () => navigate('/courses'),
             variant: 'ghost' as const,
         },
         {
             icon: <IconUser />,
-            title: 'My Profile',
-            description: 'Edit your personal info, bio, and account settings',
+            title: t('dashboard.teacher.myProfile'),
+            description: t('dashboard.teacher.myProfileDesc'),
             onClick: () => navigate('/profile'),
             variant: 'ghost' as const,
         },
@@ -186,22 +189,22 @@ export default function Dashboard() {
     const studentActions = [
         {
             icon: <IconBook />,
-            title: 'Resume Learning',
-            description: 'Continue from where you left off in your courses',
+            title: t('dashboard.student.resumeLearning'),
+            description: t('dashboard.student.resumeLearningDesc'),
             onClick: () => navigate('/student/dashboard'),
             variant: 'primary' as const,
         },
         {
             icon: <IconCompass />,
-            title: 'Explore Catalog',
-            description: 'Discover new courses and expand your knowledge',
+            title: t('dashboard.student.exploreCatalog'),
+            description: t('dashboard.student.exploreCatalogDesc'),
             onClick: () => navigate('/courses'),
             variant: 'ghost' as const,
         },
         {
             icon: <IconUser />,
-            title: 'My Profile',
-            description: 'Edit your personal info, bio, and account settings',
+            title: t('dashboard.student.myProfile'),
+            description: t('dashboard.student.myProfileDesc'),
             onClick: () => navigate('/profile'),
             variant: 'ghost' as const,
         },
@@ -256,26 +259,26 @@ export default function Dashboard() {
                                 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
                         >
                             {isTeacher
-                                ? <>Welcome back to the <strong className="text-base-content font-semibold">Atheneum</strong>. Your students are waiting — let's shape minds today.</>
-                                : <>Your digital sanctum is ready. Continue your journey through the <strong className="text-base-content font-semibold">Atheneum</strong> — knowledge awaits.</>
+                                ? <>{t('dashboard.teacher.welcome').split('Atheneum')[0]}<strong className="text-base-content font-semibold">Atheneum</strong>{t('dashboard.teacher.welcome').split('Atheneum')[1]}</>
+                                : <>{t('dashboard.student.welcome').split('Atheneum')[0]}<strong className="text-base-content font-semibold">Atheneum</strong>{t('dashboard.student.welcome').split('Atheneum')[1]}</>
                             }
                         </p>
 
                         {/* Stat pills — teacher vs student */}
                         <div className={`mt-10 flex flex-wrap gap-3 transition-all duration-1000 delay-[600ms]
                             ease-[cubic-bezier(0.16,1,0.3,1)]
-                            ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                             ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                             {isTeacher ? (
                                 <>
-                                    <StatPill emoji="🎓" label="Instructor Portal" />
-                                    <StatPill emoji="📊" label="Track Analytics" />
-                                    <StatPill emoji="✏️" label="Build Curriculum" />
+                                    <StatPill emoji="🎓" label={t('dashboard.teacher.instructorPortal')} />
+                                    <StatPill emoji="📊" label={t('dashboard.teacher.trackAnalytics')} />
+                                    <StatPill emoji="✏️" label={t('dashboard.teacher.buildCurriculum')} />
                                 </>
                             ) : (
                                 <>
-                                    <StatPill emoji="📚" label="Learn at your pace" />
-                                    <StatPill emoji="🏆" label="Earn certificates" />
-                                    <StatPill emoji="🔬" label="Explore subjects" />
+                                    <StatPill emoji="📚" label={t('dashboard.student.learnAtPace')} />
+                                    <StatPill emoji="🏆" label={t('dashboard.student.earnCertificates')} />
+                                    <StatPill emoji="🔬" label={t('dashboard.student.exploreSubjects')} />
                                 </>
                             )}
                         </div>
@@ -288,7 +291,7 @@ export default function Dashboard() {
                             ${mounted ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
                     >
                         <p className="label-caps mb-2">
-                            {isTeacher ? 'Instructor actions' : 'Quick actions'}
+                            {isTeacher ? t('dashboard.teacher.actions') : t('dashboard.student.actions')}
                         </p>
                         {actions.map((action, i) => (
                             <ActionCard

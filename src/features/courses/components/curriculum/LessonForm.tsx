@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCreateLesson, useUpdateLesson } from '@/features/courses/hooks/useLessonActions';
 import { storageService } from '@/services/appwrite/storage/storageService';
 import { HiOutlineDocument } from 'react-icons/hi2';
+import { useTranslation } from 'react-i18next';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import type { ILesson } from '@/features/courses/types/courseTypes';
 
@@ -15,6 +16,7 @@ interface LessonFormProps {
 }
 
 export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nextOrder, initialData, onCancel, onSuccess }) => {
+    const { t } = useTranslation();
     const { mutate: createLesson, isPending: isCreating } = useCreateLesson();
     const { mutate: updateLesson, isPending: isUpdating } = useUpdateLesson();
 
@@ -91,12 +93,12 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
     };
 
     return (
-        <form onSubmit={handleSubmit} className="p-4 md:p-6 bg-white rounded-2xl border border-primary/20 shadow-xl space-y-4 md:space-y-5 animate-in slide-in-from-top-4 duration-300">
+        <form onSubmit={handleSubmit} className="p-4 md:p-6 rounded-2xl border border-primary/20 shadow-xl space-y-4 md:space-y-5 animate-in slide-in-from-top-4 duration-300">
             <div className="flex items-center justify-between border-b border-base-content/5 pb-3 md:pb-4">
                 <h5 className="text-[10px] md:text-sm font-black uppercase tracking-widest text-primary">
-                    {isEditMode ? 'Refine Lesson' : 'New Lesson'}
+                    {isEditMode ? t('teacher.lessonForm.refineLesson') : t('teacher.lessonForm.newLesson')}
                 </h5>
-                <button type="button" onClick={onCancel} className="text-[10px] md:text-xs font-bold text-base-content/40 hover:text-base-content">Cancel</button>
+                <button type="button" onClick={onCancel} className="text-[10px] md:text-xs font-bold text-base-content/40 hover:text-base-content">{t('teacher.lessonForm.cancel')}</button>
             </div>
 
             <div className="space-y-3 md:space-y-4">
@@ -104,7 +106,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Lesson Title"
+                    placeholder={t('teacher.lessonForm.lessonTitle')}
                     className="w-full h-12 bg-base-200/50 rounded-xl px-4 text-xs md:text-sm font-bold outline-none focus:ring-2 focus:ring-primary/20 border border-transparent focus:border-primary/50 transition-all"
                     required
                 />
@@ -112,7 +114,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Short description..."
+                    placeholder={t('teacher.lessonForm.shortDescription')}
                     className="w-full h-24 bg-base-200/50 rounded-xl p-4 text-xs md:text-sm font-medium outline-none focus:ring-2 focus:ring-primary/20 border border-transparent focus:border-primary/50 transition-all resize-none"
                 />
 
@@ -121,7 +123,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                         type="url"
                         value={videoUrl}
                         onChange={(e) => setVideoUrl(e.target.value)}
-                        placeholder="Video URL (Optional)"
+                        placeholder={t('teacher.lessonForm.videoUrl')}
                         className="w-full h-12 bg-base-200/50 rounded-xl px-4 text-xs md:text-sm font-medium outline-none focus:ring-2 focus:ring-primary/20 border border-transparent focus:border-primary/50 transition-all"
                     />
 
@@ -135,7 +137,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                         />
                         <div className={`w-full h-12 flex items-center justify-between px-4 rounded-xl border-2 border-dashed transition-all ${files.length > 0 ? 'bg-primary/5 border-primary/30 text-primary' : 'bg-base-200/50 border-base-content/10'}`}>
                             <span className="text-[10px] md:text-sm font-bold truncate max-w-[80%]">
-                                {files.length > 0 ? `${files.length} Document(s)` : 'Attach Documents'}
+                                {files.length > 0 ? `${files.length} ${t('teacher.lessonForm.documents')}` : t('teacher.lessonForm.attachDocuments')}
                             </span>
                             <HiOutlineDocument className="w-5 h-5 opacity-50" />
                         </div>
@@ -145,7 +147,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                 <div className="flex justify-start">
                     <label className="flex items-center gap-3 h-10 md:h-12 px-4 bg-base-200/50 rounded-xl cursor-pointer">
                         <input type="checkbox" checked={isFree} onChange={(e) => setIsFree(e.target.checked)} className="checkbox checkbox-xs md:checkbox-sm checkbox-primary rounded-md" />
-                        <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-base-content/60">Free Preview</span>
+                        <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-base-content/60">{t('teacher.lessonForm.freePreview')}</span>
                     </label>
                 </div>
             </div>
@@ -153,7 +155,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
             <div className="pt-2 flex flex-col items-stretch sm:items-end gap-3">
                 {isUploading && uploadProgress > 0 && (
                     <div className="w-full sm:w-1/2 px-2">
-                        <ProgressBar progress={uploadProgress} label="Synchronizing..." />
+                        <ProgressBar progress={uploadProgress} label={t('teacher.lessonForm.synchronizing')} />
                     </div>
                 )}
                 <button
@@ -161,7 +163,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({ sectionId, courseId, nex
                     disabled={isPending || isUploading || !title.trim()}
                     className="btn btn-primary h-12 px-8 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:shadow-xl transition-all border-none w-full sm:w-auto"
                 >
-                    {isPending || isUploading ? <span className="loading loading-spinner loading-xs" /> : isEditMode ? 'Refine Segment' : 'Save Lesson'}
+                    {isPending || isUploading ? <span className="loading loading-spinner loading-xs" /> : isEditMode ? t('teacher.lessonForm.refineSegment') : t('teacher.lessonForm.saveLesson')}
                 </button>
             </div>
         </form>

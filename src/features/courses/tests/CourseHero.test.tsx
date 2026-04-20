@@ -8,7 +8,11 @@ describe('CourseHero', () => {
         subtitle: 'Explore our curated domain of knowledge.',
         searchQuery: '',
         onSearchChange: vi.fn(),
-        categories: ['All', 'Technology', 'Design'],
+        categories: [
+            { id: 'All', label: 'All' },
+            { id: 'Technology', label: 'Technology' },
+            { id: 'Design', label: 'Design' }
+        ],
         selectedCategory: 'All',
         onCategoryChange: vi.fn(),
     };

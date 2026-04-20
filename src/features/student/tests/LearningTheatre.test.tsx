@@ -1,8 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act } from '@/test-utils';
 import { openDocument } from '../store/learningTheatreSlice';
 import LearningTheatre from '../pages/LearningTheatre';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import learningTheatreReducer from '../store/learningTheatreSlice';
@@ -10,6 +9,10 @@ import learningTheatreReducer from '../store/learningTheatreSlice';
 // Mock child components to focus on layout tests
 vi.mock('../components/LearningTheatre/DocumentController', () => ({
   default: () => <div data-testid="document-controller">Document Controller</div>
+}));
+
+vi.mock('../components/TheatrePlayer', () => ({
+  TheatrePlayer: () => <div data-testid="video-player-container">TheatrePlayer Mock</div>
 }));
 
 vi.mock('@/features/courses/hooks/useCourseActions', () => ({
@@ -64,9 +67,7 @@ describe('LearningTheatre Layout', () => {
     const store = createMockStore();
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <LearningTheatre />
-        </MemoryRouter>
+        <LearningTheatre />
       </Provider>
     );
 
@@ -85,9 +86,7 @@ describe('LearningTheatre Layout', () => {
     });
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <LearningTheatre />
-        </MemoryRouter>
+        <LearningTheatre />
       </Provider>
     );
 
@@ -102,9 +101,7 @@ describe('LearningTheatre Layout', () => {
     const store = createMockStore();
     const { container } = render(
       <Provider store={store}>
-        <MemoryRouter>
-          <LearningTheatre />
-        </MemoryRouter>
+        <LearningTheatre />
       </Provider>
     );
 

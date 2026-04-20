@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { HiOutlinePhoto, HiOutlineArrowLeft } from 'react-icons/hi2';
@@ -10,6 +11,7 @@ import { useCurrentUser } from '@/hooks/useUser';
 import toast from 'react-hot-toast';
 
 const PaymentPage: React.FC = () => {
+    const { t } = useTranslation();
     const { courseId } = useParams();
     const navigate = useNavigate();
     const { data: user } = useCurrentUser();
@@ -41,16 +43,16 @@ const PaymentPage: React.FC = () => {
     }
 
     if (!course) {
-        return <div className="text-center py-20 text-muted-foreground font-semibold">Course not found.</div>;
+        return <div className="text-center py-20 text-muted-foreground font-semibold">{t('payment.courseNotFound')}</div>;
     }
 
     // Teacher has not configured payment
     if (!course.vodafone_cash_number) {
         return (
             <div className="max-w-2xl mx-auto mt-20 p-8 text-center bg-warning/10 text-warning-content rounded-[2.5rem]">
-                <h3 className="font-black text-xl mb-2">Manual Enrollment Unavailable</h3>
-                <p>The instructor has not configured a Vodafone Cash number for this course.</p>
-                <button className="btn btn-outline outline-warning mt-6" onClick={() => navigate(-1)}>Go Back</button>
+                <h3 className="font-black text-xl mb-2">{t('payment.unavailable')}</h3>
+                <p>{t('payment.unavailableDesc')}</p>
+                <button className="btn btn-outline outline-warning mt-6" onClick={() => navigate(-1)}>{t('payment.goBack')}</button>
             </div>
         );
     }
@@ -65,12 +67,12 @@ const PaymentPage: React.FC = () => {
             paymentNumberShown: course.vodafone_cash_number || ''
         }, {
             onSuccess: () => {
-                toast.success('Receipt submitted successfully. Waiting for instructor verification.');
+                toast.success(t('payment.submitSuccess'));
                 setReceipt(null);
                 setPreview(null);
             },
             onError: (error) => {
-                toast.error(error.message || 'Failed to submit receipt.');
+                toast.error(error.message || t('payment.submitError'));
             }
         });
     };
@@ -82,25 +84,25 @@ const PaymentPage: React.FC = () => {
                     <HiOutlineArrowLeft className="w-5 h-5" />
                 </button>
                 <div>
-                    <h1 className="text-3xl font-black tracking-tighter">Enrollment Gateway</h1>
+                    <h1 className="text-3xl font-black tracking-tighter">{t('payment.gateway')}</h1>
                     <p className="text-muted-foreground font-medium">{course.title}</p>
                 </div>
             </div>
 
             {enrollmentStatus && enrollmentStatus.status !== 'denied' ? (
                 <div className="bg-white p-10 rounded-[3rem] shadow-premium border border-muted/5 text-center space-y-6">
-                    <div className="flex justify-center mb-6">
+                     <div className="flex justify-center mb-6">
                         <EnrollmentStatusBadge status={enrollmentStatus.status} className="scale-125" />
                     </div>
-                    <h3 className="text-2xl font-black tracking-tight">Status Update</h3>
+                    <h3 className="text-2xl font-black tracking-tight">{t('payment.statusUpdate')}</h3>
                     <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-                        {enrollmentStatus.status === 'pending' && "Your receipt has been submitted and is currently pending instructor review. You'll receive access once verified."}
-                        {enrollmentStatus.status === 'approved' && "Your payment has been verified. You now have full access to the course material."}
+                        {enrollmentStatus.status === 'pending' && t('payment.pendingMsg')}
+                        {enrollmentStatus.status === 'approved' && t('payment.approvedMsg')}
                     </p>
 
                     {enrollmentStatus.status === 'approved' && (
                         <button onClick={() => navigate(`/student/learn/${courseId}`)} className="btn btn-primary mt-6 rounded-2xl px-10 h-14 font-black uppercase tracking-[0.2em] text-xs">
-                            Enter Theatre
+                            {t('payment.enterTheatre')}
                         </button>
                     )}
                 </div>
@@ -114,17 +116,17 @@ const PaymentPage: React.FC = () => {
                         {enrollmentStatus?.status === 'denied' && course.allow_resubmission && (
                             <div className="bg-destructive/10 text-destructive-content p-6 rounded-4xl border border-destructive/20 animate-in slide-in-from-top-2">
                                 <h4 className="font-black text-lg tracking-tight flex items-center gap-2 mb-2">
-                                    Enrollment Denied
+                                    {t('payment.deniedTitle')}
                                 </h4>
                                 <p className="text-sm opacity-90 leading-relaxed">
-                                    The instructor could not verify your previous submission. Please ensure the screenshot clearly shows the transaction ID, date, and amount sent to the correct number, then try again.
+                                    {t('payment.deniedDesc')}
                                 </p>
                             </div>
                         )}
                         {enrollmentStatus?.status === 'denied' && !course.allow_resubmission && (
                             <div className="bg-destructive/10 text-destructive-content p-6 rounded-4xl border border-destructive/20">
-                                <h4 className="font-black text-lg tracking-tight mb-2">Enrollment Denied</h4>
-                                <p className="text-sm opacity-90">The instructor has denied your enrollment and resubmissions are disabled for this course.</p>
+                                <h4 className="font-black text-lg tracking-tight mb-2">{t('payment.deniedTitle')}</h4>
+                                <p className="text-sm opacity-90">{t('payment.deniedNoResubmit')}</p>
                             </div>
                         )}
                     </div>
@@ -133,9 +135,9 @@ const PaymentPage: React.FC = () => {
                         <div className="bg-white p-8 rounded-[2.5rem] shadow-premium border border-muted/5 space-y-8">
                             <div>
                                 <h3 className="text-xl font-black tracking-tight flex items-center gap-2 mb-2">
-                                    Receipt Upload
+                                    {t('payment.receiptUpload')}
                                 </h3>
-                                <p className="text-sm text-muted-foreground">Upload the screenshot of your successful transaction.</p>
+                                <p className="text-sm text-muted-foreground">{t('payment.receiptUploadDesc')}</p>
                             </div>
 
                             <div
@@ -146,9 +148,9 @@ const PaymentPage: React.FC = () => {
 
                                 {preview ? (
                                     <div className="relative group rounded-4xl overflow-hidden aspect-4/3">
-                                        <img src={preview} alt="Receipt preview" className="w-full h-full object-cover" />
+                                        <img src={preview} alt={t('payment.receiptAlt')} className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                                            <p className="text-white font-black tracking-[0.2em] uppercase text-[10px] bg-black/40 px-4 py-2 rounded-full backdrop-blur-md">Click to replace</p>
+                                            <p className="text-white font-black tracking-[0.2em] uppercase text-[10px] bg-black/40 px-4 py-2 rounded-full backdrop-blur-md">{t('payment.clickToReplace')}</p>
                                         </div>
                                     </div>
                                 ) : (
@@ -156,8 +158,8 @@ const PaymentPage: React.FC = () => {
                                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-5 group-hover:scale-110 transition-transform">
                                             <HiOutlinePhoto className="w-8 h-8 text-muted-foreground/60" />
                                         </div>
-                                        <p className="font-black text-foreground mb-2 text-sm uppercase tracking-wide">Drop receipt here</p>
-                                        <p className="text-xs text-muted-foreground font-medium">JPEG, PNG up to 10MB</p>
+                                        <p className="font-black text-foreground mb-2 text-sm uppercase tracking-wide">{t('payment.dropReceipt')}</p>
+                                        <p className="text-xs text-muted-foreground font-medium">{t('payment.formatInfo')}</p>
                                     </div>
                                 )}
                             </div>
@@ -167,7 +169,7 @@ const PaymentPage: React.FC = () => {
                                 disabled={!receipt || isSubmitting}
                                 className="btn btn-primary w-full h-14 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:shadow-primary/30 active:scale-[0.98] transition-all no-animation disabled:opacity-50 disabled:scale-100 border-none"
                             >
-                                {isSubmitting ? <span className="loading loading-spinner"></span> : 'Submit Payment Proof'}
+                                {isSubmitting ? <span className="loading loading-spinner"></span> : t('payment.submitProof')}
                             </button>
                         </div>
                     )}

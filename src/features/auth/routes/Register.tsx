@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
@@ -14,6 +15,7 @@ import {
 import { useRegister, UserRole, registerSchema, type RegisterInput, useSendEmailVerification } from '@/features/auth';
 
 const RegisterPage: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { mutate: registerUser, isPending: isRegistering, reset: resetRegister } = useRegister();
     const { mutate: sendVerification } = useSendEmailVerification();
@@ -37,14 +39,14 @@ const RegisterPage: React.FC = () => {
             onSuccess: () => {
                 sendVerification(undefined, {
                     onSuccess: () => navigate('/login', {
-                        state: { message: 'A verification link has been sent to your email. Please verify to access the Atheneum.' }
+                        state: { message: t('auth.register.verificationSent') }
                     }),
                     onError: () => navigate('/login', {
-                        state: { message: 'Registration successful! However, we couldn\'t send a verification link. Please sign in and request a new one.' }
+                        state: { message: t('auth.register.verificationError') }
                     })
                 });
             },
-            onError: (err: Error) => setAuthError(err.message || 'Registration failed. Please try again.'),
+            onError: (err: Error) => setAuthError(err.message || t('auth.register.registrationFailed')),
         });
     };
 
@@ -87,8 +89,8 @@ const RegisterPage: React.FC = () => {
                             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-content text-sm font-black shadow-premium group-hover:scale-105 transition-transform">E</div>
                             <span className="font-heading text-lg font-black tracking-tight">EduStream</span>
                         </Link>
-                        <h2 className="text-4xl font-heading font-black tracking-tighter">Join the masterclass.</h2>
-                        <p className="text-lg text-base-content/60 font-medium max-w-sm">Begin your journey in our editorial digital learning space.</p>
+                        <h2 className="text-4xl font-heading font-black tracking-tighter">{t('auth.register.joinMasterclass')}</h2>
+                        <p className="text-lg text-base-content/60 font-medium max-w-sm">{t('auth.register.heroSubtitle')}</p>
                     </motion.div>
 
                     <AnimatePresence mode="wait">
@@ -109,20 +111,20 @@ const RegisterPage: React.FC = () => {
                         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Name */}
                             <div className="space-y-3">
-                                <label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Name</label>
+                                <label htmlFor="name" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">{t('auth.register.nameLabel')}</label>
                                 <div className="relative group">
                                     <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
-                                    <input id="name" placeholder="John Doe" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('name')} />
+                                    <input id="name" placeholder={t('auth.register.namePlaceholder')} className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('name')} />
                                 </div>
                                 {errors.name && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.name.message}</p>}
                             </div>
 
                             {/* Email */}
                             <div className="space-y-3">
-                                <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Email</label>
+                                <label htmlFor="email" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">{t('auth.register.emailLabel')}</label>
                                 <div className="relative group">
                                     <HiOutlineEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
-                                    <input id="email" type="email" placeholder="you@domain.com" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('email')} />
+                                    <input id="email" type="email" placeholder={t('auth.register.emailPlaceholder')} className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('email')} />
                                 </div>
                                 {errors.email && <p className="text-[10px] font-black uppercase text-error tracking-widest ml-1">{errors.email.message}</p>}
                             </div>
@@ -131,7 +133,7 @@ const RegisterPage: React.FC = () => {
                         <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Password */}
                             <div className="space-y-3">
-                                <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Password</label>
+                                <label htmlFor="password" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">{t('auth.register.passwordLabel')}</label>
                                 <div className="relative group">
                                     <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
                                     <input id="password" type="password" placeholder="••••••••" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('password')} />
@@ -141,7 +143,7 @@ const RegisterPage: React.FC = () => {
 
                             {/* Confirm Password */}
                             <div className="space-y-3">
-                                <label htmlFor="confirmPassword" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Confirm Password</label>
+                                <label htmlFor="confirmPassword" className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">{t('auth.register.confirmPasswordLabel')}</label>
                                 <div className="relative group">
                                     <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/30 group-focus-within:text-primary transition-colors" />
                                     <input id="confirmPassword" type="password" placeholder="••••••••" className="input input-ghost w-full h-14 rounded-3xl pl-12 bg-base-200 border-none focus:bg-base-100 focus:shadow-premium transition-all text-base font-medium" {...register('confirmPassword')} />
@@ -152,15 +154,15 @@ const RegisterPage: React.FC = () => {
 
                         {/* Role Selector */}
                         <motion.div variants={itemVariants} className="space-y-4">
-                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">Choose Account Type</label>
+                            <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/40 ml-1">{t('auth.register.chooseAccountType')}</label>
                             <Controller
                                 control={control}
                                 name="role"
                                 render={({ field: { value, onChange } }) => (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {[
-                                            { id: UserRole.STUDENT, title: 'Learn', desc: 'Expand knowledge library' },
-                                            { id: UserRole.TEACHER, title: 'Teach', desc: 'Curate your syllabus' }
+                                            { id: UserRole.STUDENT, title: t('auth.register.roleStudentTitle'), desc: t('auth.register.roleStudentDesc') },
+                                            { id: UserRole.TEACHER, title: t('auth.register.roleTeacherTitle'), desc: t('auth.register.roleTeacherDesc') }
                                         ].map((role) => (
                                             <motion.button
                                                 key={role.id}
@@ -191,15 +193,15 @@ const RegisterPage: React.FC = () => {
                                 disabled={isRegistering}
                                 className="btn btn-primary w-full h-16 rounded-4xl font-black text-xs uppercase tracking-[0.3em] shadow-premium hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group no-animation border-none"
                             >
-                                {isRegistering ? <span className="loading loading-spinner" /> : <>Finalize Enrollment <HiOutlineArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" /></>}
+                                {isRegistering ? <span className="loading loading-spinner" /> : <>{t('auth.register.finalizeEnrollment')} <HiOutlineArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" /></>}
                             </button>
                         </motion.div>
                     </form>
 
                     <motion.div variants={itemVariants} className="pt-4 text-center">
                         <p className="text-sm font-bold text-base-content/40">
-                            Already have access?{' '}
-                            <Link to="/login" className="text-primary hover:underline underline-offset-8 transition-all font-black decoration-2">Sign in directly</Link>
+                            {t('auth.register.alreadyHaveAccess')}{' '}
+                            <Link to="/login" className="text-primary hover:underline underline-offset-8 transition-all font-black decoration-2">{t('auth.register.signInDirectly')}</Link>
                         </p>
                     </motion.div>
                 </motion.div>
@@ -223,16 +225,16 @@ const RegisterPage: React.FC = () => {
                             className="w-1.5 bg-primary rounded-full mb-8 shadow-premium"
                         />
                         <h3 className="text-5xl font-heading font-black leading-[1.05] tracking-tight text-base-content">
-                            Elevate your<br />
-                            <span className="text-primary tracking-tighter">digital literacy.</span>
+                            {t('auth.register.elevateLiteracy')}<br />
+                            <span className="text-primary tracking-tighter">{t('auth.register.digitalLiteracy')}</span>
                         </h3>
                     </div>
 
                     <div className="space-y-8 max-w-sm">
                         {[
-                            { title: 'Global Faculty', text: 'Curriculum audited by industry pioneers.' },
-                            { title: 'Peer Collective', text: 'Dynamic networking with 40k+ alumni.' },
-                            { title: 'Scholarly Archive', text: 'Eternal access to updated courseware.' }
+                            { title: t('auth.register.feature1Title'), text: t('auth.register.feature1Desc') },
+                            { title: t('auth.register.feature2Title'), text: t('auth.register.feature2Desc') },
+                            { title: t('auth.register.feature3Title'), text: t('auth.register.feature3Desc') }
                         ].map((item, i) => (
                             <motion.div
                                 key={i}
@@ -269,8 +271,8 @@ const RegisterPage: React.FC = () => {
                                 ))}
                             </div>
                             <div className="pr-6">
-                                <p className="text-[10px] font-black uppercase tracking-widest text-base-content">Next Cohort</p>
-                                <p className="text-xs font-bold text-primary">April 15, 2026</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-base-content">{t('auth.register.nextCohort')}</p>
+                                <p className="text-xs font-bold text-primary">{t('auth.register.nextCohortDate')}</p>
                             </div>
                         </div>
                     </motion.div>

@@ -1,4 +1,5 @@
 import { type FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { useCurrentAccount } from '@/features/auth';
@@ -18,6 +19,7 @@ interface DashboardItem {
 }
 
 const StudentDashboard: FC = () => {
+    const { t } = useTranslation();
     const { data: user } = useCurrentAccount();
     const { data: enrolledCourses, isLoading: isEnrolledLoading } = useGetEnrolledCourses(user?.$id);
     const { data: vodafoneEnrollments, isLoading: isVodafoneLoading } = useStudentVodafoneEnrollments(user?.$id || '');
@@ -75,13 +77,13 @@ const StudentDashboard: FC = () => {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-10">
                 <div>
                     <h1 className="text-3xl md:text-5xl font-heading font-black text-base-content tracking-tight mb-3 md:mb-4 flex items-center gap-3 md:gap-4">
-                        Learning Portal
+                        {t('dashboard.student.portalTitle')}
                         <div className="bg-primary/10 p-2 rounded-xl md:rounded-2xl">
                             <HiOutlineAcademicCap className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                         </div>
                     </h1>
                     <p className="text-base-content/40 text-sm md:text-lg font-medium max-w-2xl leading-relaxed">
-                        Welcome back, <span className="text-primary font-bold">{user?.name}</span>. Access your active scholarly pursuits and continue your cognitive expansion.
+                        {t('dashboard.student.welcomeBack', { name: user?.name })}
                     </p>
                 </div>
             </div>
@@ -100,7 +102,7 @@ const StudentDashboard: FC = () => {
                         </div>
                         <div>
                             <div className="text-xl md:text-2xl font-heading font-black text-primary">{totalEnrolled}</div>
-                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">Active Courses</div>
+                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">{t('dashboard.student.activeCourses')}</div>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -109,7 +111,7 @@ const StudentDashboard: FC = () => {
                         </div>
                         <div>
                             <div className="text-xl md:text-2xl font-heading font-black text-accent">{totalCompleted}</div>
-                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">Lessons Done</div>
+                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">{t('dashboard.student.lessonsDone')}</div>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -118,7 +120,7 @@ const StudentDashboard: FC = () => {
                         </div>
                         <div>
                             <div className={`text-xl md:text-2xl font-heading font-black ${pendingCount > 0 ? 'text-warning' : 'text-base-content/30'}`}>{pendingCount}</div>
-                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">Pending Review</div>
+                            <div className="text-[8px] md:text-[9px] uppercase font-black tracking-widest text-base-content/30">{t('dashboard.student.pendingReview')}</div>
                         </div>
                     </div>
                 </motion.div>
@@ -155,16 +157,16 @@ const StudentDashboard: FC = () => {
                     <div className="bg-primary/5 p-10 h-24 w-24 rounded-4xl inline-flex items-center justify-center mb-8 text-primary/40 relative z-10">
                         <HiOutlineBolt className="w-10 h-10" />
                     </div>
-                    <h3 className="text-3xl font-heading font-black text-base-content mb-4 tracking-tight relative z-10">No Active Enrollments</h3>
+                    <h3 className="text-3xl font-heading font-black text-base-content mb-4 tracking-tight relative z-10">{t('dashboard.student.noEnrollments')}</h3>
                     <p className="text-base-content/40 text-lg font-medium mb-12 max-w-sm mx-auto relative z-10 leading-relaxed">
-                        It appears your academic transcript is currently empty. Explore the course catalog to begin your journey.
+                        {t('dashboard.student.emptyTranscript')}
                     </p>
                     <Link
                         to="/courses"
                         viewTransition
                         className="relative z-10 inline-flex items-center px-10 py-4 bg-primary text-primary-content font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5 rounded-2xl transition-all duration-300"
                     >
-                        Browse Curriculums
+                        {t('dashboard.student.browseCurriculums')}
                     </Link>
                 </div>
             )}

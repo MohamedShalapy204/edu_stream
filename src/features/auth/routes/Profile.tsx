@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm, type Resolver } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +12,7 @@ import { toast } from 'react-hot-toast';
 type ProfileSettingsInput = z.infer<typeof paymentSettingsSchema>;
 
 const Profile: React.FC = () => {
+    const { t } = useTranslation();
     const { data: profile, isLoading } = useCurrentUser();
     const { mutate: updateProfile, isPending } = useUpdateUser();
 
@@ -32,10 +34,10 @@ const Profile: React.FC = () => {
             }
         }, {
             onSuccess: () => {
-                toast.success('Dossier updated successfully');
+                toast.success(t('profile.updateSuccess'));
             },
             onError: (error: Error) => {
-                toast.error(error.message || 'Update failed');
+                toast.error(error.message || t('profile.updateFailed'));
             }
         });
     };
@@ -58,10 +60,12 @@ const Profile: React.FC = () => {
                         <h2 className="text-2xl md:text-3xl font-black tracking-tighter">{profile?.name}</h2>
                         <div className="flex items-center self-center md:self-auto gap-2 px-4 py-1.5 bg-primary/10 rounded-full">
                             <HiOutlineCheckBadge className="w-4 h-4 text-primary" />
-                            <span className="text-[10px] uppercase font-black tracking-widest text-primary">{profile?.role} Scholar</span>
+                            <span className="text-[10px] uppercase font-black tracking-widest text-primary">
+                                {t('profile.scholarRole', { role: profile?.role })}
+                            </span>
                         </div>
                     </div>
-                    <p className="text-base-content/60 font-medium max-w-md text-sm md:text-base">{profile?.bio || 'No archival record of this scholar exists yet.'}</p>
+                    <p className="text-base-content/60 font-medium max-w-md text-sm md:text-base">{profile?.bio || t('profile.noBio')}</p>
                 </div>
             </div>
 
@@ -72,11 +76,11 @@ const Profile: React.FC = () => {
                         <div className="p-3 bg-secondary/10 rounded-2xl text-secondary">
                             <HiOutlineUserCircle className="w-6 h-6" />
                         </div>
-                        <h3 className="text-xl font-black tracking-tight">Identity Details</h3>
+                        <h3 className="text-xl font-black tracking-tight">{t('profile.identityDetails')}</h3>
                     </div>
 
                     <div className="space-y-3">
-                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">Scholarly Email</label>
+                        <label className="text-[10px] uppercase font-black tracking-[0.2em] text-base-content/60 ml-1">{t('profile.scholarlyEmail')}</label>
                         <div className="input input-bordered h-14 rounded-2xl bg-base-200 border-none flex items-center px-6 font-semibold opacity-50 cursor-not-allowed text-sm">
                             {profile?.email}
                         </div>
@@ -89,14 +93,14 @@ const Profile: React.FC = () => {
                             <div className="p-3 bg-primary/10 rounded-2xl text-primary">
                                 <HiOutlineBanknotes className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-black tracking-tight">Financial Protocol</h3>
+                            <h3 className="text-xl font-black tracking-tight">{t('profile.financialProtocol')}</h3>
                         </div>
 
                         <VodafoneNumberInput
-                            label="Global Default Number"
+                            label={t('profile.defaultNumberLabel')}
                             register={register('vodafone_cash_number')}
                             error={errors.vodafone_cash_number}
-                            description="Used as default for all your courses. Must be 010 (11 digits)."
+                            description={t('profile.defaultNumberDesc')}
                         />
 
                         <button
@@ -104,7 +108,7 @@ const Profile: React.FC = () => {
                             disabled={isPending}
                             className="btn btn-primary w-full h-14 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-[0.25em] shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:scale-[1.02] transition-all no-animation border-none"
                         >
-                            {isPending ? <span className="loading loading-spinner" /> : 'Commit Changes'}
+                            {isPending ? <span className="loading loading-spinner" /> : t('profile.commitChanges')}
                         </button>
                     </div>
                 )}
