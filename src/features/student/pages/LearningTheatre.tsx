@@ -1,7 +1,7 @@
 import { useState, useMemo, type FC } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { HiOutlineArrowLeft, HiOutlineBars3BottomLeft, HiOutlineBars3BottomRight, HiOutlineXMark } from 'react-icons/hi2';
+import { HiOutlineArrowLeft, HiOutlineArrowRight, HiOutlineBars3BottomLeft, HiOutlineBars3BottomRight, HiOutlineXMark } from 'react-icons/hi2';
 import { useTranslation } from 'react-i18next';
 
 import { useGetCourseById } from '@/features/courses/hooks/useCourseActions';
@@ -19,15 +19,17 @@ import { DocumentHub } from '../components/DocumentHub';
 import DocumentController from '../components/LearningTheatre/DocumentController';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useEffect } from 'react';
-import { resetTheatre } from '../store/learningTheatreSlice';
+import { resetTheatre, openDocument } from '../store/learningTheatreSlice';
+import { storageService } from '@/services/appwrite/storage/storageService';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const LearningTheatre: FC = () => {
     const { id: courseId } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { data: user } = useCurrentAccount();
     const isMobile = useMediaQuery('(max-width: 1024px)');
+    const isRTL = i18n.dir() === 'rtl';
 
     const { data: course, isLoading: isCourseLoading } = useGetCourseById(courseId || '');
     const { data: sections, isLoading: isSectionsLoading } = useGetSections(courseId || '');
@@ -134,15 +136,35 @@ const LearningTheatre: FC = () => {
     const activeLesson = lessons.find(l => l.$id === activeLessonId);
     const isCompleted = activeLessonId ? courseProgress.completed_lessons.includes(activeLessonId) : false;
 
+    // Determine if the active lesson has a video
+    const lessonHasVideo = Boolean(activeLesson?.video_url || activeLesson?.video_id);
+
+    // Auto-open the first document when lesson has no video
+    useEffect(() => {
+        if (activeLesson && !lessonHasVideo && activeLesson.document_ids?.length) {
+            const firstDocId = activeLesson.document_ids[0];
+            const url = storageService.getFileView(firstDocId).toString();
+            dispatch(openDocument({
+                id: firstDocId,
+                title: `${t('theatre.exhibit')} 1`,
+                url,
+                type: 'doc'
+            }));
+        }
+    }, [activeLesson, lessonHasVideo, dispatch, t]);
+
     return (
         <div className="fixed inset-0 z-50 bg-base-200 flex overflow-hidden">
             {/* ── STAGE CONTROLS ─────────────────────────────────────────── */}
-            <div className="absolute top-4 md:top-6 left-4 md:left-6 z-60 flex gap-2 md:gap-3">
+            <div className="absolute top-4 md:top-6 start-4 md:start-6 z-60 flex gap-2 md:gap-3">
                 <button
                     onClick={() => navigate('/student/dashboard', { viewTransition: true })}
                     className="h-10 md:h-12 px-4 md:px-6 bg-primary text-primary-content rounded-full flex items-center gap-2 md:gap-3 label-caps shadow-xl shadow-primary/20 hover:-translate-y-1 hover:shadow-primary/30 active:scale-95 transition-all group border-none"
                 >
-                    <HiOutlineArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform text-primary-content" />
+                    {isRTL
+                        ? <HiOutlineArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform text-primary-content" />
+                        : <HiOutlineArrowLeft className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:-translate-x-1 transition-transform text-primary-content" />
+                    }
                     <span className="hidden xs:inline">{t('theatre.returnToAtheneum')}</span>
                 </button>
 
@@ -157,7 +179,7 @@ const LearningTheatre: FC = () => {
                 </button>
             </div>
 
-            <div className="absolute top-4 md:top-6 right-4 md:right-6 z-60">
+            <div className="absolute top-4 md:top-6 end-4 md:end-6 z-60">
                 <button
                     onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
                     className={`h-10 w-10 md:h-12 md:w-12 rounded-full flex items-center justify-center shadow-xl backdrop-blur-xl border transition-all duration-300 active:scale-95
@@ -173,11 +195,11 @@ const LearningTheatre: FC = () => {
             <AnimatePresence initial={false}>
                 {isLeftSidebarOpen && (
                     <motion.div
-                        initial={{ x: -400, opacity: 0 }}
+                        initial={{ x: isRTL ? 400 : -400, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: -400, opacity: 0 }}
+                        exit={{ x: isRTL ? 400 : -400, opacity: 0 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`h-screen bg-base-100 border-r border-base-content/5 shadow-2xl overflow-hidden pt-20 md:pt-24 z-50
+                        className={`h-screen bg-base-100 border-e border-base-content/5 shadow-2xl overflow-hidden pt-20 md:pt-24 z-50
                             ${isMobile ? 'fixed inset-0 w-full' : 'relative w-96'}`}
                     >
                         {/* Visual gradient backdrop */}
@@ -215,19 +237,24 @@ const LearningTheatre: FC = () => {
                 >
                     {activeLesson ? (
                         <>
-                            <div className={`transition-all duration-500 flex flex-col ${isWorkspaceActive ? 'h-1/2 lg:h-full lg:w-1/2' : 'h-full w-full'
-                                }`}>
-                                <TheatrePlayer
-                                    lesson={activeLesson}
-                                    isCompleted={isCompleted}
-                                    onMarkCompleted={handleMarkComplete}
-                                    onNextLesson={handleNextLesson}
-                                />
-                            </div>
+                            {lessonHasVideo && (
+                                <div className={`transition-all duration-500 flex flex-col ${isWorkspaceActive ? 'h-1/2 lg:h-full lg:w-1/2' : 'h-full w-full'
+                                    }`}>
+                                    <TheatrePlayer
+                                        lesson={activeLesson}
+                                        isCompleted={isCompleted}
+                                        onMarkCompleted={handleMarkComplete}
+                                        onNextLesson={handleNextLesson}
+                                    />
+                                </div>
+                            )}
 
-                            {isWorkspaceActive && (
+                            {(isWorkspaceActive || !lessonHasVideo) && (
                                 <div className={`animate-in fade-in slide-in-from-right-4 duration-500 
-                                    ${isMobile ? 'h-1/2 border-t border-base-content/5' : 'h-full lg:w-1/2 lg:p-4'}`}>
+                                    ${!lessonHasVideo
+                                        ? 'h-full w-full'
+                                        : isMobile ? 'h-1/2 border-t border-base-content/5' : 'h-full lg:w-1/2 lg:p-4'
+                                    }`}>
                                     <DocumentController />
                                 </div>
                             )}
@@ -245,11 +272,11 @@ const LearningTheatre: FC = () => {
             <AnimatePresence initial={false}>
                 {isRightSidebarOpen && (
                     <motion.div
-                        initial={{ x: 400, opacity: 0 }}
+                        initial={{ x: isRTL ? -400 : 400, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: 400, opacity: 0 }}
+                        exit={{ x: isRTL ? -400 : 400, opacity: 0 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`h-screen bg-base-100 border-l border-base-content/5 shadow-2xl overflow-hidden pt-20 md:pt-24 z-50
+                        className={`h-screen bg-base-100 border-s border-base-content/5 shadow-2xl overflow-hidden pt-20 md:pt-24 z-50
                             ${isMobile ? 'fixed inset-0 w-full' : 'relative w-96'}`}
                     >
                         <div className="absolute inset-x-0 top-20 md:top-24 h-px bg-linear-to-r from-transparent via-primary/20 to-transparent" />

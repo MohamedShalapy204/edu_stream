@@ -48,7 +48,7 @@ const DocumentTabs: React.FC<DocumentTabsProps> = ({
           </span>
           <button
             aria-label={`Close ${doc.title}`}
-            className="p-0.5 rounded-full hover:bg-base-content/10 opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 focus:bg-base-content/10"
+            className="p-0.5 rounded-full opacity-60 hover:opacity-100 hover:bg-base-content/10 transition-opacity focus:opacity-100 focus:bg-base-content/10"
             onClick={(e) => {
               e.stopPropagation();
               onClose(doc.id);

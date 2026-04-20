@@ -1,7 +1,7 @@
 import { type FC, useMemo } from 'react';
 import type { ILesson } from '@/features/courses';
 import { storageService } from '@/services/appwrite/storage/storageService';
-import { HiOutlineCheckCircle, HiOutlineVideoCameraSlash } from 'react-icons/hi2';
+import { HiOutlineCheckCircle } from 'react-icons/hi2';
 import { useTranslation } from 'react-i18next';
 
 interface TheatrePlayerProps {
@@ -19,7 +19,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
 }) => {
     const { t } = useTranslation();
     const embedInfo = useMemo(() => {
-        const url = lesson.video_url || '';
+        const url = lesson.video_url || lesson.video_id || '';
         if (url.includes('youtube.com/watch?v=')) {
             const id = url.split('v=')[1].split('&')[0];
             return { type: 'youtube', src: `https://www.youtube-nocookie.com/embed/${id}` };
@@ -32,19 +32,17 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
             const id = url.split('vimeo.com/')[1].split('?')[0];
             return { type: 'vimeo', src: `https://player.vimeo.com/video/${id}` };
         }
+        const driveRegex = /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=[a-zA-Z]+&)?id=)([a-zA-Z0-9_-]+)/;
+        const driveMatch = url.match(driveRegex);
+        if (driveMatch) {
+            return { type: 'google_drive', src: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
+        }
         return null;
-    }, [lesson.video_url]);
+    }, [lesson.video_url, lesson.video_id]);
 
     const hasVideo = Boolean(embedInfo || lesson.video_id || lesson.video_url);
 
     const renderVideo = () => {
-        if (!hasVideo) return (
-            <div className="w-full h-full flex flex-col items-center justify-center text-white/10 p-12 bg-black/40">
-                <HiOutlineVideoCameraSlash className="w-12 h-12 mb-4" />
-                <p className="label-caps">{t('theatre.lectureArchiveMissing')}</p>
-            </div>
-        );
-
         return (
             <div className="w-full h-full bg-black relative flex items-center justify-center overflow-hidden group">
                 {embedInfo ? (
@@ -58,7 +56,7 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
                 ) : (
                     <video
                         key={lesson.video_id || lesson.video_url}
-                        src={lesson.video_id ? storageService.getFileView(lesson.video_id).toString() : lesson.video_url}
+                        src={(lesson.video_id && !lesson.video_id.startsWith('http')) ? storageService.getFileView(lesson.video_id).toString() : (lesson.video_url || lesson.video_id)}
                         controls
                         className="w-full h-full object-contain"
                         controlsList="nodownload"
@@ -73,17 +71,20 @@ export const TheatrePlayer: FC<TheatrePlayerProps> = ({
 
     return (
         <div className="w-full h-full flex flex-col bg-base-100/40 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden shadow-premium border border-base-content/15 relative">
-            {/* Top Stage Label */}
-            <div className="absolute top-4 left-6 z-10 pointer-events-none">
-                <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full label-caps !text-[8px] !text-white/60 border border-white/10 italic">
-                    {t('theatre.primaryLectureStage')}
-                </span>
-            </div>
+            {/* Top Stage Label & Video Content — only when video exists */}
+            {hasVideo && (
+                <>
+                    <div className="absolute top-4 left-6 z-10 pointer-events-none">
+                        <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full label-caps !text-[8px] !text-white/60 border border-white/10 italic">
+                            {t('theatre.primaryLectureStage')}
+                        </span>
+                    </div>
 
-            {/* Video Content */}
-            <div className="flex-1 min-h-0 bg-black/20">
-                {renderVideo()}
-            </div>
+                    <div className="flex-1 min-h-0 bg-black/20">
+                        {renderVideo()}
+                    </div>
+                </>
+            )}
 
             {/* Action Footer */}
             <div className="flex-none min-h-20 md:h-24 bg-base-200/50 backdrop-blur-2xl border-t border-base-content/10 flex flex-col sm:flex-row items-center justify-between px-6 md:px-12 py-4 sm:py-0 z-10 gap-4 sm:gap-0">

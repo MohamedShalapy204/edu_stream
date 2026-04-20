@@ -20,6 +20,16 @@ export const LessonPlayer: React.FC<LessonPlayerProps> = ({ lesson }) => {
         return match ? match[1] : null;
     };
 
+    const getGoogleDriveId = (url: string) => {
+        if (url.includes('drive.google.com/file/d/')) {
+            return url.split('/file/d/')[1].split('/')[0].split('?')[0];
+        }
+        if (url.includes('drive.google.com/open?id=')) {
+            return url.split('id=')[1].split('&')[0];
+        }
+        return null;
+    };
+
     const hasVideoUrl = !!lesson.video_url;
     const documentIds = lesson.document_ids || [];
     const hasAttachments = documentIds.length > 0;
@@ -55,6 +65,14 @@ export const LessonPlayer: React.FC<LessonPlayerProps> = ({ lesson }) => {
                             title={lesson.title}
                             className="absolute inset-0 w-full h-full border-0"
                             allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
+                        />
+                    ) : getGoogleDriveId(lesson.video_url!) ? (
+                        <iframe
+                            src={`https://drive.google.com/file/d/${getGoogleDriveId(lesson.video_url!)}/preview`}
+                            title={lesson.title}
+                            className="absolute inset-0 w-full h-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         />
                     ) : (
